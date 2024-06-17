@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lazyui/lazyui.dart';
 
-import '../../../data/models/explore/project_freelancer_model.dart';
+import '../../../data/models/setting/project_freelancer_model.dart';
 import '../../../providers/explore/project_freelancer_provider.dart';
 import '../../../widgets/color_widget.dart';
 import 'bid_explore.dart';
@@ -29,14 +29,14 @@ class DataExplore extends ConsumerWidget {
                         itemCount: projectFreelancers.length,
                         itemBuilder: (context, index) {
                           final projectFreelancer = projectFreelancers[index];
-                          String title = projectFreelancer.title;
-                          String description = projectFreelancer.description;
-                          String startSalary = projectFreelancer.startSalary;
-                          String endSalary = projectFreelancer.endSalary;
-                          DateTime startDate = projectFreelancer.startDate;
-                          DateTime endDate = projectFreelancer.endDate;
-                        
-      
+                          String title = projectFreelancer.title!;
+                          String description = projectFreelancer.description!;
+                          double startSalary = projectFreelancer.startSalary!;
+                          double endSalary = projectFreelancer.endSalary!;
+                          DateTime startDate = projectFreelancer.startDate!;
+                          DateTime endDate = projectFreelancer.endDate!;
+
+
                           return Container(
                             padding: Ei.only(l: 20, r: 20, t: 10),
                             margin: Ei.only(l: 25, r: 25, b: 20),
@@ -155,7 +155,7 @@ class DataExplore extends ConsumerWidget {
                                 Flexible(
                                   child: InkTouch(
                                     onTap: () {
-                                      context.lzPush(BidExplore(data2: projectFreelancer,));
+                                      context.lzPush(BidExplore(data: projectFreelancer));
                                     },
                                     child: Align(
                                       alignment: Alignment.bottomCenter,
@@ -186,7 +186,7 @@ class DataExplore extends ConsumerWidget {
                             'There is no data yet, please add data in the add profileFreelancers menu');
               },
               error: (error, _) {
-                ref.read(projectFreelancer.notifier).getProjectFree();
+                ref.read(projectFreelancer.notifier).getProjectFreelancer();
                 return LzNoData(message: 'Oops! $error');
               },
               loading: () {

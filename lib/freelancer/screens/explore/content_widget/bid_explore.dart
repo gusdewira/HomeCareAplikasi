@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lazyui/lazyui.dart';
 import '../../../data/models/explore/bid_project_model.dart';
-import '../../../data/models/explore/project_freelancer_model.dart';
+import '../../../data/models/setting/project_freelancer_model.dart';
 import '../../../providers/explore/bid_project_provider.dart';
 import '../../../providers/explore/project_freelancer_provider.dart';
 import '../../../widgets/color_widget.dart';
 
 class BidExplore extends ConsumerWidget {
-  final BidProjectModel? data;
+  final ProjectFreelancerModel? data;
   final ProjectFreelancerModel? data2;
 
-  const BidExplore({Key? key, this.data,this.data2}) : super(key: key);
+  const BidExplore({Key? key, this.data, this.data2}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -25,7 +25,7 @@ class BidExplore extends ConsumerWidget {
 
     return RefreshIndicator(
     onRefresh: () async {
-      await ref.read(projectFreelancer.notifier).getProjectFree();
+      await ref.read(projectFreelancer.notifier).getProjectFreelancer();
     },
       child: Scaffold(
         body: Container(
@@ -99,23 +99,23 @@ class BidExplore extends ConsumerWidget {
                         mainAxisAlignment: Maa.spaceBetween,
                         children: [
                           Text(
-                            'Start Date: ${DateFormat('dd/MM/yyyy').format(data2!.startDate)}',
+                            'Start Date: ${DateFormat('dd/MM/yyyy').format(data2!.startDate!)}',
                             style: Gfont.fs12.bold,
                           ),
                           Text(
-                            'End date : ${DateFormat('dd/MM/yyyy').format(data2!.endDate)}',
+                            'End date : ${DateFormat('dd/MM/yyyy').format(data2!.endDate!)}',
                             style: Gfont.fs12.bold,
                           )
                         ],
                       ).margin(b: 20),
                     ),
-                    
+
                     Container(
                       width: context.width,
                       height: 1,
                       color: Colors.black54,
                     ),
-      
+
                     LzForm.input(
                       label: 'Bid Amount',
                       labelStyle: LzFormLabelStyle(color: color1),
@@ -147,7 +147,7 @@ class BidExplore extends ConsumerWidget {
           textColor: Colors.white,
           text: 'Bid Project',
           onTap: (state) async {
-            
+
             notifier.postbid(context);
           },
         ).theme1().margin(b: 30),

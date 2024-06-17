@@ -4,7 +4,8 @@ import 'package:lazyui/lazyui.dart';
 import '../../../widgets/color_widget.dart';
 
 class BalanceWithDrawl extends StatelessWidget {
-  const BalanceWithDrawl({super.key});
+  final String earning;
+  const BalanceWithDrawl({super.key, required this.earning});
 
   @override
   Widget build(BuildContext context) {
@@ -24,12 +25,16 @@ class BalanceWithDrawl extends StatelessWidget {
                   color: color1.lighten(0.9),
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: const Center(
-                  child: Icon(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [const Icon(
                     Ti.clockDollar,
                     size: 24,
                     color: Colors.white,
                   ),
+                  const SizedBox(width: 8,),
+                  Text(earning, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),)
+                  ]
                 ),
               ),
               Text('Balance Withdrawal',

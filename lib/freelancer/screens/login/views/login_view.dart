@@ -16,15 +16,15 @@ class LoginView extends ConsumerWidget {
     final notifier = ref.read(authProvider.notifier);
     final forms = notifier.forms;
     //freelancer
-    forms.fill({'email': 'freelancer123@gmail.com', 'password': 'freelancer123'}); 
+    forms.fill({'email': 'freelancer@gmail123.com', 'password': 'freelancer123'});
 
  // Employer
- //  forms.fill({'email': 'emp123@gmail.com', 'password': 'employer1234'}); 
+ //  forms.fill({'email': 'emp123@gmail.com', 'password': 'employer1234'});
 
 
 
-    
-    
+
+
     return Scaffold(
         body: LzFormList(
       cleanOnFilled: true,
@@ -115,8 +115,8 @@ class LoginView extends ConsumerWidget {
               height: 50,
               child: ElevatedButton(
                 onPressed: () {
-                    context.push(Paths.home2);
-                    // notifier.login(context); 
+                    context.push(Paths.home);
+                    // notifier.login(context);
                     // context.push(Paths.home);
                 },
                 style: ButtonStyle(

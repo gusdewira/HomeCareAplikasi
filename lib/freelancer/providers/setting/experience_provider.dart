@@ -8,7 +8,7 @@ class ExperienceProvider
     extends StateNotifier<AsyncValue<List<ExperienceModel>>> with UseApi {
   ExperienceProvider() : super(const AsyncValue.loading()) {
     getEx();
-    }
+  }
 
   final forms = LzForm.make(
       ['title', 'company', 'description', 'start_date', 'end_date']);
@@ -31,10 +31,10 @@ class ExperienceProvider
     }
   }
 
- Future<bool> postEx(int? id) async {
+  Future<bool> postEx(int? id) async {
     try {
       final form = forms.validate(
-         required: ['*'],
+          required: ['*'],
           singleNotifier: false,
           notifierType: LzFormNotifier.text,
           messages: FormMessages(required: {
@@ -43,8 +43,12 @@ class ExperienceProvider
             "description": "The Description form must be filled in",
             "start_date": "Please enter the Start Date",
             "end_date": "Please enter the End Date",
-          })
-      );
+          }));
+
+      if (!form.ok) {
+        LzToast.show("Please fill all required fields.");
+        return false;
+      }
 
       if (form.ok) {
         ResHandler res;
@@ -66,7 +70,8 @@ class ExperienceProvider
             state = AsyncValue.data(data);
           });
         } else {
-          if (res.message == "The end date field must be a date after start date.") {
+          if (res.message ==
+              "The end date field must be a date after start date.") {
             LzToast.show("The end date must be after the start date.");
           } else {
             LzToast.show(res.message);
@@ -83,8 +88,6 @@ class ExperienceProvider
     }
   }
 
-
-  
   Future delEx(int id) async {
     try {
       LzToast.overlay('Deleting...');
@@ -108,6 +111,7 @@ class ExperienceProvider
   }
 }
 
-final experienceProvider = StateNotifierProvider.autoDispose<ExperienceProvider, AsyncValue<List<ExperienceModel>>>((ref) {
+final experienceProvider = StateNotifierProvider.autoDispose<ExperienceProvider,
+    AsyncValue<List<ExperienceModel>>>((ref) {
   return ExperienceProvider();
 });

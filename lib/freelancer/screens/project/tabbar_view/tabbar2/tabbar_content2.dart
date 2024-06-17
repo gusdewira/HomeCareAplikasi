@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lazyui/lazyui.dart';
 
-import '../../../../data/models/explore/project_freelancer_model.dart';
+import '../../../../data/models/setting/project_freelancer_model.dart';
 import '../../../../providers/project/project_active_provider.dart';
 import '../../../../providers/project/project_waiting_provider.dart';
 import '../../../../routes/paths.dart';
@@ -26,11 +26,11 @@ class Tabbar2 extends ConsumerWidget {
                       itemCount: projectProgreses.length,
                       itemBuilder: (context, index) {
                         final projectProgress = projectProgreses[index];
-                        String title = projectProgress.title;
-                        String startSalary = projectProgress.startSalary;
-                        String endSalary = projectProgress.endSalary;
-                        DateTime startDate = projectProgress.startDate;
-                        DateTime endDate = projectProgress.endDate;
+                        String title = projectProgress.title!;
+                        double startSalary = projectProgress.startSalary!;
+                        double endSalary = projectProgress.endSalary!;
+                        DateTime startDate = projectProgress.startDate!;
+                        DateTime endDate = projectProgress.endDate!;
 
                         return Column(
                           children: [

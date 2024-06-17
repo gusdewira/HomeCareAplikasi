@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lazyui/lazyui.dart';
 
-import '../../../data/models/explore/project_freelancer_model.dart';
+import '../../../data/models/setting/project_freelancer_model.dart';
 
 class DetailProjectExplore extends ConsumerWidget {
   final ProjectFreelancerModel? projectExplore;
@@ -74,7 +74,7 @@ class DetailProjectExplore extends ConsumerWidget {
                         style:
                             Gfont.color(LzColors.hex('231E55')).fsize(15).bold),
                     Textr(
-                      projectExplore!.title,
+                      projectExplore!.title!,
                       style: Gfont.color(LzColors.hex('595959')).fsize(13),
                       margin: Ei.only(t: 5),
                       width: context.width,
@@ -86,7 +86,7 @@ class DetailProjectExplore extends ConsumerWidget {
                       margin: Ei.only(t: 20),
                     ),
                     Textr(
-                      projectExplore!.description,
+                      projectExplore!.description!,
                       style: Gfont.color(LzColors.hex('595959')).fsize(13),
                       margin: Ei.only(t: 5),
                       width: 350,
@@ -153,7 +153,7 @@ class DetailProjectExplore extends ConsumerWidget {
                         children: [
                           Expanded(
                             child: Textr(
-                              projectExplore!.attachment,
+                              projectExplore!.attachment!,
                               style:
                                   Gfont.color(LzColors.hex('A9A6CD')).fsize(15),
                             ),
@@ -181,7 +181,7 @@ class DetailProjectExplore extends ConsumerWidget {
                       '22/09/2023 - 31/12/2023',
                       style: Gfont.color(LzColors.hex('A9A6CD')).fsize(13),
                     ),
-                    
+
                   ],
                 ),
               ),

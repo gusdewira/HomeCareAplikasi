@@ -2,7 +2,7 @@ import 'package:fetchly/fetchly.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lazyui/lazyui.dart';
 import '../../data/api/api.dart';
-import '../../data/models/explore/project_freelancer_model.dart';
+import '../../data/models/setting/project_freelancer_model.dart';
 
 class ProjectComplatedProvider
     extends StateNotifier<AsyncValue<List<ProjectFreelancerModel>>> with UseApi {
@@ -36,5 +36,3 @@ final projectComplated =
     StateNotifierProvider.autoDispose<ProjectComplatedProvider, AsyncValue<List<ProjectFreelancerModel>>>((ref) {
   return ProjectComplatedProvider();
 });
-
-

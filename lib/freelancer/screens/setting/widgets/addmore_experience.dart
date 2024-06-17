@@ -144,6 +144,8 @@ class AddMoreExperience extends ConsumerWidget {
             LzToast.show(data?.id == null
                 ? 'Experience has been created.'
                 : 'Experience has been updated.');
+          }else{
+            state.abort();
           }
         },
       ).theme1().margin(b: 50),

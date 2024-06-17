@@ -79,6 +79,9 @@ class AddMoreSkill extends ConsumerWidget {
             LzToast.show(data?.id == null
                 ? 'Skill has been created.'
                 : 'skill has been updated.');
+          }else{
+            state.abort();
+            LzToast.show("Please fill all required fields.");
           }
         },
       ).theme1().margin(b: 50),

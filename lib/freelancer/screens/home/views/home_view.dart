@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:homecare_app/freelancer/data/models/setting/project_freelancer_model.dart';
+import 'package:homecare_app/freelancer/providers/project/project_active_provider.dart';
+import 'package:homecare_app/freelancer/providers/project/project_complated_provider.dart';
+import 'package:homecare_app/freelancer/providers/project/project_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lazyui/lazyui.dart';
 
@@ -13,13 +17,16 @@ import '../widgets/recent_transaction.dart';
 import '../widgets/saldo_home.dart';
 import '../widgets/your_project_home.dart';
 
-
 class HomeView extends ConsumerWidget {
   const HomeView({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+
     final profileData = ref.watch(profileFreelancerProvider);
+    final projectActive = ref.watch(projectProgress);
+    final projectCompleted = ref.watch(projectComplated);
+
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -32,13 +39,24 @@ class HomeView extends ConsumerWidget {
         data: (ProfileFreelancerModel profile) {
           if (profile.id == null) {
             return const LzNoData(
-                message: 'There is no data yet, please add data in the add experience menu');
+                message:
+                    'There is no data yet, please add data in the add experience menu');
           }
           String email = profile.email ?? '';
           String fistName = profile.firstName ?? '';
           String lastName = profile.lastName ?? '';
+          String earn = profile.earning != null ? profile.earning.split('.')[0] : '';
+          int? profileId = profile.id;
 
-          return Stack(
+          if (profileId == null) {
+            return const LzNoData(message: 'Profile ID is missing');
+          }
+
+          final projectData = ref.watch(projectFreelancerByProfile(profileId));
+
+          return Expanded(
+              child: SingleChildScrollView(
+                  child: Stack(
             children: [
               Positioned(
                 top: 60,
@@ -49,7 +67,11 @@ class HomeView extends ConsumerWidget {
                   },
                   child: Row(
                     children: [
-                      const LzImage('profile.jpg', radius: 50, size: 50,),
+                      const LzImage(
+                        'profile.jpg',
+                        radius: 50,
+                        size: 50,
+                      ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -73,7 +95,7 @@ class HomeView extends ConsumerWidget {
                   ),
                 ),
               ),
-              Positioned(                              
+              Positioned(
                   top: 50,
                   right: 25,
                   child: IconButton(
@@ -92,26 +114,63 @@ class HomeView extends ConsumerWidget {
                 decoration: BoxDecoration(
                   color: color2,
                   borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20)),
                 ),
               ),
               const SaldoHome(),
-              const Column(
+              Column(
                 mainAxisAlignment: Maa.start,
                 children: [
                   Row(
                     mainAxisSize: Mas.min,
                     children: [
-                      BalanceWithDrawl(),
-                      RecentTransaction()
+                      BalanceWithDrawl(
+                        earning: earn,
+                      ),
+                      const RecentTransaction()
                     ],
                   ),
-                  YourProjectHome(),
-                  AllProjectHome()
+                  projectData.when(
+                    data: (List<ProjectFreelancerModel> projects) {
+                      late List<ProjectFreelancerModel> project =
+                          projects.take(2).toList();
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          YourProjectHome(projects: project),
+                          projectActive.when(
+                            data: (List<ProjectFreelancerModel> active) {
+                              return projectCompleted.when(
+                                data: (List<ProjectFreelancerModel> completed) {
+                                  return AllProjectHome(projects: projects.length, active: active.length, completed: completed.length, rejected: 0,);
+                            }, error: (error, _) {
+                              return LzNoData(message: 'Oops! $error');
+                            }, loading: () {
+                              return LzLoader.bar(message: 'Loading...');
+                            },);
+                            },
+                            error: (error, _) {
+                              return LzNoData(message: 'Oops! $error');
+                            },
+                            loading: () {
+                              return LzLoader.bar(message: 'Loading...');
+                            },
+                          )
+                        ],
+                      );
+                    },
+                    error: (error, _) {
+                      return LzNoData(message: 'Oops! $error');
+                    },
+                    loading: () {
+                      return LzLoader.bar(message: 'Loading...');
+                    },
+                  ),
                 ],
               ).margin(l: 25, r: 25, t: 220),
             ],
-          );
+          )));
         },
         error: (error, _) {
           return LzNoData(message: 'Oops! $error');

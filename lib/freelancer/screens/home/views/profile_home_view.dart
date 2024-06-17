@@ -47,6 +47,7 @@ class ProfileHome extends StatelessWidget {
                 String numberPhone = profileFreelancer.numberPhone ?? '';
                 String summary = profileFreelancer.summary ?? '';
                 String profession = profileFreelancer.profession ?? '';
+                String address = profileFreelancer.address ?? '';
 
                 return Stack(
                   children: [
@@ -182,7 +183,7 @@ class ProfileHome extends StatelessWidget {
                                 Row(
                                   children: [
                                     Icon(Ti.mapPin, color: Colors.white).margin(r: 8),
-                                    Textr('Bali, Indonesia',
+                                    Textr(address,
                                         width: 130,
                                         maxLines: 1,
                                         overflow: Tof.clip,

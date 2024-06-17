@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:homecare_app/freelancer/data/models/setting/project_freelancer_model.dart';
 import 'package:lazyui/lazyui.dart';
 
 import '../../../widgets/color_widget.dart';
 
 class AllProjectHome extends StatelessWidget {
-  const AllProjectHome({super.key});
+  final int? projects;
+  final int? active;
+  final int? completed;
+  final int? rejected;
+
+  const AllProjectHome({super.key, required this.projects, required this.active, this.completed, this.rejected});
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +45,7 @@ class AllProjectHome extends StatelessWidget {
                     style: Gfont.fs18,
                   ).margin(r: 5),
                   Text(
-                    '10',
+                    '$projects',
                     style: Gfont.bold.fsize(16),
                   ),
                 ],
@@ -67,7 +73,7 @@ class AllProjectHome extends StatelessWidget {
                     style: Gfont.color(LzColors.hex('2A1E17')).bold,
                   ),
                   Text(
-                    '02',
+                    '$active',
                     style: Gfont.color(LzColors.hex('2A1E17')),
                   ),
                 ],
@@ -81,11 +87,11 @@ class AllProjectHome extends StatelessWidget {
                     margin: Ei.only(r: 5),
                   ),
                   Text(
-                    'Completed projects : : ',
+                    'Completed projects : ',
                     style: Gfont.color(LzColors.hex('2A1E17')).bold,
                   ),
                   Text(
-                    '07',
+                    '$completed',
                     style: Gfont.color(LzColors.hex('2A1E17')),
                   ),
                 ],
@@ -103,7 +109,7 @@ class AllProjectHome extends StatelessWidget {
                     style: Gfont.color(LzColors.hex('2A1E17')).bold,
                   ),
                   Text(
-                    '07',
+                    '$rejected',
                     style: Gfont.color(LzColors.hex('2A1E17')),
                   ),
                 ],

@@ -25,7 +25,7 @@ class EditProfilChangeNotifier with ChangeNotifier, UseApi {
     forms['last_name']!.controller.text = editModel.lastName ?? '';
     forms['email']!.controller.text = editModel.email ?? '';
     forms['number_phone']!.controller.text = editModel.numberPhone ?? '';
-     forms['earning']!.controller.selection = editModel.earning ?? '';
+    forms['earning']!.controller.text = editModel.earning ?? '';
     forms['summary']!.controller.text = editModel.summary ?? '';
     forms['profession']!.controller.text = editModel.profession ?? '';
     forms['address']!.controller.text = editModel.address ?? '';
@@ -70,7 +70,7 @@ class EditProfilChangeNotifier with ChangeNotifier, UseApi {
         map['portofolio_attachment'] = filePath;
 
         map['_method'] = 'put';
-        ResHandler res = await editProfileApi.updateEditProfile(map, id);
+        ResHandler res = await editProfileApi.updateEditProfile(map);
 
         LzToast.dismiss();
 
@@ -81,7 +81,7 @@ class EditProfilChangeNotifier with ChangeNotifier, UseApi {
           Navigator.pop(context);
         } else {
           forms.reset();
-          LzToast.show('Successfully Edited Contact Category');
+          LzToast.show('Successfully Edited Profile Freelancer');
 
           Navigator.pop(context);
         }

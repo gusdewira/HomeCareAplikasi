@@ -2,15 +2,15 @@ import 'package:fetchly/fetchly.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lazyui/lazyui.dart';
 import '../../data/api/api.dart';
-import '../../data/models/explore/project_freelancer_model.dart';
+import '../../data/models/setting/project_freelancer_model.dart';
 
 class ProjectFreelancerProvider
     extends StateNotifier<AsyncValue<List<ProjectFreelancerModel>>> with UseApi {
   ProjectFreelancerProvider() : super(const AsyncValue.loading()) {
-    getProjectFree();
+    getProjectFreelancer();
     }
 
-  Future<void> getProjectFree() async {
+  Future<void> getProjectFreelancer() async {
   try {
     state = const AsyncValue.loading();
 
@@ -36,5 +36,3 @@ final projectFreelancer =
     StateNotifierProvider.autoDispose<ProjectFreelancerProvider, AsyncValue<List<ProjectFreelancerModel>>>((ref) {
   return ProjectFreelancerProvider();
 });
-
-

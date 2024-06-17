@@ -1,16 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:homecare_app/freelancer/data/models/setting/project_freelancer_model.dart';
 import 'package:lazyui/lazyui.dart';
 
 import '../../../widgets/color_widget.dart';
 
 class YourProjectHome extends StatelessWidget {
-  const YourProjectHome({super.key});
+  final List<ProjectFreelancerModel> projects;
+  const YourProjectHome({super.key, required this.projects});
 
   @override
   Widget build(BuildContext context) {
+
+String formatNumber(double number) {
+    if (number >= 1000000000) {
+      return (number / 1000000000).toStringAsFixed(1) + 'B';
+    } else if (number >= 1000000) {
+      return (number / 1000000).toStringAsFixed(1) + 'M';
+    } else if (number >= 1000) {
+      return (number / 1000).toStringAsFixed(1) + 'k';
+    } else {
+      return number.toStringAsFixed(0);
+    }
+  }
+
     return Container(
       height: 180,
-      width: context.width / 1,
+      width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(20),
@@ -55,46 +70,58 @@ class YourProjectHome extends StatelessWidget {
             height: 2,
             color: Colors.black12,
           ),
-          Container(
-            padding: Ei.only(l: 15, r: 15, t: 15),
-            child: Row(
-              mainAxisAlignment: Maa.spaceBetween,
-              children: [
-                Text(
-                  'Russian Preschool',
-                  style: Gfont.color(LzColors.hex('000000')).bold.fsize(13),
-                ),
-                Text('10/04/2023 - 21/04/2023 ',
-                    style: Gfont.color(LzColors.hex('000000')).fsize(12))
-              ],
-            ),
+          Expanded(
+            child: ListView.builder(
+                itemCount: projects.length,
+                itemBuilder: (contect, index) {
+                  final project = projects[index];
+
+                  String startDate = project.startDate.format('dd/MM/yyyy');
+                  String endDate = project.endDate.format('dd/MM/yyyy');
+
+                  String startSalary = formatNumber(project.startSalary!);
+                  String endSalary = formatNumber(project.endSalary!);
+
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.only(left: 15, right: 15),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              project.title!,
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 13,
+                              ),
+                            ),
+                            Text(
+                              '$startDate - $endDate',
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        alignment: Alignment.topLeft,
+                        margin: const EdgeInsets.only(left: 15, bottom: 15),
+                        child: Text(
+                          'Salary $startSalary - $endSalary',
+                          style: const TextStyle(
+                            fontSize: 13,
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                }),
           ),
-          Textr(
-            'salary 200k-1200k',
-            style: Gfont.fs13,
-            alignment: Alignment.topLeft,
-            margin: Ei.only(l: 15),
-          ),
-          Container(
-            padding: Ei.only(l: 15, r: 15, t: 15),
-            child: Row(
-              mainAxisAlignment: Maa.spaceBetween,
-              children: [
-                Text(
-                  'Russian Preschool',
-                  style: Gfont.color(LzColors.hex('000000')).bold.fsize(13),
-                ),
-                Text('10/04/2023 - 21/04/2023 ',
-                    style: Gfont.color(LzColors.hex('000000')).fsize(12))
-              ],
-            ),
-          ),
-          Textr(
-            'salary 200k-1200k',
-            style: Gfont.fs13,
-            alignment: Alignment.topLeft,
-            margin: Ei.only(l: 15),
-          )
         ],
       ),
     );

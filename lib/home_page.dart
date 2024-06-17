@@ -10,7 +10,7 @@ import 'freelancer/screens/project/views/project_view.dart';
 import 'freelancer/screens/setting/views/setting_view.dart';
 import 'freelancer/screens/support/views/support_view.dart';
 
-
+// Freelancer Page
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
 

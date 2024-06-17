@@ -1,7 +1,7 @@
 import 'dart:io';
-
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lazyui/lazyui.dart' hide MultipartFile;
 import '../../../data/models/setting/qualification_model.dart';
@@ -18,7 +18,6 @@ class AddMoreQualification extends ConsumerWidget {
     final notifier = ref.read(qualificationPostProvider.notifier);
     final forms = notifier.forms;
 
-    // Jangan gunakan ?? null di sini, karena data pasti tidak null
     if (!data.hasNull) {
       forms.fill(data!.toJson());
     }
@@ -163,43 +162,6 @@ class AddMoreQualification extends ConsumerWidget {
                   }
                 },
               ),
-              // ElevatedButton(
-              //   onPressed: () async {
-              //     FilePickerResult? result =
-              //         await FilePicker.platform.pickFiles();
-
-              //     if (result != null) {
-              //       File file = File(result.files.single.path ?? '');
-
-              //       notifier.setFile(file);
-              //     }
-              //   },
-              //   style: ElevatedButton.styleFrom(
-              //     backgroundColor: Colors.white,
-              //   ),
-              //   child: Column(
-              //     mainAxisSize: MainAxisSize.min,
-              //     children: [
-              //       SizedBox(height: 15),
-              //       Icon(
-              //         Ti.fileDownload,
-              //         size: 30,
-              //         color: Colors.black,
-              //       ),
-              //       SizedBox(height: 15),
-              //       Text(
-              //         'Klik disini untuk upload file',
-              //         style: TextStyle(color: Colors.black),
-              //       ),
-              //       SizedBox(height: 15),
-              //       if (notifier.fileAttachment != null)
-              //         Text(
-              //           '${notifier.fileAttachment!}',
-              //           style: TextStyle(color: Colors.black),
-              //         ),
-              //     ],
-              //   ),
-              // ),
             ],
           )
         ],
@@ -209,20 +171,18 @@ class AddMoreQualification extends ConsumerWidget {
         color: color1,
         text: 'Save',
         textColor: Colors.white,
-        onTap: (state) {
-          notifier.qualifiPost(context);
-        },
-        // onTap: (state) async {
-        //   state.submit();
-        //   bool ok = await notifier.postQualif(data?.id);
+        onTap: (state) async {
+          state.submit();
+          bool ok = await notifier.qualifiPost(context);
 
-        //   if (ok && context.mounted) {
-        //     context.pop();
-        //     LzToast.show(data?.id == null
-        //         ? 'Experience has been created.'
-        //         : 'Experience has been updated.');
-        //   }
-        // },
+          if (ok && context.mounted) {
+            context.pop();
+            LzToast.show("Qualification has been created.");
+          }else{
+            state.abort();
+            LzToast.show("Please fill all required fields.");
+          }
+        },
       ).theme1().margin(b: 50),
     );
   }
