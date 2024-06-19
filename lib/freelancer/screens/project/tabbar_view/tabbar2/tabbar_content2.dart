@@ -26,11 +26,14 @@ class Tabbar2 extends ConsumerWidget {
                       itemCount: projectProgreses.length,
                       itemBuilder: (context, index) {
                         final projectProgress = projectProgreses[index];
+                        int id = projectProgress.id!;
                         String title = projectProgress.title!;
                         double startSalary = projectProgress.startSalary!;
                         double endSalary = projectProgress.endSalary!;
                         DateTime startDate = projectProgress.startDate!;
                         DateTime endDate = projectProgress.endDate!;
+                       String client = '${projectProgress.user!['first_name']} ${projectProgress.user!['last_name']}';
+                       DateTime hireDate = projectProgress.createdAt!;
 
                         return Column(
                           children: [
@@ -56,7 +59,7 @@ class Tabbar2 extends ConsumerWidget {
                                   Align(
                                     alignment: Alignment.topRight,
                                     child: Text(
-                                      'Hired date: 12-04-2023',
+                                      'Hired date: ${DateFormat('dd-MM-yyyy').format(hireDate)}',
                                       style: Gfont.color(color1)
                                           .fsize(12)
                                           .bold,
@@ -67,7 +70,7 @@ class Tabbar2 extends ConsumerWidget {
                                               .fsize(15)
                                               .bold)
                                       .margin(b: 5),
-                                  Text('Client : Galang Kangin Software',
+                                  Text('Client : $client',
                                       style: Gfont.color(color1).fsize(12)),
                                   Row(
                                     children: [
@@ -100,8 +103,7 @@ class Tabbar2 extends ConsumerWidget {
                                     children: [
                                       InkTouch(
                                         onTap: () {
-                                          context.push(
-                                              Paths.sendProgressProject);
+                                          context.push(Paths.sendProgressProject);
                                         },
                                         child: Container(
                                           margin: Ei.only(t: 20),
@@ -121,7 +123,7 @@ class Tabbar2 extends ConsumerWidget {
                                       ),
                                       InkTouch(
                                         onTap: () {
-                                          context.push(Paths.historyProgress);
+                                          context.push('${Paths.historyProgress}/$id');
                                         },
                                         child: Container(
                                           margin: Ei.only(t: 20, l: 10),
@@ -143,8 +145,7 @@ class Tabbar2 extends ConsumerWidget {
                                         child: InkTouch(
                                             margin: Ei.only(t: 15, l: 20),
                                             onTap: () {
-                                              context.push(Paths
-                                                  .detailProgressProject);
+                                              context.push('${Paths.detailProjectexplore}/$id');
                                             },
                                             child: Icon(
                                               Ti.infoCircle,

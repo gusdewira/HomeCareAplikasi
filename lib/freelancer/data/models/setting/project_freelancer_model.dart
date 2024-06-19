@@ -11,6 +11,7 @@ class ProjectFreelancerModel {
   double? startSalary;
   double? endSalary;
   DateTime? createdAt;
+  Map<String, dynamic>? user;
 
   ProjectFreelancerModel({
     this.id,
@@ -25,6 +26,7 @@ class ProjectFreelancerModel {
     this.startSalary,
     this.endSalary,
     this.createdAt,
+    this.user
   });
 
   factory ProjectFreelancerModel.fromJson(Map<String, dynamic> json) =>
@@ -43,6 +45,7 @@ class ProjectFreelancerModel {
         startSalary: double.parse(json['start_salary']),
         endSalary: double.parse(json['end_salary']),
         createdAt: DateTime.parse(json['created_at']['raw']),
+        user: json['user']
       );
 
   Map<String, dynamic> toJson() => {
@@ -58,5 +61,6 @@ class ProjectFreelancerModel {
         "start_salary": startSalary,
         "end_salary": endSalary,
         "created_at": createdAt,
+        "user": user
       };
 }

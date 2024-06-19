@@ -83,7 +83,7 @@ final GoRouter router = GoRouter(
       builder: (BuildContext context, GoRouterState state) {
         return const HomePage2();
       },
-    ), 
+    ),
     GoRoute(
       path: Paths.profileHome,
       builder: (BuildContext context, GoRouterState state) {
@@ -174,9 +174,10 @@ final GoRouter router = GoRouter(
         return const DetailProgressProject();
       },
     ),GoRoute(
-      path: Paths.historyProgress,
+      path: '${Paths.historyProgress}/:id',
       builder: (BuildContext context, GoRouterState state) {
-        return const HistoryProgress();
+        final id = state.pathParameters['id'];
+        return HistoryProgress(id: int.parse(id!));
       },
     ),GoRoute(
       path: Paths.detailPastProject,
@@ -197,9 +198,10 @@ final GoRouter router = GoRouter(
       },
     ),
     GoRoute(
-      path: Paths.DetailProjectExplore,
+      path: '${Paths.detailProjectexplore}/:id',
       builder: (BuildContext context, GoRouterState state) {
-        return const DetailProjectExplore();
+      final id = state.pathParameters['id'];
+      return DetailProjectExplore(id: int.parse(id!),);
       },
     ),
 

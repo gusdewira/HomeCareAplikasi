@@ -25,12 +25,14 @@ class Tabbar1 extends ConsumerWidget {
                       itemCount: projectBids.length,
                       itemBuilder: (context, index) {
                         final projectBid = projectBids[index];
+                        int id = projectBid.id!;
                         String title = projectBid.title!;
                         String description = projectBid.description!;
                         double startSalary = projectBid.startSalary!;
                         double endSalary = projectBid.endSalary!;
                         DateTime startDate = projectBid.startDate!;
                         DateTime endDate = projectBid.endDate!;
+                        String address = projectBid.user!['address'];
 
                         return Column(
                           children: [
@@ -76,8 +78,7 @@ class Tabbar1 extends ConsumerWidget {
                                             ),
                                             InkTouch(
                                                 onTap: () {
-                                                  context.push(
-                                                      Paths.detailBidProject);
+                                                  context.push('${Paths.detailProjectexplore}/$id');
                                                 },
                                                 child: Icon(
                                                   Ti.infoCircle,
@@ -125,7 +126,7 @@ class Tabbar1 extends ConsumerWidget {
                                                     color: color1,
                                                   ).margin(r: 5),
                                                   Textr(
-                                                    'Galkasoft',
+                                                    address,
                                                     style: Gfont.color(black)
                                                         .fsize(12),
                                                     width: context.width / 3,

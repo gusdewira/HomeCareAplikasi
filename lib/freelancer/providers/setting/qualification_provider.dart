@@ -74,12 +74,13 @@ class QualificationPostProvider with ChangeNotifier, UseApi {
     try {
       final form = LzForm.validate(forms,
           required: ['*'],
-          singleNotifier: false,
+          singleNotifier: true,
           notifierType: LzFormNotifier.text,
           messages: FormMessages(required: {
             "title": "The title form must be filled in",
             "org_qualification": "The Organitation Qualification form must be filled in",
-            "attachment": "The attachment form must be filled in"
+            "attachment": "The attachment form must be filled in",
+            "date": "The date form must be filled in"
           }));
 
       final payload = form.value;
@@ -88,14 +89,18 @@ class QualificationPostProvider with ChangeNotifier, UseApi {
         LzToast.overlay('Loading...');
 
         if (fileAttachment!.existsSync()) {
-          // File is valid, proceed with the API request
-          payload['attachment'] = await qualificationApi.toFile(fileAttachment!.path);
-        }
+        print('File exists: ${fileAttachment!.path}');
+        payload['attachment'] = await qualificationApi.toFile(fileAttachment!.path);
+        print('Attachment: ${payload['attachment']}');
+      } else {
+        print('File does not exist.');
+        LzToast.show('Attachment file is missing.');
+        return false;
+      }
 
-        print(payload);
-        ResHandler res = await qualificationApi.postQualification(payload);
+      ResHandler res = await qualificationApi.postQualification(payload);
 
-        return true;
+      return res.status;
       }
 
       return false;

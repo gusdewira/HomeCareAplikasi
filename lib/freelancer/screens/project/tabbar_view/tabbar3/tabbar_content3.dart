@@ -32,6 +32,8 @@ class Tabbar3 extends ConsumerWidget {
                         DateTime startDate = projectComplated.startDate!;
                         DateTime endDate = projectComplated.endDate!;
                         String description = projectComplated.description!;
+                        String address = projectComplated.user!['address'];
+                        int id = projectComplated.id!;
 
                         return Column(
                           children: [
@@ -76,8 +78,7 @@ class Tabbar3 extends ConsumerWidget {
                                         ),
                                         InkTouch(
                                             onTap: () {
-                                              context.push(Paths
-                                                  .DetailProjectExplore);
+                                              context.push('${Paths.detailProjectexplore}/$id');
                                             },
                                             child: Icon(
                                               Ti.infoCircle,
@@ -127,7 +128,7 @@ class Tabbar3 extends ConsumerWidget {
                                                 color: color1,
                                               ).margin(r: 5),
                                               Textr(
-                                                'Galkasoft',
+                                                address,
                                                 style: Gfont.color(black)
                                                     .fsize(12),
                                                 width: context.width / 3,

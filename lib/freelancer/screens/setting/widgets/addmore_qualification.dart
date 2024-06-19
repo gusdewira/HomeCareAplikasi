@@ -15,7 +15,7 @@ class AddMoreQualification extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final notifier = ref.read(qualificationPostProvider.notifier);
+    final notifier = ref.watch(qualificationPostProvider.notifier);
     final forms = notifier.forms;
 
     if (!data.hasNull) {

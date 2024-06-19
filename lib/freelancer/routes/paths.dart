@@ -26,7 +26,7 @@ class Paths {
   static const String detailPastProject = '/detail-past-project';
   static const String sendProgressProject = '/see-history-project';
   static const String bidExplore = '/bid-explore';
-  static const String DetailProjectExplore = '/detail-project-explore';
+  static const String detailProjectexplore = '/detail-project-explore';
 
 
 

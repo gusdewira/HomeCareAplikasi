@@ -40,9 +40,9 @@ class MyProfile extends ConsumerWidget {
               data: (ProfileFreelancerModel profileFreelancer) {
                 if (profileFreelancer.id == null) {
                   return const LzNoData(
-                      message:
-                          'There is no data yet, please add data in the add profileFreelancer menu');
+                      message: 'There is no data yet, please add data in the add profileFreelancer menu');
                 }
+                
                 final newdata = profileFreelancer;
                 String firstName = profileFreelancer.firstName ?? '';
                 String lastName = profileFreelancer.lastName ?? '';
@@ -50,6 +50,7 @@ class MyProfile extends ConsumerWidget {
                 String numberPhone = profileFreelancer.numberPhone ?? '';
                 String summary = profileFreelancer.summary ?? '';
                 String profession = profileFreelancer.profession ?? '';
+                String address = profileFreelancer.address ?? '';
 
                 return RefreshIndicator(
                   onRefresh: () async {
@@ -196,7 +197,7 @@ class MyProfile extends ConsumerWidget {
                                         children: [
                                           Icon(Ti.mapPin, color: Colors.white)
                                               .margin(r: 8),
-                                          Textr('Bali, Indonesia',
+                                          Textr(address,
                                               width: 130,
                                               maxLines: 1,
                                               overflow: Tof.clip,

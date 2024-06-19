@@ -19,7 +19,7 @@ class HistoryView extends StatelessWidget {
       begin: Alignment.centerLeft,
       end: Alignment.centerRight,
       colors: [
-        LzColors.hex('11B0E6'), 
+        LzColors.hex('11B0E6'),
         LzColors.hex('3265FF'),
       ],
       stops: const [0.0, 0.6]
@@ -52,7 +52,7 @@ class HistoryView extends StatelessWidget {
                 tabs: [
                   Tab(text: 'Awaiting'),
                   Tab(text: 'Active'),
-                  Tab(text: 'Complated'),
+                  Tab(text: 'Completed'),
                 ],
               ),
             ),

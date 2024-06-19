@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
@@ -102,23 +105,110 @@ class SendProgressProject extends StatelessWidget {
                     labelStyle: LzFormLabelStyle(color: color1),
                     hint: 'Input Title',
                   ).margin(t: 20),
-                  LzForm.input(
-                    label: 'attachment',
-                    labelStyle: LzFormLabelStyle(color: color1),
-                    hint: 'Upload attachment',
-                    suffixIcon: La.upload,
-                  ),
-                  Container(
-                    height: 40,
+                  SizedBox(
+                    height: 70,
                     width: context.width,
-                    margin: Ei.only(t: 20),
-                    decoration: BoxDecoration(
-                        color: LzColors.hex('0047E3'),
-                        borderRadius: BorderRadius.circular(25)),
-                    child: Center(
-                      child: Text(
-                        'Send',
-                        style: Gfont.white.fsize(15),
+                    child: Stack(
+                      children: [
+                        Center(
+                          child: Container(
+                            height: 50,
+                            width: MediaQuery.of(context).size.width,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(color: Colors.black26),
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10),
+                              child: OverflowBox(
+                                alignment: Alignment.topLeft,
+                                maxHeight: double.infinity,
+                                child: Container(
+                                  child: Padding(
+                                    padding: Ei.only(h: 13.0),
+                                    child: Row(
+                                      mainAxisAlignment: Maa.spaceBetween,
+                                      children: [
+                                        if (true)
+                                          Flexible(
+                                            flex: 10,
+                                            child: Textr(
+                                              'Picked file: fdgfdag',
+                                              style: Gfont.black.fsize(7),
+                                              padding: Ei.only(v: 10),
+                                              alignment: Alignment.centerLeft,
+                                            ),
+                                          ),
+                                        Row(
+                                          mainAxisAlignment: Maa.end,
+                                          children: [
+                                            IconButton(
+                                              onPressed: () async {
+                                                FilePickerResult? result =
+                                                    await FilePicker.platform
+                                                        .pickFiles();
+
+                                                if (result != null) {
+                                                  File file = File(result
+                                                          .files.single.path ??
+                                                      '');
+                                                }
+                                              },
+                                              icon: Align(
+                                                alignment:
+                                                    Alignment.centerRight,
+                                                child: Icon(
+                                                  Ti.upload,
+                                                  size: 25,
+                                                  color: Colors.black45,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          left: 15,
+                          top: 0,
+                          child: Textr(
+                            'Attachment',
+                            style: Gfont.color(color1.lighten(0.72))
+                                .bold
+                                .fsize(13),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  LzForm.input(
+                    label: 'Description',
+                    labelStyle: LzFormLabelStyle(color: color1),
+                    hint: 'Input Description',
+                  ),
+                  InkWell(
+                    onTap: () {
+                      print("Hello");
+                    },
+                    borderRadius: BorderRadius.circular(25),
+                    child: Container(
+                      height: 40,
+                      width: context.width,
+                      margin: Ei.only(t: 20),
+                      decoration: BoxDecoration(
+                          color: LzColors.hex('0047E3'),
+                          borderRadius: BorderRadius.circular(25)),
+                      child: Center(
+                        child: Text(
+                          'Send',
+                          style: Gfont.white.fsize(15),
+                        ),
                       ),
                     ),
                   )

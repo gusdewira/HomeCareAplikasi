@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:homecare_app/freelancer/routes/paths.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lazyui/lazyui.dart';
 
@@ -35,6 +37,7 @@ class DataExplore extends ConsumerWidget {
                           double endSalary = projectFreelancer.endSalary!;
                           DateTime startDate = projectFreelancer.startDate!;
                           DateTime endDate = projectFreelancer.endDate!;
+                          int id = projectFreelancer.id!;
 
 
                           return Container(
@@ -75,11 +78,7 @@ class DataExplore extends ConsumerWidget {
                                       ),
                                       InkTouch(
                                           onTap: () {
-                                            Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                          builder: (context) => DetailProjectExplore(projectExplore: projectFreelancer),
-                                        ),
-                                      );
+                                            context.push('${Paths.detailProjectexplore}/$id');
                                           },
                                           child: Icon(
                                             Ti.infoCircle,
