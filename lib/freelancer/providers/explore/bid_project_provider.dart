@@ -7,7 +7,7 @@ import '../../data/api/api.dart';
 class BidProvider with ChangeNotifier, UseApi {
   final forms =   LzForm.make(['offer_amount', 'estimated_duration', 'offer_reason']);
 
-  Future postbid(BuildContext context) async {
+  Future postbid(BuildContext context, int id) async {
     try {
       final form = LzForm.validate(forms,
           required: ['*'],
@@ -24,19 +24,19 @@ class BidProvider with ChangeNotifier, UseApi {
         LzToast.overlay('send an offer');
 
 
-        payload['project_id'] = '1';
+        payload['project_id'] = id;
         ResHandler res = await bidProjectApi.postBidProject(payload);
 
        if (!res.status) {
           forms.reset();
           LzToast.show(res.message);
-      
+
           // ignore: use_build_context_synchronously
           Navigator.pop(context);
         } else {
           forms.reset();
           LzToast.show('Offer successfully sent');
-          
+
           // ignore: use_build_context_synchronously
           Navigator.pop(context);
         }
@@ -49,9 +49,8 @@ class BidProvider with ChangeNotifier, UseApi {
     }
   }
 
-  
+
 }
 
 final bidProvider =
     ChangeNotifierProvider((ref) => BidProvider());
-

@@ -4,6 +4,7 @@ import 'package:homecare_app/freelancer/data/models/setting/project_freelancer_m
 import 'package:homecare_app/freelancer/providers/explore/project_freelancer_provider.dart';
 import 'package:homecare_app/freelancer/routes/paths.dart';
 import 'package:homecare_app/freelancer/screens/explore/content_widget/bid_explore.dart';
+import 'package:homecare_app/freelancer/screens/explore/content_widget/detail_project_explore.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lazyui/lazyui.dart';
 
@@ -402,7 +403,7 @@ class ProjectFreelancerCard extends StatelessWidget {
                 ),
                 InkTouch(
                   onTap: () {
-                    context.push('${Paths.detailProjectexplore}/$id');
+                    context.lzPush(DetailProjectExplore(data: projectFreelancer,));
                   },
                   child: Icon(
                     Ti.infoCircle,

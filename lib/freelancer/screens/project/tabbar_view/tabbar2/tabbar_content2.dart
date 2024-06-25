@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:homecare_app/freelancer/screens/explore/content_widget/detail_project_explore.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lazyui/lazyui.dart';
 
@@ -145,7 +146,7 @@ class Tabbar2 extends ConsumerWidget {
                                         child: InkTouch(
                                             margin: Ei.only(t: 15, l: 20),
                                             onTap: () {
-                                              context.push('${Paths.detailProjectexplore}/$id');
+                                              context.lzPush(DetailProjectExplore(data: projectProgress));
                                             },
                                             child: Icon(
                                               Ti.infoCircle,

@@ -197,13 +197,6 @@ final GoRouter router = GoRouter(
         return const BidExplore();
       },
     ),
-    GoRoute(
-      path: '${Paths.detailProjectexplore}/:id',
-      builder: (BuildContext context, GoRouterState state) {
-      final id = state.pathParameters['id'];
-      return DetailProjectExplore(id: int.parse(id!),);
-      },
-    ),
 
 
 

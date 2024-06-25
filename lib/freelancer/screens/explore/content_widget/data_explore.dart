@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:homecare_app/freelancer/routes/paths.dart';
+import 'package:homecare_app/freelancer/screens/explore/content_widget/detail_project_explore.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lazyui/lazyui.dart';
 
@@ -36,8 +37,6 @@ class DataExplore extends ConsumerWidget {
                           double endSalary = projectFreelancer.endSalary!;
                           DateTime startDate = projectFreelancer.startDate!;
                           DateTime endDate = projectFreelancer.endDate!;
-                          int id = projectFreelancer.id!;
-
 
                           return Container(
                             padding: Ei.only(l: 20, r: 20, t: 10),
@@ -77,7 +76,7 @@ class DataExplore extends ConsumerWidget {
                                       ),
                                       InkTouch(
                                           onTap: () {
-                                            context.push('${Paths.detailProjectexplore}/$id');
+                                            context.lzPush(DetailProjectExplore(data: projectFreelancer,));
                                           },
                                           child: Icon(
                                             Ti.infoCircle,
@@ -87,7 +86,7 @@ class DataExplore extends ConsumerWidget {
                                     ],
                                   ),
                                 ),
-                                Text('posted 1 hours ago', style: Gfont.color(LzColors.hex('747474')).fsize(12),).margin(t: 5, b: 5),
+                                Text('posted 1 hours', style: Gfont.color(LzColors.hex('747474')).fsize(12),).margin(t: 5, b: 5),
                                 SizedBox(
                                     width: context.width,
                                     child: Column(

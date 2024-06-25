@@ -9,23 +9,21 @@ import '../../../widgets/color_widget.dart';
 
 class BidExplore extends ConsumerWidget {
   final ProjectFreelancerModel? data;
-  final ProjectFreelancerModel? data2;
 
-  const BidExplore({Key? key, this.data, this.data2}) : super(key: key);
+  const BidExplore({Key? key, this.data}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final notifier = ref.read(bidProvider.notifier);
     final forms = notifier.forms;
 
-    // Jangan gunakan ?? null di sini, karena data pasti tidak null
     if (!data.hasNull) {
       forms.fill(data!.toJson());
     }
 
     return RefreshIndicator(
     onRefresh: () async {
-      // await ref.read(projectFreelancer.notifier).getProjectFreelancer();
+      await ref.read(projectFreelancer.notifier).getProjectFreelancer();
     },
       child: Scaffold(
         body: Container(
@@ -83,14 +81,14 @@ class BidExplore extends ConsumerWidget {
                     right: 0,
                     child: Center(
                         child: Textr(
-                      'Make an offer',
+                      'Make an offer ${data!.id!}',
                       style: Gfont.white.bold.fsize(18),
                     ))),
                 Column(
                   crossAxisAlignment: Caa.start,
                   children: [
                     Text(
-                      '${data2!.title}',
+                      '${data!.title}',
                       style: Gfont.color(LzColors.hex('000000')).bold,
                     ).margin(b: 15),
                     SizedBox(
@@ -99,11 +97,11 @@ class BidExplore extends ConsumerWidget {
                         mainAxisAlignment: Maa.spaceBetween,
                         children: [
                           Text(
-                            'Start Date: ${DateFormat('dd/MM/yyyy').format(data2!.startDate!)}',
+                            'Start Date: ${DateFormat('dd/MM/yyyy').format(data!.startDate!)}',
                             style: Gfont.fs12.bold,
                           ),
                           Text(
-                            'End date : ${DateFormat('dd/MM/yyyy').format(data2!.endDate!)}',
+                            'End date : ${DateFormat('dd/MM/yyyy').format(data!.endDate!)}',
                             style: Gfont.fs12.bold,
                           )
                         ],
@@ -147,8 +145,9 @@ class BidExplore extends ConsumerWidget {
           textColor: Colors.white,
           text: 'Bid Project',
           onTap: (state) async {
-
-            notifier.postbid(context);
+            notifier.postbid(context, data!.id!);
+            // forms['project_id'] = data!.id as FormModel;
+            print(forms);
           },
         ).theme1().margin(b: 30),
       ),
