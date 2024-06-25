@@ -14,13 +14,12 @@ class ProfileFreelancerProvider extends StateNotifier<AsyncValue<ProfileFreelanc
     try {
       state = const AsyncValue.loading();
       ResHandler res = await profileFreelancerApi.getProfileFreelancer();
-      
+
       if (res.status) {
         state = AsyncValue.data(ProfileFreelancerModel.fromJson(res.data ?? {}));
       } else {
         LzToast.show(res.message);
         state = AsyncValue.error(res.message ?? 'Unknown error occurred', StackTrace.current);
-
       }
     } catch (e, s) {
       print('Error: $e');

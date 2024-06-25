@@ -13,17 +13,8 @@ class LoginView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
 
-    final notifier = ref.read(authProvider.notifier);
+    final notifier = ref.watch(authProvider.notifier);
     final forms = notifier.forms;
-    //freelancer
-    forms.fill({'email': 'freelancer@gmail123.com', 'password': 'freelancer123'});
-
- // Employer
- //  forms.fill({'email': 'emp123@gmail.com', 'password': 'employer1234'});
-
-
-
-
 
     return Scaffold(
         body: LzFormList(
@@ -114,10 +105,20 @@ class LoginView extends ConsumerWidget {
               width: context.width,
               height: 50,
               child: ElevatedButton(
-                onPressed: () {
-                    context.push(Paths.home);
-                    // notifier.login(context);
-                    // context.push(Paths.home);
+                onPressed: () async {
+                  final ok = await notifier.login(context, ref);
+                  print('ok: ${ok["role"]}');
+                  if(ok['status']){
+                    if(ok['role'] == "freelancer"){
+                      context.push(Paths.home);
+                      LzToast.show("Login success as Freelancer");
+                    }else{
+                      context.push(Paths.home2);
+                      LzToast.show("Login success as Freelancer");
+                    }
+                  }else{
+                      LzToast.show("Login Failed!");
+                  }
                 },
                 style: ButtonStyle(
                     backgroundColor: WidgetStateProperty.all<Color>(

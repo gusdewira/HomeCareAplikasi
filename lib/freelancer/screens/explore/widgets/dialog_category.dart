@@ -3,8 +3,18 @@ import 'package:lazyui/lazyui.dart';
 
 import '../../../widgets/color_widget.dart';
 
-class DialogCategory extends StatelessWidget {
+class DialogCategory extends StatefulWidget {
   const DialogCategory({super.key});
+
+  @override
+  State<DialogCategory> createState() => _DialogCategoryState();
+}
+
+class _DialogCategoryState extends State<DialogCategory> {
+  String fromSalary = '';
+  String toSalary = '';
+  String location = '';
+  final List<String> selectedCategories = [];
 
   @override
   Widget build(BuildContext context) {
@@ -53,6 +63,11 @@ class DialogCategory extends StatelessWidget {
                         padding: Ei.only(r: 10),
                         child: LzForm.input(
                           label: 'From',
+                          onChange: (value) {
+                            setState(() {
+                              fromSalary = value;
+                            });
+                          },
                           labelStyle: LzFormLabelStyle(color: color1),
                           hint: 'Salary Range',
                         ).margin(t: 10),
@@ -62,6 +77,11 @@ class DialogCategory extends StatelessWidget {
                         padding: Ei.only(l: 10),
                         child: LzForm.input(
                           label: 'To',
+                          onChange: (value) {
+                            setState(() {
+                              toSalary = value;
+                            });
+                          },
                           labelStyle: LzFormLabelStyle(color: color1),
                           hint: 'Salary Range',
                         ).margin(t: 10),
@@ -72,28 +92,42 @@ class DialogCategory extends StatelessWidget {
                     labelStyle: LzFormLabelStyle(color: color1),
                     activeColor: color1,
                     label: 'Category',
-                    options: List.generate(
-                        8,
-                        (i) => Option(
-                              option: [
-                                'Mobile Development',
-                                'Content Writing',
-                                'Digital Marketing',
-                                'Video Editing',
-                                'UI/UX Design',
-                                'Game Development',
-                                'Data Entry',
-                                'Virtual Assistance'
-                              ][i],
-                            )),
+                    options: [
+                      Option(option: 'Mobile Development', value: 'Mobile Development'),
+                      Option(option: 'Content Writing', value: 'Content Writing'),
+                      Option(option: 'Digital Marketing', value: 'Digital Marketing'),
+                      Option(option: 'Video Editing', value: 'Video Editing'),
+                      Option(option: 'UI/UX Design', value: 'UI/UX Design'),
+                      Option(option: 'Game Development', value: 'Game Development'),
+                      Option(option: 'Data Entry', value: 'Data Entry'),
+                      Option(option: 'Virtual Assistance', value: 'Virtual Assistance'),
+                    ],
+                    onChange: (selectedOptions) {
+                      final value = selectedOptions.value;
+                      final dataExist = selectedCategories.contains(value);
+                      if(!dataExist){
+                        selectedCategories.add(value);
+                      }else{
+                        selectedCategories.remove(value);
+                      }
+                    },
                   ),
                   LzForm.input(
                     label: 'Location',
+                    onChange: (value) {
+                      setState(() {
+                        location = value;
+                      });
+                    },
                     labelStyle: LzFormLabelStyle(color: color1),
                     hint: 'Input Location',
                   ).margin(b: 10),
                   InkTouch(
-                    onTap: () {},
+                    onTap: () {
+                      print('Salary Range: $fromSalary - $toSalary');
+                      print('Categories: $selectedCategories');
+                      print('Location: $location');
+                    },
                     child: Container(
                       height: 50,
                       width: context.width,

@@ -25,7 +25,7 @@ class BidExplore extends ConsumerWidget {
 
     return RefreshIndicator(
     onRefresh: () async {
-      await ref.read(projectFreelancer.notifier).getProjectFreelancer();
+      // await ref.read(projectFreelancer.notifier).getProjectFreelancer();
     },
       child: Scaffold(
         body: Container(

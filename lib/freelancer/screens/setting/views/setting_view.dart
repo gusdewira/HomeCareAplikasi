@@ -36,8 +36,8 @@ class SettingView extends ConsumerWidget {
             String fistName = profile.firstName ?? '';
             String lastName = profile.lastName ?? '';
             String image = profile.photoProfile != null ? profile.photoProfile : 'profile.jpg';
-            
-      
+
+
             return Stack(
               children: [
                 Container(
@@ -61,37 +61,40 @@ class SettingView extends ConsumerWidget {
                     top: 85,
                     left: 0,
                     right: 0,
-                    child: Column(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(50),
-                              border: Border.all(color: Colors.white, width: 4)),
-                          child:
-                               LzImage(image, size: 80, radius: 40),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          '$fistName $lastName',
-                          style: Gfont.color(black).bold,
-                        ),
-                        Container(
-                            margin: Ei.only(t: 5),
-                            padding: Ei.only(l: 10, r: 10, b: 5, t: 5),
+                    bottom: 0,
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          Container(
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                color: LzColors.hex('94BDFF').lighten(0.25)),
-                            child: Text(
-                              email,
-                              style:
-                                  Gfont.color(LzColors.hex('000000')).fsize(12),
-                            )),
-                        Container(
-                            margin: Ei.only(l: 25, r: 25),
-                            child: ListMenuSetting())
-                      ],
+                                borderRadius: BorderRadius.circular(50),
+                                border: Border.all(color: Colors.white, width: 4)),
+                            child:
+                                 LzImage(image, size: 80, radius: 40),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            '$fistName $lastName',
+                            style: Gfont.color(black).bold,
+                          ),
+                          Container(
+                              margin: Ei.only(t: 5),
+                              padding: Ei.only(l: 10, r: 10, b: 5, t: 5),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: LzColors.hex('94BDFF').lighten(0.25)),
+                              child: Text(
+                                email,
+                                style:
+                                    Gfont.color(LzColors.hex('000000')).fsize(12),
+                              )),
+                          Container(
+                              margin: Ei.only(l: 25, r: 25),
+                              child: const ListMenuSetting())
+                        ],
+                      ),
                     )),
               ],
             );

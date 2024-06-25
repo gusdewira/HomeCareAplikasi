@@ -2,10 +2,6 @@ library api;
 
 import 'package:fetchly/fetchly.dart';
 
-
-
-
-
 part 'auth_api.dart';
 part 'todo_api.dart';
 part 'register_api.dart';

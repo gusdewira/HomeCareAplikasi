@@ -8,14 +8,13 @@ import '../../../data/models/setting/project_freelancer_model.dart';
 import '../../../providers/explore/project_freelancer_provider.dart';
 import '../../../widgets/color_widget.dart';
 import 'bid_explore.dart';
-import 'detail_project_explore.dart';
 
 class DataExplore extends ConsumerWidget {
   const DataExplore({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final profileData = ref.watch(projectFreelancer);
+    final project = ref.watch(projectFreelancer);
 
     return RefreshIndicator(
       onRefresh: ()async{
@@ -24,7 +23,7 @@ class DataExplore extends ConsumerWidget {
       child: Column(
         children: [
           Expanded(
-            child: profileData.when(
+            child: project.when(
               data: (List<ProjectFreelancerModel> projectFreelancers) {
                 return projectFreelancers.isNotEmpty
                     ? ListView.builder(
@@ -95,7 +94,7 @@ class DataExplore extends ConsumerWidget {
                                       children: [
                                         Row(
                                           children: [
-                                            Icon(
+                                            const Icon(
                                               Ti.coin,
                                               color: Colors.green,
                                             ).margin(r: 5),
@@ -109,7 +108,7 @@ class DataExplore extends ConsumerWidget {
                                         ),
                                         Row(
                                           children: [
-                                            Icon(
+                                            const Icon(
                                               Ti.clock,
                                               color: Colors.red,
                                             ).margin(r: 5),
@@ -185,7 +184,7 @@ class DataExplore extends ConsumerWidget {
                             'There is no data yet, please add data in the add profileFreelancers menu');
               },
               error: (error, _) {
-                ref.read(projectFreelancer.notifier).getProjectFreelancer();
+                // ref.read(projectFreelancer.notifier).getProjectFreelancer();
                 return LzNoData(message: 'Oops! $error');
               },
               loading: () {

@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
 class SearchExplore extends StatelessWidget {
-  const SearchExplore({super.key});
+  final ValueChanged<String>? onChanged;
+
+  const SearchExplore({super.key, required this.onChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -24,8 +26,9 @@ class SearchExplore extends StatelessWidget {
                 margin: Ei.only(l: 20),
               ),
               Expanded(
-                child: const TextField(
-                  decoration: InputDecoration(
+                child: TextField(
+                  onChanged: onChanged,
+                  decoration: const InputDecoration(
                     hintText: 'Search',
                     border: InputBorder.none,
                   ),
