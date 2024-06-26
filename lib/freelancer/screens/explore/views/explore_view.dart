@@ -1,17 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:homecare_app/freelancer/data/models/setting/project_freelancer_model.dart';
 import 'package:homecare_app/freelancer/providers/explore/project_freelancer_provider.dart';
-import 'package:homecare_app/freelancer/routes/paths.dart';
 import 'package:homecare_app/freelancer/screens/explore/content_widget/bid_explore.dart';
 import 'package:homecare_app/freelancer/screens/explore/content_widget/detail_project_explore.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lazyui/lazyui.dart';
 
 import '../../../widgets/color_widget.dart';
-import '../content_widget/data_explore.dart';
-import '../widgets/dialog_category.dart';
-import '../widgets/search_widget_explore.dart';
 
 class ExploreView extends ConsumerStatefulWidget {
   const ExploreView({super.key});
@@ -362,7 +357,6 @@ class ProjectFreelancerCard extends StatelessWidget {
     final endSalary = projectFreelancer.endSalary ?? 0.0;
     final startDate = projectFreelancer.startDate ?? DateTime.now();
     final endDate = projectFreelancer.endDate ?? DateTime.now();
-    final id = projectFreelancer.id ?? 0;
 
     return Container(
       padding: Ei.only(l: 20, r: 20, t: 10),

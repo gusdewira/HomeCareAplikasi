@@ -4,7 +4,11 @@ import 'package:lazyui/lazyui.dart';
 import '../../../../freelancer/widgets/color_widget.dart';
 
 class AllProjectEmployer extends StatelessWidget {
-  const AllProjectEmployer({super.key});
+  final int? projects;
+  final int? active;
+  final int? completed;
+  final int? rejected;
+  const AllProjectEmployer({super.key, this.projects, this.active, this.completed, this.rejected});
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +43,7 @@ class AllProjectEmployer extends StatelessWidget {
                     style: Gfont.fs18,
                   ).margin(r: 5),
                   Text(
-                    '10',
+                    '$projects',
                     style: Gfont.bold.fsize(16),
                   ),
                 ],
@@ -67,7 +71,7 @@ class AllProjectEmployer extends StatelessWidget {
                     style: Gfont.color(LzColors.hex('2A1E17')).bold,
                   ),
                   Text(
-                    '02',
+                    '$active',
                     style: Gfont.color(LzColors.hex('2A1E17')),
                   ),
                 ],
@@ -81,11 +85,11 @@ class AllProjectEmployer extends StatelessWidget {
                     margin: Ei.only(r: 5),
                   ),
                   Text(
-                    'Completed projects : : ',
+                    'Completed projects : ',
                     style: Gfont.color(LzColors.hex('2A1E17')).bold,
                   ),
                   Text(
-                    '07',
+                    '$completed',
                     style: Gfont.color(LzColors.hex('2A1E17')),
                   ),
                 ],
@@ -103,7 +107,7 @@ class AllProjectEmployer extends StatelessWidget {
                     style: Gfont.color(LzColors.hex('2A1E17')).bold,
                   ),
                   Text(
-                    '07',
+                    '$rejected',
                     style: Gfont.color(LzColors.hex('2A1E17')),
                   ),
                 ],

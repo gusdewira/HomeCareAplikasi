@@ -13,16 +13,16 @@ import 'freelancer/providers/app_provider.dart';
 
 
 class HomePage2 extends ConsumerWidget {
-  const HomePage2({super.key});
+   const HomePage2({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    List<Widget> pages = const [
-      ExploreEmployerView(),
-      ProjectEmployerView(),
-      HomeEmployerView(),
-      SupportEmployerView(),
-      SettingEmployerView(),
+    final List<Widget> pages =  [
+      ExploreView(),
+      const ProjectEmployerView(),
+      const HomeEmployerView(),
+      const SupportEmployerView(),
+      const SettingEmployerView(),
     ];
     Utils.setSystemUI(
         navBarColor: Colors.white, navBarIconColor: Brightness.dark);

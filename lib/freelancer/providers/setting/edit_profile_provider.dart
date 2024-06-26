@@ -65,7 +65,7 @@ class EditProfilChangeNotifier with ChangeNotifier, UseApi {
 
       if (validate.ok) {
         final map = forms.toMap();
-        LzToast.overlay('Editing Categories...');
+        LzToast.overlay('Editing profile...');
 
         map['portofolio_attachment'] = filePath;
 

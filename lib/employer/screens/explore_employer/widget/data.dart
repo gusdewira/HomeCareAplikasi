@@ -1,13 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:homecare_app/employer/data/models/project_model.dart';
 import 'package:homecare_app/freelancer/routes/paths.dart';
 import 'package:lazyui/lazyui.dart';
 
 class DataExploreFreelancer extends StatelessWidget {
-  const DataExploreFreelancer({super.key});
+  final ProjectEmployerModel projectEmployee;
+  const DataExploreFreelancer({super.key, required this.projectEmployee});
 
   @override
   Widget build(BuildContext context) {
+    String formatNumber(double number) {
+    if (number >= 1000000000) {
+      return '${(number / 1000000000).toStringAsFixed(1)}B';
+    } else if (number >= 1000000) {
+      return '${(number / 1000000).toStringAsFixed(1)}M';
+    } else if (number >= 1000) {
+      return '${(number / 1000).toStringAsFixed(1)}k';
+    } else {
+      return number.toStringAsFixed(0);
+    }}
+
+    final name = '${projectEmployee.user!["first_name"]!} ${projectEmployee.user!["last_name"]!}';
+
     return InkTouch(
       onTap: () {
         context.push(Paths.profileFreelancerEx);
@@ -49,11 +64,11 @@ class DataExploreFreelancer extends StatelessWidget {
                       children: [
                         Column(
                           children: [
-                            Textr('Ayu Istri',
+                            Textr(name,
                                 width: 150,
                                 overflow: Tof.ellipsis,
                                 style: Gfont.color(LzColors.hex('001380'))),
-                            Textr('Web Development',
+                            Textr('${projectEmployee.user!['profession'] ?? "Employer"}',
                                 overflow: Tof.ellipsis,
                                 width: 150,
                                 style: Gfont.color(LzColors.hex('B9B9B9'))),
@@ -61,7 +76,7 @@ class DataExploreFreelancer extends StatelessWidget {
                         ),
                         Column(
                           children: [
-                            Textr('500k - 100k ',
+                            Textr('${formatNumber(projectEmployee.startSalary!)} ${formatNumber(projectEmployee.endSalary!)}',
                                 overflow: Tof.ellipsis,
                                 width: 100,
                                 style: Gfont.color(LzColors.hex('001380'))),
@@ -77,7 +92,7 @@ class DataExploreFreelancer extends StatelessWidget {
                                       color: LzColors.hex('001380'),
                                       size: 15,
                                     ),
-                                    Text('Tabanan',
+                                    Text(projectEmployee.user!['address'],
                                         overflow: Tof.ellipsis,
                                         style:
                                             Gfont.color(LzColors.hex('001380'))),
@@ -96,7 +111,7 @@ class DataExploreFreelancer extends StatelessWidget {
             Textr(
               margin: Ei.only(t: 10),
               maxLines: 4,
-              'I am an enthusiastic and creative individual with a background in technology and web development. My expertise spans front-end development using HTML',
+              projectEmployee.description!,
               style: Gfont.color(LzColors.hex('747474')).fsize(14),
             ),
             SizedBox(
@@ -106,7 +121,7 @@ class DataExploreFreelancer extends StatelessWidget {
                 children: [
                   InkTouch(
                     onTap: () {
-                      
+
                     },
                     child: Container(
                       margin: Ei.only(r: 10),
