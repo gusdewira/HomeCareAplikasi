@@ -1,12 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:homecare_app/employer/data/models/project_model.dart';
 import 'package:homecare_app/employer/screens/project_employer/widget/data_see_request.dart';
 import 'package:lazyui/lazyui.dart';
 
 class SeeRequestEmployer extends StatelessWidget {
-  const SeeRequestEmployer({super.key});
+  final ProjectEmployerModel project;
+  const SeeRequestEmployer({super.key, required this.project});
 
   @override
   Widget build(BuildContext context) {
+    String formatNumber(double number) {
+    if (number >= 1000000000) {
+      return '${(number / 1000000000).toStringAsFixed(1)}B';
+    } else if (number >= 1000000) {
+      return '${(number / 1000000).toStringAsFixed(1)}M';
+    } else if (number >= 1000) {
+      return '${(number / 1000).toStringAsFixed(1)}k';
+    } else {
+      return number.toStringAsFixed(0);
+    }}
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -70,7 +82,7 @@ class SeeRequestEmployer extends StatelessWidget {
                 Container(
                   width: context.width,
                   child: Text(
-                    'EcoSolutions Waste Management Pilot',
+                    project.title!,
                     maxLines: 1,
                     overflow: Tof.ellipsis,
                     style: Gfont.color(LzColors.hex('001380')).fsize(18),
@@ -89,7 +101,7 @@ class SeeRequestEmployer extends StatelessWidget {
                           ),
                           Textr(
                             margin: Ei.only(r: 10),
-                            '4000k - 6000k',
+                            '${formatNumber(project.startSalary!)} - ${formatNumber(project.endSalary!)}',
                             style: Gfont.color(LzColors.hex('001380')),
                           ),
                         ],
@@ -107,7 +119,7 @@ class SeeRequestEmployer extends StatelessWidget {
                           Textr(
                             maxLines: 1,
                             overflow: Tof.ellipsis,
-                            '20/04/2023 - 20/05/2023',
+                            "${project.startDate!.format('yy/MM/dd')} - ${project.endDate!.format('yy/MM/dd')}",
                           ),
                         ],
                       ),
@@ -121,7 +133,7 @@ class SeeRequestEmployer extends StatelessWidget {
                     Textr(
                       alignment: Alignment.centerRight,
                       margin: Ei.only(r: 10),
-                      'Denpasar',
+                      project.user!['location'] ?? 'Denpasar',
                       style: Gfont.color(LzColors.hex('001380')),
                     ),
                   ],
@@ -130,13 +142,13 @@ class SeeRequestEmployer extends StatelessWidget {
                   margin: Ei.only(t: 10),
                   maxLines: 3,
                   overflow: Tof.ellipsis,
-                  'The EcoSolutions Waste Management Pilot aims to implement an innovative waste management system that emphasizes ',
+                  project.description!,
                 ),
                 Textr(
                   margin: Ei.only(t: 30),
                   maxLines: 3,
                   overflow: Tof.ellipsis,
-                  'Request Bid (2)',
+                  'Request Bid (${project.offer})',
                   style: Gfont.bold,
                 ),
                 Container(

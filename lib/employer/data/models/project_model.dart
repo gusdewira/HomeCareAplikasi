@@ -12,6 +12,7 @@ class ProjectEmployerModel {
   double? endSalary;
   DateTime? createdAt;
   Map<String, dynamic>? user;
+  List<Map<String, dynamic>>? offer;
 
   ProjectEmployerModel({
     this.id,
@@ -26,7 +27,8 @@ class ProjectEmployerModel {
     this.startSalary,
     this.endSalary,
     this.createdAt,
-    this.user
+    this.user,
+    this.offer
   });
 
   factory ProjectEmployerModel.fromJson(Map<String, dynamic> json) =>
@@ -45,7 +47,8 @@ class ProjectEmployerModel {
         startSalary: double.parse(json['start_salary']),
         endSalary: double.parse(json['end_salary']),
         createdAt: DateTime.parse(json['created_at']['raw']),
-        user: json['user']
+        user: json['user'],
+        offer: json['offer']
       );
 
   Map<String, dynamic> toJson() => {
@@ -61,6 +64,7 @@ class ProjectEmployerModel {
         "start_salary": startSalary,
         "end_salary": endSalary,
         "created_at": createdAt,
-        "user": user
+        "user": user,
+        "offer": offer,
       };
 }
