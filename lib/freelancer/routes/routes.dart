@@ -247,12 +247,6 @@ final GoRouter router = GoRouter(
       },
     ),
     GoRoute(
-      path: Paths.infoRequestBid,
-      builder: (BuildContext context, GoRouterState state) {
-        return const InfoRequestBid();
-      },
-    ),
-    GoRoute(
       path: Paths.seeHistoryProgressEmployer,
       builder: (BuildContext context, GoRouterState state) {
         return const SeeHistoryProgressEmployer();

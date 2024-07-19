@@ -148,7 +148,7 @@ class SeeRequestEmployer extends StatelessWidget {
                   margin: Ei.only(t: 30),
                   maxLines: 3,
                   overflow: Tof.ellipsis,
-                  'Request Bid (${project.offer})',
+                  'Request Bid (${project.offer!.length})',
                   style: Gfont.bold,
                 ),
                 Container(
@@ -158,14 +158,11 @@ class SeeRequestEmployer extends StatelessWidget {
                   color: Colors.black,
                 ),
                 Expanded(
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        DataSeeRequest(),
-                        DataSeeRequest(),
-                      ],
-                    ),
-                  ),
+                  child: ListView.builder(
+                    itemCount: project.offer!.length,
+                    itemBuilder: (context, index){
+                    return DataSeeRequest(bid: project.offer![index],);
+                  })
                 ),
               ],
             ),

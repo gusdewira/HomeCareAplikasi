@@ -1,13 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:homecare_app/employer/screens/project_employer/widget/info_request_bid.dart';
 import 'package:homecare_app/freelancer/routes/paths.dart';
 import 'package:lazyui/lazyui.dart';
 
 class DataSeeRequest extends StatelessWidget {
-  const DataSeeRequest({super.key});
+  final Map bid;
+  const DataSeeRequest({super.key, required this.bid});
 
   @override
   Widget build(BuildContext context) {
+    String formatNumber(double number) {
+    if (number >= 1000000000) {
+      return '${(number / 1000000000).toStringAsFixed(1)}B';
+    } else if (number >= 1000000) {
+      return '${(number / 1000000).toStringAsFixed(1)}M';
+    } else if (number >= 1000) {
+      return '${(number / 1000).toStringAsFixed(1)}k';
+    } else {
+      return number.toStringAsFixed(0);
+    }}
+
+    DateTime offerDate = DateTime.parse(bid['offer_date']);
     return Container(
       padding: Ei.only(l: 20, r: 20, t: 10),
       margin: Ei.only(b: 20, t: 20),
@@ -45,11 +59,11 @@ class DataSeeRequest extends StatelessWidget {
                     children: [
                       Column(
                         children: [
-                          Textr('Ayu Istri',
+                          Textr('${bid["user"]["first_name"]} ${bid["user"]["last_name"]}',
                               width: 150,
                               overflow: Tof.ellipsis,
                               style: Gfont.color(LzColors.hex('001380'))),
-                          Textr('Web Development',
+                          Textr(bid["user"]["profession"] ?? '',
                               overflow: Tof.ellipsis,
                               width: 150,
                               style: Gfont.color(LzColors.hex('B9B9B9'))),
@@ -57,7 +71,7 @@ class DataSeeRequest extends StatelessWidget {
                       ),
                       Column(
                         children: [
-                          Textr('24/08/23 - 24/08/24',
+                          Textr(offerDate.format('yy/MM/dd'),
                               overflow: Tof.ellipsis,
                               width: 100,
                               style: Gfont.color(LzColors.hex('001380'))),
@@ -77,7 +91,7 @@ class DataSeeRequest extends StatelessWidget {
                       width: 150,
                       overflow: Tof.ellipsis,
                       style: Gfont.color(LzColors.hex('001380'))),
-                  Textr('4000k - 6000k',
+                  Textr(formatNumber(double.parse(bid["offer_amount"])),
                       overflow: Tof.ellipsis,
                       width: 150,
                       style: Gfont.color(LzColors.hex('B9B9B9'))),
@@ -93,7 +107,7 @@ class DataSeeRequest extends StatelessWidget {
                       color: LzColors.hex('001380'),
                       size: 15,
                     ),
-                    Text('Tabanan',
+                    Text(bid['user']['address'],
                         overflow: Tof.ellipsis,
                         style: Gfont.color(LzColors.hex('001380'))),
                   ],
@@ -104,7 +118,7 @@ class DataSeeRequest extends StatelessWidget {
           Textr(
             margin: Ei.only(t: 10),
             maxLines: 4,
-            'I am an enthusiastic and creative individual with a background in technology and web development. My expertise spans front-end development using HTML',
+            bid['user']['summary'] ?? '',
             style: Gfont.color(LzColors.hex('747474')).fsize(14),
           ),
           SizedBox(
@@ -157,7 +171,7 @@ class DataSeeRequest extends StatelessWidget {
                 Spacer(),
                 InkTouch(
                   onTap: () {
-                    context.push(Paths.infoRequestBid);
+                    context.lzPush(InfoRequestBid(bid: bid,));
                   },
                   child: Icon(
                     Ti.infoCircle,

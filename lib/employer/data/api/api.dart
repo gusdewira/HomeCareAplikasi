@@ -4,6 +4,7 @@ part 'project_completed_api.dart';
 part 'project_api.dart';
 part 'profile_api.dart';
 part 'project_active_api.dart';
+part 'reviews_api.dart';
 
 mixin UseApi1 {
   ProfileEmployeeApi profileEmployeeApi = ProfileEmployeeApi();

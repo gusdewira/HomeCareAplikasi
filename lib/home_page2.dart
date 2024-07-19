@@ -17,8 +17,8 @@ class HomePage2 extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final List<Widget> pages =  [
-      ExploreView(),
+    final List<Widget> pages = [
+      const ExploreView(),
       const ProjectEmployerView(),
       const HomeEmployerView(),
       const SupportEmployerView(),
@@ -38,6 +38,7 @@ class HomePage2 extends ConsumerWidget {
                   duration: 250.ms,
                   opacity: isActive ? 1 : 0,
                   child: Navigator(
+                    key: ValueKey<int>(index),
                     onGenerateRoute: (RouteSettings settings) {
                       return MaterialPageRoute(
                         builder: (_) => pages[index],

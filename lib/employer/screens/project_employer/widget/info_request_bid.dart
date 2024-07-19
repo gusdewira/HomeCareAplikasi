@@ -2,17 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
 class InfoRequestBid extends StatelessWidget {
-  const InfoRequestBid({super.key});
+  final Map bid;
+  const InfoRequestBid({super.key, required this.bid});
 
   @override
   Widget build(BuildContext context) {
+    String formatNumber(double number) {
+    if (number >= 1000000000) {
+      return '${(number / 1000000000).toStringAsFixed(1)}B';
+    } else if (number >= 1000000) {
+      return '${(number / 1000000).toStringAsFixed(1)}M';
+    } else if (number >= 1000) {
+      return '${(number / 1000).toStringAsFixed(1)}k';
+    } else {
+      return number.toStringAsFixed(0);
+    }}
+    DateTime offerDate = DateTime.parse(bid['offer_date']);
+    print(bid);
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
             Navigator.of(context).pop();
           },
-          icon: Icon(
+          icon: const Icon(
             Icons.arrow_back,
             color: Colors.black,
           ),
@@ -48,13 +61,13 @@ class InfoRequestBid extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Textr(
-                              'Ayu Istri',
+                              '${bid["user"]["first_name"]} ${bid["user"]["last_name"]}',
                               width: 150,
                               overflow: Tof.ellipsis,
                               style: Gfont.color(LzColors.hex('001380')),
                             ),
                             Textr(
-                              'Web Development',
+                              bid["user"]["profession"],
                               overflow: Tof.ellipsis,
                               width: 150,
                               style: Gfont.grey,
@@ -70,7 +83,7 @@ class InfoRequestBid extends StatelessWidget {
             Container(
               margin: Ei.only(l: 60), // 50 (image size) + 10 (margin)
               child: Text(
-                '20 April 2024',
+                DateFormat('dd MMMM yyyy').format(offerDate),
                 style: Gfont.black.bold.fsize(12),
               ),
             ),
@@ -89,7 +102,7 @@ class InfoRequestBid extends StatelessWidget {
                   style: Gfont.color(LzColors.hex('001380')),
                 ),
                 Text(
-                  '500k',
+                  formatNumber(double.parse(bid["offer_amount"])),
                   style: Gfont.color(LzColors.hex('595959')),
                 )
               ],
@@ -103,7 +116,7 @@ class InfoRequestBid extends StatelessWidget {
                   style: Gfont.color(LzColors.hex('001380')),
                 ),
                 Text(
-                  'The redesign is crucial to maintaining a modern and user-friendly online presence. It will improve brand perception, attract new users, and better serve our existing audience. This project aligns with our strategic goals of staying ahead in the digital landscape. ',
+                  bid['offer_reason'],
                   style: Gfont.color(LzColors.hex('595959')),
                 )
               ],
@@ -117,7 +130,7 @@ class InfoRequestBid extends StatelessWidget {
                   style: Gfont.color(LzColors.hex('001380')),
                 ),
                 Text(
-                  '2 months',
+                  '${bid["estimated_duration"]} months',
                   style: Gfont.color(LzColors.hex('595959')),
                 )
               ],
@@ -139,7 +152,7 @@ class InfoRequestBid extends StatelessWidget {
                     style: Gfont.color(LzColors.hex('ffffff')).fsize(12),
                   ),
                 ),
-                Spacer(),
+                const Spacer(),
                 Container(
                   height: 30,
                   width: 100,

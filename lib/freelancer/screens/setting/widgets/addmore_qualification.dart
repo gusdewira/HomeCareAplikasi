@@ -77,52 +77,50 @@ class AddMoreQualification extends ConsumerWidget {
                           child: OverflowBox(
                             alignment: Alignment.topLeft,
                             maxHeight: double.infinity,
-                            child: Container(
-                              child: Padding(
-                                padding: Ei.only(h: 13.0),
-                                child: Row(
-                                  mainAxisAlignment: Maa.spaceBetween,
-                                  children: [
-                                    if (notifier.fileAttachment != null)
-                                      Flexible(
-                                        flex: 10,
-                                        child: Textr(
-                                          'Picked file: ${notifier.fileAttachment!}',
-                                          style: Gfont.black.fsize(7),
-                                          padding: Ei.only(v: 10),
-                                          alignment: Alignment.centerLeft,
-                                        ),
+                            child: Padding(
+                              padding: Ei.only(h: 13.0),
+                              child: Row(
+                                mainAxisAlignment: Maa.spaceBetween,
+                                children: [
+                                  if (notifier.fileAttachment != null)
+                                    Flexible(
+                                      flex: 10,
+                                      child: Textr(
+                                        'Picked file: ${notifier.fileAttachment!}',
+                                        style: Gfont.black.fsize(7),
+                                        padding: Ei.only(v: 10),
+                                        alignment: Alignment.centerLeft,
                                       ),
-                                    Row(
-                                      mainAxisAlignment: Maa.end,
-                                      children: [
-                                        IconButton(
-                                          onPressed: () async {
-                                            FilePickerResult? result =
-                                                await FilePicker.platform
-                                                    .pickFiles();
+                                    ),
+                                  Row(
+                                    mainAxisAlignment: Maa.end,
+                                    children: [
+                                      IconButton(
+                                        onPressed: () async {
+                                          FilePickerResult? result =
+                                              await FilePicker.platform
+                                                  .pickFiles();
 
-                                            if (result != null) {
-                                              File file = File(
-                                                  result.files.single.path ??
-                                                      '');
+                                          if (result != null) {
+                                            File file = File(
+                                                result.files.single.path ??
+                                                    '');
 
-                                              notifier.setFile(file);
-                                            }
-                                          },
-                                          icon: Align(
-                                            alignment: Alignment.centerRight,
-                                            child: Icon(
-                                              Ti.upload,
-                                              size: 25,
-                                              color: Colors.black45,
-                                            ),
+                                            notifier.setFile(file);
+                                          }
+                                        },
+                                        icon: Align(
+                                          alignment: Alignment.centerRight,
+                                          child: Icon(
+                                            Ti.upload,
+                                            size: 25,
+                                            color: Colors.black45,
                                           ),
                                         ),
-                                      ],
-                                    )
-                                  ],
-                                ),
+                                      ),
+                                    ],
+                                  )
+                                ],
                               ),
                             ),
                           ),

@@ -26,7 +26,6 @@ class ProfileEmployeeProvider extends StateNotifier<AsyncValue<ProfileEmployerMo
         state = AsyncValue.error(res.message ?? 'Unknown error occurred', StackTrace.current);
       }
     } catch (e, s) {
-      print('Error: $e');
       Errors.check(e, s);
       state = AsyncValue.error(e, s);
     }

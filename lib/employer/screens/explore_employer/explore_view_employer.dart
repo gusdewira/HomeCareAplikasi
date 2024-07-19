@@ -257,11 +257,11 @@ class ExploreEmployerView extends ConsumerState<ExploreView> {
                                               };
 
 print(query);
-                                              ref
-                                                  .read(projectProvider
-                                                      .notifier)
-                                                  .getProjectEmployerQuery(
-                                                      query);
+                                              // ref
+                                              //     .read(projectProvider
+                                              //         .notifier)
+                                              //     .getProjectEmployerQuery(
+                                              //         query);
                                             },
                                             child: Container(
                                               height: 50,

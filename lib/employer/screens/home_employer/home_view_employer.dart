@@ -158,29 +158,39 @@ class HomeEmployerView extends ConsumerWidget {
                           data: (List<ProjectEmployerModel> projectEmployee) {
                             late List<ProjectEmployerModel> project =
                                 projectEmployee.take(2).toList();
-
                             return Column(
                               children: [
                                 YourProjectEmployer(projects: project)
                                     .margin(t: 20, b: 20),
                                 projectActive.when(
-                            data: (List<ProjectEmployerModel> active) {
-                              return projectCompleted.when(
-                                data: (List<ProjectEmployerModel> completed) {
-                                  return AllProjectEmployer(projects: projectEmployee.length, active: active.length, completed: completed.length, rejected: 0,);
-                            }, error: (error, _) {
-                              return LzNoData(message: 'Oops! $error');
-                            }, loading: () {
-                              return LzLoader.bar(message: 'Loading...');
-                            },);
-                            },
-                            error: (error, _) {
-                              return LzNoData(message: 'Oops! $error');
-                            },
-                            loading: () {
-                              return LzLoader.bar(message: 'Loading...');
-                            },
-                          )
+                                  data: (List<ProjectEmployerModel> active) {
+                                    return projectCompleted.when(
+                                      data: (List<ProjectEmployerModel>
+                                          completed) {
+                                        return AllProjectEmployer(
+                                          projects: projectEmployee.length,
+                                          active: active.length,
+                                          completed: completed.length,
+                                          rejected: 0,
+                                        );
+                                      },
+                                      error: (error, _) {
+                                        return LzNoData(
+                                            message: 'Oops! $error');
+                                      },
+                                      loading: () {
+                                        return LzLoader.bar(
+                                            message: 'Loading...');
+                                      },
+                                    );
+                                  },
+                                  error: (error, _) {
+                                    return LzNoData(message: 'Oops! $error');
+                                  },
+                                  loading: () {
+                                    return LzLoader.bar(message: 'Loading...');
+                                  },
+                                )
                               ],
                             );
                           },
@@ -188,7 +198,7 @@ class HomeEmployerView extends ConsumerWidget {
                             return LzNoData(message: 'Oops! $error');
                           },
                           loading: () {
-                            return LzLoader.bar(message: 'Loading...');
+                            return LzLoader.bar(message: 'Loading Projects...');
                           },
                         )
                       ],
