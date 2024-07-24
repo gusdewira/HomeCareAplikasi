@@ -213,13 +213,7 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: Paths.profileFreelancerEx,
       builder: (BuildContext context, GoRouterState state) {
-        return const ProfileFreelancerEx();
-      },
-    ),
-    GoRoute(
-      path: Paths.editProfileEmployer,
-      builder: (BuildContext context, GoRouterState state) {
-        return const EditProfileEmployer();
+        return ProfileFreelancerEx();
       },
     ),
     GoRoute(

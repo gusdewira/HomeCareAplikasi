@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:homecare_app/employer/data/models/project_model.dart';
-import 'package:homecare_app/employer/providers/project_provider.dart';
+import 'package:homecare_app/employer/providers/freelancer_provider.dart';
 import 'package:homecare_app/employer/screens/explore_employer/widget/category.dart';
 import 'package:homecare_app/employer/screens/explore_employer/widget/data.dart';
 import 'package:homecare_app/employer/screens/explore_employer/widget/search_freelancer.dart';
+import 'package:homecare_app/freelancer/data/models/setting/profile_freelancer_model.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lazyui/lazyui.dart';
 
 import '../../../freelancer/widgets/color_widget.dart';
 
 class ExploreView extends ConsumerStatefulWidget {
-   const ExploreView({super.key});
+  const ExploreView({super.key});
 
   @override
   ConsumerState<ExploreView> createState() => ExploreEmployerView();
@@ -26,7 +27,8 @@ class ExploreEmployerView extends ConsumerState<ExploreView> {
 
   @override
   Widget build(BuildContext context) {
-    var project = ref.watch(projectProvider);
+    var profiles = ref.watch(freelancerProvider);
+    print(profiles);
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -58,16 +60,15 @@ class ExploreEmployerView extends ConsumerState<ExploreView> {
                 child: Column(
                   children: [
                     Expanded(
-                      child: project.when(
-                        data:
-                            (List<ProjectEmployerModel> projectEmployeers) {
-                          final projectEmployee =
-                              projectEmployeers.where((project) {
-                            return project.title!.toLowerCase().contains(
-                                    _searchQuery.text.toLowerCase()) ||
-                                project.description!
+                      child: profiles.when(
+                        data: (List<ProfileFreelancerModel> profile) {
+                          final projectEmployee = profile.where((freelancer) {
+                            return "${freelancer.firstName} ${freelancer.lastName}"
                                     .toLowerCase()
-                                    .contains(_searchQuery.text.toLowerCase());
+                                    .contains(_searchQuery.text.toLowerCase()) ||
+                                (freelancer.summary?.toLowerCase().contains(
+                                        _searchQuery.text.toLowerCase()) ??
+                                    false);
                           }).toList();
                           return projectEmployee.isNotEmpty
                               ? ListView.builder(
@@ -75,9 +76,7 @@ class ExploreEmployerView extends ConsumerState<ExploreView> {
                                   itemBuilder: (context, index) {
                                     final projectEmployeer =
                                         projectEmployee[index];
-                                    return DataExploreFreelancer(
-                                      projectEmployee: projectEmployeer,
-                                    );
+                                    return DataExploreFreelancer(projectEmployee: projectEmployeer);
                                   },
                                 )
                               : const LzNoData(
@@ -86,8 +85,8 @@ class ExploreEmployerView extends ConsumerState<ExploreView> {
                         },
                         error: (error, _) {
                           ref
-                              .read(projectProvider.notifier)
-                              .getProject();
+                              .read(freelancerProvider.notifier)
+                              .getFreelancer();
                           return LzNoData(message: 'Oops! $error');
                         },
                         loading: () => LzLoader.bar(message: 'Loading...'),
@@ -100,7 +99,7 @@ class ExploreEmployerView extends ConsumerState<ExploreView> {
                 top: 50,
                 left: 25,
                 child: Textr(
-                  'Explore Project',
+                  'Explore Freelancer',
                   style: Gfont.bold.white.fsize(25),
                 ),
               ),
@@ -153,8 +152,6 @@ class ExploreEmployerView extends ConsumerState<ExploreView> {
                                         ],
                                       ),
                                       Column(
-                                        // mainAxisSize: Mas.min,
-                                        // crossAxisAlignment: Caa.start,
                                         children: [
                                           Row(
                                             children: [
@@ -256,7 +253,6 @@ class ExploreEmployerView extends ConsumerState<ExploreView> {
                                                 'location': location,
                                               };
 
-print(query);
                                               // ref
                                               //     .read(projectProvider
                                               //         .notifier)
@@ -323,7 +319,7 @@ print(query);
                       Expanded(
                         child: TextField(
                           onChanged: (query) async {
-                            project = ref.watch(projectProvider);
+                            profiles = ref.watch(freelancerProvider);
                           },
                           controller: _searchQuery,
                           decoration: const InputDecoration(

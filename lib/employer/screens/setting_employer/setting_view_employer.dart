@@ -85,7 +85,7 @@ class SettingEmployerView extends ConsumerWidget {
                           )),
                       Container(
                           margin: Ei.only(l: 25, r: 25),
-                          child: const MenuSettingEmployer())
+                          child: MenuSettingEmployer(profile: profile,))
                     ],
                   );
                 },

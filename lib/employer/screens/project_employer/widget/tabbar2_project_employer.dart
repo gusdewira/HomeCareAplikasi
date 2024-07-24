@@ -102,7 +102,6 @@ class Tabbar2ProjectEmployer extends ConsumerWidget {
           itemCount: projects.length,
           itemBuilder: (context, index) {
             final project = projects[index];
-
             return Container(
               padding: Ei.only(l: 20, r: 20, t: 10),
               margin: Ei.only(l: 25, r: 25, b: 20, t: 20),

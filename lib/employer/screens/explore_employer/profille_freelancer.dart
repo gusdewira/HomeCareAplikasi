@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:homecare_app/employer/data/models/project_model.dart';
+import 'package:homecare_app/freelancer/data/models/setting/profile_freelancer_model.dart';
 import 'package:lazyui/lazyui.dart';
 
 import '../../../freelancer/widgets/color_widget.dart';
@@ -7,7 +9,8 @@ import 'widget/tabbar/tabbar2_profile_freelancerEx.dart';
 import 'widget/tabbar/tabbar3_profile_freelancerEx.dart';
 
 class ProfileFreelancerEx extends StatelessWidget {
-  const ProfileFreelancerEx({super.key});
+  ProfileFreelancerModel? profile;
+  ProfileFreelancerEx({super.key, this.profile});
 
   @override
   Widget build(BuildContext context) {
@@ -116,14 +119,14 @@ class ProfileFreelancerEx extends StatelessWidget {
                           crossAxisAlignment: Caa.start,
                           children: [
                             Textr(
-                              'Ayu Istri',
+                              "${profile!.firstName} ${profile!.lastName}",
                               width: 280,
                               maxLines: 1,
                               overflow: Tof.clip,
                               style: Gfont.white.fsize(20).bold,
                             ),
                             Textr(
-                              'Web Development',
+                              profile?.profession ?? "No Profession",
                               width: 280,
                               maxLines: 1,
                               style:
@@ -144,7 +147,7 @@ class ProfileFreelancerEx extends StatelessWidget {
                             color: Colors.white,
                           ).margin(r: 8),
                           Expanded(
-                            child: Textr('ayuistri@gmail.com',
+                            child: Textr(profile?.email ?? "No Email",
                                 width: context.width,
                                 maxLines: 1,
                                 overflow: Tof.clip,
@@ -155,7 +158,7 @@ class ProfileFreelancerEx extends StatelessWidget {
                       Row(
                         children: [
                           const Icon(Ti.phone, color: Colors.white).margin(r: 8),
-                          Textr('08977286738',
+                          Textr(profile?.numberPhone ?? "No Phone Number",
                               width: 130,
                               maxLines: 1,
                               overflow: Tof.clip,
@@ -165,7 +168,7 @@ class ProfileFreelancerEx extends StatelessWidget {
                       Row(
                         children: [
                           const Icon(Ti.mapPin, color: Colors.white).margin(r: 8),
-                          Textr('Tabanan',
+                          Textr(profile?.address ?? "No Location",
                               width: 130,
                               maxLines: 1,
                               overflow: Tof.clip,
@@ -181,7 +184,7 @@ class ProfileFreelancerEx extends StatelessWidget {
                 height: 70,
                 width: context.width,
                 child: Text(
-                  'I am an enthusiastic and creative individual with a background in technology and web development. My expertise spans front-end development using HTML',
+                  profile?.summary ?? "No Summary",
                   style: Gfont.white.fsize(13),
                   maxLines: 4,
                   overflow: Tof.ellipsis,

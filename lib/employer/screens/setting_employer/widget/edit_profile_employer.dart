@@ -1,24 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:homecare_app/employer/data/models/profile_model.dart';
 import 'package:homecare_app/employer/providers/profile_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lazyui/lazyui.dart';
-
 import '../../../../freelancer/widgets/color_widget.dart';
 
 class EditProfileEmployer extends ConsumerWidget {
-  const EditProfileEmployer({super.key});
+  ProfileEmployerModel? data;
+  EditProfileEmployer({Key? key, this.data}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final notifier = ref.read(editProfilChangeNotifier.notifier);
-    final data = ref.watch(profileEmployeeProvider);
 
-    return data.when(
-      data: (data) {
-        notifier.fillForm(data);
+if (data != null) {
+      notifier.fillForm(data!);
+    }
         return Scaffold(
             body: LzFormList(
-              cleanOnFilled: true,
               style: LzFormStyle(
                 activeColor: LzColors.dark,
                 inputBorderColor: Colors.black26,
@@ -180,16 +179,9 @@ class EditProfileEmployer extends ConsumerWidget {
               textColor: Colors.white,
               text: 'Update',
               onTap: (state) async {
-                notifier.edit(context, data.id!);
+                notifier.edit(context, data!.id!);
               },
             ).theme1().margin(b: 10));
-      },
-      error: (error, _) {
-        return LzNoData(message: 'Oops! $error');
-      },
-      loading: () {
-        return LzLoader.bar(message: 'Loading...');
-      },
-    );
+
   }
 }

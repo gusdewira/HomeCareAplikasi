@@ -97,7 +97,7 @@ class EditProfilChangeNotifier with ChangeNotifier, UseApi1 {
         ResHandler res = await profileEmployeeApi.updateEditProfile(map);
 
         LzToast.dismiss();
-print(res.message);
+
         if (!res.status) {
           forms.reset();
           LzToast.show(res.message);

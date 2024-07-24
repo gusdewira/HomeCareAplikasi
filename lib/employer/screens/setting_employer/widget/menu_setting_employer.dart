@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:homecare_app/employer/data/models/profile_model.dart';
 import 'package:homecare_app/employer/providers/auth_provider.dart';
+import 'package:homecare_app/employer/screens/setting_employer/widget/edit_profile_employer.dart';
 import 'package:homecare_app/freelancer/routes/paths.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lazyui/lazyui.dart';
@@ -8,7 +10,8 @@ import 'package:lazyui/lazyui.dart';
 import '../../../../freelancer/widgets/color_widget.dart';
 
 class MenuSettingEmployer extends ConsumerWidget {
-  const MenuSettingEmployer({super.key});
+ProfileEmployerModel profile;
+  MenuSettingEmployer({Key? key, required this.profile}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -19,7 +22,7 @@ class MenuSettingEmployer extends ConsumerWidget {
         children: [
           InkTouch(
             onTap: () {
-              context.push(Paths.editProfileEmployer);
+              context.lzPush(EditProfileEmployer(data: profile,));
             },
             child: RowItem('Edit Profile', Ti.edit, color1)),
           RowItem('Payment Account', Ti.creditCard, color1),
