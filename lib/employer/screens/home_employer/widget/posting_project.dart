@@ -252,7 +252,8 @@ class PostingProjectEmployer extends ConsumerWidget {
                               model: notifier.forms['end_salary'],
                               maxLength: 2000,
                             ),
-                            Container(
+                            SizedBox(
+                              width: double.infinity,
                               child: LzButton(
                                 radius: 20,
                                 color: color1,
@@ -272,7 +273,7 @@ class PostingProjectEmployer extends ConsumerWidget {
                                   }
                                 },
                               ).theme1(),
-                            )
+                            ),
                           ],
                         ).margin(t: 10, l: 25, r: 25, b: 50),
                       )),
@@ -282,24 +283,6 @@ class PostingProjectEmployer extends ConsumerWidget {
           ),
         ],
       ),
-      // bottomNavigationBar: LzButton(
-      //   radius: 20,
-      //   color: color1,
-      //   text: 'Save',
-      //   textColor: Colors.white,
-      //   onTap: (state) async {
-      //     state.submit();
-      //     bool ok = await notifier.create(context);
-
-      //     if (ok && context.mounted) {
-      //       context.pop();
-      //       LzToast.show("Project has been created.");
-      //     }else{
-      //       state.abort();
-      //       LzToast.show("Please fill all required fields.");
-      //     }
-      //   },
-      // ).theme1().margin(b: 50),
     );
   }
 }

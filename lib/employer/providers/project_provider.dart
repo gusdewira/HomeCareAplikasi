@@ -118,11 +118,17 @@ class PostProjectNotifier with ChangeNotifier, UseApi1 {
 
       if (validate.ok && fileAttachment != null) {
         final map = forms.toMap();
+        
         LzToast.overlay('Loading Post Project...');
-        map['name_category'] = [map['name_category']];
+        if (map['name_category'] is String) {
+          map['name_category[0]'] = map['name_category'];
+        }
+
+        print(map);
 
         if (fileAttachment!.existsSync()) {
-          map['attachment'] = projectsApi.toFile(fileAttachment!.path);
+          final attachment = await projectsApi.toFile(fileAttachment!.path);
+          map['attachment'] = attachment;
         } else {
           LzToast.show("Attachment file is missing.");
         }
@@ -132,10 +138,7 @@ class PostProjectNotifier with ChangeNotifier, UseApi1 {
         LzToast.dismiss();
         print(res.message);
         if (!res.status) {
-          forms.reset();
           LzToast.show(res.message);
-
-          Navigator.pop(context);
           return false;
         } else {
           forms.reset();

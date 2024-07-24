@@ -98,6 +98,14 @@ class Tabbar2ProjectEmployer extends ConsumerWidget {
 
     final projectActive = ref.watch(projectActiveProvider);
     return projectActive.when(data: (List<ProjectEmployerModel> projects) {
+      if (projects.isEmpty) {
+        return Center(
+          child: Text(
+            'No active projects',
+            style: TextStyle(fontSize: 18, color: Colors.grey),
+          ),
+        );
+      }
       return ListView.builder(
           itemCount: projects.length,
           itemBuilder: (context, index) {

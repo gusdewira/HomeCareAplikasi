@@ -30,6 +30,11 @@ class Tabbar1ProjectEmployer extends ConsumerWidget {
     return Scaffold(
       body: projectsEmployee.when(
         data: (List<ProjectEmployerModel> projects) {
+          if (projects.isEmpty) {
+            return Center(
+              child: Text('Project is empty'),
+            );
+          }
           return ListView.builder(
             itemCount: projects.length,
             itemBuilder: (context, index) {
@@ -138,7 +143,7 @@ class Tabbar1ProjectEmployer extends ConsumerWidget {
                       child: SizedBox(
                         width: context.width,
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
+                          mainAxisAlignment: Maa.end,
                           children: [
                             Container(
                               height: 30,
