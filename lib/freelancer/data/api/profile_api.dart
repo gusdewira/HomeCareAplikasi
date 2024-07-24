@@ -6,3 +6,4 @@ class ProfileApi extends Fetchly {
   Future<ResHandler> updateProfile(Map<String, dynamic> map, int id ) async =>
      await put('users/freelancers/$id', FormData.fromMap(map));
 }
+  
