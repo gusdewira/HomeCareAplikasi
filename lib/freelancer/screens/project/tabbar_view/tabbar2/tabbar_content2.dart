@@ -75,7 +75,7 @@ class Tabbar2 extends ConsumerWidget {
                                       style: Gfont.color(color1).fsize(12)),
                                   Row(
                                     children: [
-                                      Icon(
+                                      const Icon(
                                         Ti.coin,
                                         color: Colors.green,
                                       ).margin(r: 5),
@@ -87,7 +87,7 @@ class Tabbar2 extends ConsumerWidget {
                                   ).margin(t: 10),
                                   Row(
                                     children: [
-                                      Icon(
+                                      const Icon(
                                         Ti.clock,
                                         color: Colors.red,
                                       ).margin(r: 5),

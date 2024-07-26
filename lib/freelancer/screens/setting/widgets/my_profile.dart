@@ -169,7 +169,7 @@ class MyProfile extends ConsumerWidget {
                                     children: [
                                       Row(
                                         children: [
-                                          Icon(
+                                          const Icon(
                                             Ti.mail,
                                             color: Colors.white,
                                           ).margin(r: 8),
@@ -184,7 +184,7 @@ class MyProfile extends ConsumerWidget {
                                       ),
                                       Row(
                                         children: [
-                                          Icon(Ti.phone, color: Colors.white)
+                                          const Icon(Ti.phone, color: Colors.white)
                                               .margin(r: 8),
                                           Textr(numberPhone,
                                               width: 130,
@@ -195,7 +195,7 @@ class MyProfile extends ConsumerWidget {
                                       ).margin(t: 5, b: 5),
                                       Row(
                                         children: [
-                                          Icon(Ti.mapPin, color: Colors.white)
+                                          const Icon(Ti.mapPin, color: Colors.white)
                                               .margin(r: 8),
                                           Textr(address,
                                               width: 130,

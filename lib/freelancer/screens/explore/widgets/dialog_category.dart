@@ -93,14 +93,14 @@ class _DialogCategoryState extends State<DialogCategory> {
                     activeColor: color1,
                     label: 'Category',
                     options: [
-                      Option(option: 'Mobile Development', value: 'Mobile Development'),
-                      Option(option: 'Content Writing', value: 'Content Writing'),
-                      Option(option: 'Digital Marketing', value: 'Digital Marketing'),
-                      Option(option: 'Video Editing', value: 'Video Editing'),
-                      Option(option: 'UI/UX Design', value: 'UI/UX Design'),
-                      Option(option: 'Game Development', value: 'Game Development'),
-                      Option(option: 'Data Entry', value: 'Data Entry'),
-                      Option(option: 'Virtual Assistance', value: 'Virtual Assistance'),
+                      const Option(option: 'Mobile Development', value: 'Mobile Development'),
+                      const Option(option: 'Content Writing', value: 'Content Writing'),
+                      const Option(option: 'Digital Marketing', value: 'Digital Marketing'),
+                      const Option(option: 'Video Editing', value: 'Video Editing'),
+                      const Option(option: 'UI/UX Design', value: 'UI/UX Design'),
+                      const Option(option: 'Game Development', value: 'Game Development'),
+                      const Option(option: 'Data Entry', value: 'Data Entry'),
+                      const Option(option: 'Virtual Assistance', value: 'Virtual Assistance'),
                     ],
                     onChange: (selectedOptions) {
                       final value = selectedOptions.value;

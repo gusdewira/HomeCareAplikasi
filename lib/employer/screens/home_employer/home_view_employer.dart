@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:homecare_app/employer/data/models/profile_model.dart';
@@ -56,6 +58,7 @@ class HomeEmployerView extends ConsumerWidget {
             if (profileId == null) {
               return const LzNoData(message: 'Profile ID is missing');
             }
+
             return LzListView(
               padding: Ei.zero,
               children: [
@@ -66,11 +69,18 @@ class HomeEmployerView extends ConsumerWidget {
                       left: 25,
                       child: Row(
                         children: [
-                          const LzImage(
-                            'profile.jpg',
-                            radius: 50,
-                            size: 50,
-                          ),
+                          profile.photoProfile != null &&
+                                  profile.photoProfile is String
+                              ? LzImage(
+                                  profile.photoProfile,
+                                  radius: 50,
+                                  size: 50,
+                                )
+                              : const Icon(
+                                  Icons.account_circle,
+                                  size: 50,
+                                  color: Colors.white,
+                                ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [

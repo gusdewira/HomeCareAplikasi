@@ -31,7 +31,7 @@ class Tabbar1ProjectEmployer extends ConsumerWidget {
       body: projectsEmployee.when(
         data: (List<ProjectEmployerModel> projects) {
           if (projects.isEmpty) {
-            return Center(
+            return const Center(
               child: Text('Project is empty'),
             );
           }
@@ -66,7 +66,7 @@ class Tabbar1ProjectEmployer extends ConsumerWidget {
                   mainAxisSize: Mas.min,
                   crossAxisAlignment: Caa.start,
                   children: [
-                    Container(
+                    SizedBox(
                       width: context.width,
                       child: Text(
                         maxLines: 1,

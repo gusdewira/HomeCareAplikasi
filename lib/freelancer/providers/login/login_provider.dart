@@ -1,15 +1,11 @@
 import 'package:fetchly/fetchly.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:homecare_app/employer/data/api/api.dart';
 import 'package:homecare_app/freelancer/data/api/api.dart';
-import 'package:homecare_app/freelancer/providers/setting/profile_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lazyui/lazyui.dart';
 
-import '../../data/api/api.dart';
 import '../../data/local/storage.dart';
-import '../../routes/paths.dart';
 
 // class Auth with ChangeNotifier, UseApi {
 //   final forms = LzForm.make(['email', 'password']);

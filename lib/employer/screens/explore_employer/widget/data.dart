@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:homecare_app/employer/data/models/project_model.dart';
 import 'package:homecare_app/employer/screens/explore_employer/profille_freelancer.dart';
 import 'package:homecare_app/freelancer/data/models/setting/profile_freelancer_model.dart';
-import 'package:homecare_app/freelancer/routes/paths.dart';
 import 'package:lazyui/lazyui.dart';
 
 class DataExploreFreelancer extends StatelessWidget {
@@ -51,8 +48,8 @@ class DataExploreFreelancer extends StatelessWidget {
         children: [
           Row(
             children: [
-              const LzImage(
-                'profile.jpg',
+              LzImage(
+                projectEmployee.photoProfile,
                 radius: 40,
                 size: 50,
               ),

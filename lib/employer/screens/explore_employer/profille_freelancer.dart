@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:homecare_app/employer/data/models/project_model.dart';
 import 'package:homecare_app/freelancer/data/models/setting/profile_freelancer_model.dart';
 import 'package:lazyui/lazyui.dart';
 

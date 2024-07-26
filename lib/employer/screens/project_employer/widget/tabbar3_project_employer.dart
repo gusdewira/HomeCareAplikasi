@@ -4,19 +4,16 @@ import 'package:homecare_app/employer/data/api/api.dart';
 import 'package:homecare_app/employer/data/models/profile_model.dart';
 import 'package:homecare_app/employer/data/models/project_model.dart';
 import 'package:homecare_app/employer/providers/profile_provider.dart';
-import 'package:homecare_app/employer/providers/project_active_provider.dart';
 import 'package:homecare_app/employer/providers/project_completed_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lazyui/lazyui.dart';
-
-import '../../../../freelancer/widgets/color_widget.dart';
 
 class Tabbar3ProjectEmployer extends ConsumerWidget {
   const Tabbar3ProjectEmployer({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    void _showEndContractDialog(
+    void showEndContractDialog(
         BuildContext context, int userId, int projectId, int freelancerId) {
       int rating = 0;
       String description = '';
@@ -47,12 +44,13 @@ class Tabbar3ProjectEmployer extends ConsumerWidget {
                           'Give Me The Rates',
                           style: Gfont.color(LzColors.hex('001380')).fsize(20),
                         ),
-                        Spacer(),
+                        const Spacer(),
                         InkTouch(
                           onTap: () {
                             Navigator.of(context).pop();
                           },
-                          child: Icon(Ti.x, color: Colors.black, size: 25),
+                          child:
+                              const Icon(Ti.x, color: Colors.black, size: 25),
                         ),
                       ],
                     ),
@@ -78,9 +76,9 @@ class Tabbar3ProjectEmployer extends ConsumerWidget {
                             );
                           }),
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         TextFormField(
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             labelText: 'Description',
                             border: OutlineInputBorder(),
                           ),
@@ -102,10 +100,18 @@ class Tabbar3ProjectEmployer extends ConsumerWidget {
                             "review_text": description,
                             "review_for_id": freelancerId
                           };
-                          ResHandler response =
+                          ResHandler res =
                               await ReviewProject().postReview(data);
-                          print(response.data);
-                          Navigator.of(context).pop();
+                          LzToast.dismiss();
+                          print(res.message);
+                          if (!res.status) {
+                            LzToast.show(res.message);
+                            return false;
+                          } else {
+                            LzToast.show('Successfully add review project');
+                            Navigator.pop(context);
+                            return true;
+                          }
                         },
                         child: Center(
                           child: Container(
@@ -154,14 +160,15 @@ class Tabbar3ProjectEmployer extends ConsumerWidget {
     final profileEmployee = ref.watch(profileEmployeeProvider);
     return projectCompleted.when(
       data: (List<ProjectEmployerModel> projects) {
-        print(projects[0]);
+        print(projects[0].endDate);
         return ListView.builder(
           itemCount: projects.length,
           itemBuilder: (context, index) {
             ProjectEmployerModel project = projects[index];
             return Container(
-              padding: EdgeInsets.only(left: 20, right: 20, top: 10),
-              margin: EdgeInsets.only(left: 25, right: 25, bottom: 20, top: 20),
+              padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
+              margin: const EdgeInsets.only(
+                  left: 25, right: 25, bottom: 20, top: 20),
               height: 180,
               width: MediaQuery.of(context).size.width / 1,
               decoration: BoxDecoration(
@@ -193,7 +200,7 @@ class Tabbar3ProjectEmployer extends ConsumerWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Salary'),
+                            const Text('Salary'),
                             Text(
                               '${project.startSalary!} - ${project.endSalary!}',
                               style: Gfont.color(LzColors.hex('001380')),
@@ -205,7 +212,7 @@ class Tabbar3ProjectEmployer extends ConsumerWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
+                            const Text(
                               'Estimated duration',
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
@@ -288,7 +295,7 @@ class Tabbar3ProjectEmployer extends ConsumerWidget {
                         } else {
                           return InkTouch(
                             onTap: () {
-                              _showEndContractDialog(
+                              showEndContractDialog(
                                 context,
                                 project.user!['id'],
                                 project.id!,
@@ -319,7 +326,37 @@ class Tabbar3ProjectEmployer extends ConsumerWidget {
                           );
                         }
                       } else {
-                        return Container();
+                        return InkTouch(
+                          onTap: () {
+                            showEndContractDialog(
+                              context,
+                              project.user!['id'],
+                              project.id!,
+                              project.offer![0]['offer_by'],
+                            );
+                          },
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Container(
+                                  height: 30,
+                                  width: 100,
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.green),
+                                    borderRadius: BorderRadius.circular(30),
+                                  ),
+                                  child: Textr(
+                                    alignment: Alignment.center,
+                                    'Leave a review',
+                                    style: Gfont.green.fsize(12),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ).margin(t: 20),
+                        );
                       }
                     },
                     error: (error, _) {

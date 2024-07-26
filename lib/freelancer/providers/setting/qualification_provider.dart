@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lazyui/lazyui.dart';
 import '../../data/api/api.dart';
-import '../../data/local/storage.dart';
 import '../../data/models/setting/qualification_model.dart';
 
 class QualificationProvider extends StateNotifier<AsyncValue<List<QualificationModel>>> with UseApi {

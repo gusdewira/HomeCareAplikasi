@@ -13,7 +13,7 @@ class Tabbar2ProjectEmployer extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    void _showEndContractDialog(BuildContext context) {
+    void showEndContractDialog(BuildContext context) {
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -22,7 +22,7 @@ class Tabbar2ProjectEmployer extends ConsumerWidget {
               AlertDialog(
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30)),
-                title: Icon(
+                title: const Icon(
                   Ti.alertTriangle,
                   size: 55,
                   color: Colors.red,
@@ -53,7 +53,7 @@ class Tabbar2ProjectEmployer extends ConsumerWidget {
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 20,
                       ),
                       InkTouch(
@@ -96,10 +96,30 @@ class Tabbar2ProjectEmployer extends ConsumerWidget {
       );
     }
 
+    String formatTanggal(DateTime? tanggal1, DateTime? tanggal2) {
+      if (tanggal1 == null || tanggal2 == null) {
+        return '';
+      }
+
+      String formattedDate1 = DateFormat('dd', 'id_ID').format(tanggal1);
+      String formattedDate2 =
+          DateFormat('dd MMMM yyyy', 'id_ID').format(tanggal2);
+
+      if (tanggal1.month == tanggal2.month && tanggal1.year == tanggal2.year) {
+        return '$formattedDate1 - $formattedDate2';
+      } else {
+        String fullFormattedDate1 =
+            DateFormat('dd MMMM yyyy', 'id_ID').format(tanggal1);
+        String fullFormattedDate2 =
+            DateFormat('dd MMMM yyyy', 'id_ID').format(tanggal2);
+        return '$fullFormattedDate1 - $fullFormattedDate2';
+      }
+    }
+
     final projectActive = ref.watch(projectActiveProvider);
     return projectActive.when(data: (List<ProjectEmployerModel> projects) {
       if (projects.isEmpty) {
-        return Center(
+        return const Center(
           child: Text(
             'No active projects',
             style: TextStyle(fontSize: 18, color: Colors.grey),
@@ -131,11 +151,17 @@ class Tabbar2ProjectEmployer extends ConsumerWidget {
                 children: [
                   Row(
                     children: [
-                      const LzImage(
-                        'profile.jpg',
-                        radius: 40,
-                        size: 50,
-                      ),
+                      project.user?['profile_photo'] != null
+                          ? LzImage(
+                              "https://homecare.galkasoft.id/storage/${project.user?['profile_photo']}",
+                              radius: 50,
+                              size: 50,
+                            )
+                          : const Icon(
+                              Icons.account_circle,
+                              size: 50,
+                              color: Colors.blue,
+                            ),
                       Expanded(
                         child: Container(
                           margin: Ei.only(l: 10),
@@ -147,12 +173,15 @@ class Tabbar2ProjectEmployer extends ConsumerWidget {
                             children: [
                               Column(
                                 children: [
-                                  Textr('Ayu Istri',
+                                  Textr(
+                                      "${project.user?['first_name']} ${project.user?['last_name']}",
                                       width: 150,
                                       overflow: Tof.ellipsis,
                                       style:
                                           Gfont.color(LzColors.hex('001380'))),
-                                  Textr('Web Development',
+                                  Textr(
+                                      project.user?['profession'] ??
+                                          "No Profession",
                                       overflow: Tof.ellipsis,
                                       width: 150,
                                       style:
@@ -165,24 +194,44 @@ class Tabbar2ProjectEmployer extends ConsumerWidget {
                       ),
                     ],
                   ),
-                  Text('Hired date : 23 April - 10 November 2023')
+                  Text('Hired date : ${formatTanggal(project.startDate, project.endDate)}')
                       .margin(t: 10),
-                  Text('Salary 2800K'),
+                  Text(
+                      'Salary: Rp. ${project.startSalary!.toStringAsFixed(0)} - Rp. ${project.endSalary!.toStringAsFixed(0)}'),
                   Container(
                     margin: Ei.only(t: 8, b: 8),
                     width: context.width,
                     height: 1,
                     color: Colors.grey,
                   ),
-                  Textr(
-                    width: context.width,
-                    'Mobile App Development',
-                    style: Gfont.color(LzColors.hex('001380')),
-                    maxLines: 1,
-                    overflow: Tof.ellipsis,
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: project.nameCategories!
+                          .map((name) => Padding(
+                                padding:
+                                    const EdgeInsets.only(right: 8.0),
+                                child: Container(
+                                  constraints: BoxConstraints(
+                                      maxWidth:
+                                          MediaQuery.of(context).size.width),
+                                  child: Text(
+                                    name,
+                                    style: const TextStyle(
+                                      color: Color(0xFF001380),
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                              ))
+                          .toList(),
+                    ),
                   ),
                   Text(
-                    'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over ',
+                    project.description ?? "No Description",
                     maxLines: 4,
                     overflow: Tof.ellipsis,
                   ),
@@ -211,9 +260,10 @@ class Tabbar2ProjectEmployer extends ConsumerWidget {
                         ),
                         InkTouch(
                           onTap: () async {
-                            _showEndContractDialog(context);
+                            showEndContractDialog(context);
 
-                            var response = await ProjectCompletedApi().endProject('1');
+                            var response =
+                                await ProjectCompletedApi().endProject(project.offer![0]['id']);
                             print(response);
                           },
                           child: Container(
@@ -239,7 +289,7 @@ class Tabbar2ProjectEmployer extends ConsumerWidget {
                             ),
                           ),
                         ),
-                        Spacer(),
+                        const Spacer(),
                         InkTouch(
                           onTap: () {},
                           child: Icon(

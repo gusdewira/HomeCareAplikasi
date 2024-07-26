@@ -35,7 +35,7 @@ class SettingView extends ConsumerWidget {
             String email = profile.email ?? '';
             String fistName = profile.firstName ?? '';
             String lastName = profile.lastName ?? '';
-            String image = profile.photoProfile != null ? profile.photoProfile : 'profile.jpg';
+            String image = profile.photoProfile ?? 'profile.jpg';
 
 
             return Stack(

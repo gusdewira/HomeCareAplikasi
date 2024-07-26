@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:homecare_app/employer/data/models/project_model.dart';
 import 'package:homecare_app/employer/providers/freelancer_provider.dart';
-import 'package:homecare_app/employer/screens/explore_employer/widget/category.dart';
 import 'package:homecare_app/employer/screens/explore_employer/widget/data.dart';
-import 'package:homecare_app/employer/screens/explore_employer/widget/search_freelancer.dart';
 import 'package:homecare_app/freelancer/data/models/setting/profile_freelancer_model.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lazyui/lazyui.dart';
@@ -193,28 +190,28 @@ class ExploreEmployerView extends ConsumerState<ExploreView> {
                                             activeColor: color1,
                                             label: 'Category',
                                             options: [
-                                              Option(
+                                              const Option(
                                                   option: 'Mobile Development',
                                                   value: 'Mobile Development'),
-                                              Option(
+                                              const Option(
                                                   option: 'Content Writing',
                                                   value: 'Content Writing'),
-                                              Option(
+                                              const Option(
                                                   option: 'Digital Marketing',
                                                   value: 'Digital Marketing'),
-                                              Option(
+                                              const Option(
                                                   option: 'Video Editing',
                                                   value: 'Video Editing'),
-                                              Option(
+                                              const Option(
                                                   option: 'UI/UX Design',
                                                   value: 'UI/UX Design'),
-                                              Option(
+                                              const Option(
                                                   option: 'Game Development',
                                                   value: 'Game Development'),
-                                              Option(
+                                              const Option(
                                                   option: 'Data Entry',
                                                   value: 'Data Entry'),
-                                              Option(
+                                              const Option(
                                                   option: 'Virtual Assistance',
                                                   value: 'Virtual Assistance'),
                                             ],

@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:homecare_app/freelancer/screens/explore/content_widget/detail_project_explore.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lazyui/lazyui.dart';
 
 import '../../../../data/models/setting/project_freelancer_model.dart';
 import '../../../../providers/project/project_waiting_provider.dart';
-import '../../../../routes/paths.dart';
 import '../../../../widgets/color_widget.dart';
 
 class Tabbar1 extends ConsumerWidget {
@@ -94,7 +92,7 @@ class Tabbar1 extends ConsumerWidget {
                                             children: [
                                               Row(
                                                 children: [
-                                                  Icon(
+                                                  const Icon(
                                                     Ti.coin,
                                                     color: Colors.green,
                                                   ).margin(r: 5),
@@ -106,7 +104,7 @@ class Tabbar1 extends ConsumerWidget {
                                                 ],
                                               ).margin(t: 10),
                                               Row(children: [
-                                                Icon(
+                                                const Icon(
                                                   Ti.clock,
                                                   color: Colors.red,
                                                 ).margin(r: 5),

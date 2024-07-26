@@ -109,7 +109,7 @@ class AddMoreQualification extends ConsumerWidget {
                                             notifier.setFile(file);
                                           }
                                         },
-                                        icon: Align(
+                                        icon: const Align(
                                           alignment: Alignment.centerRight,
                                           child: Icon(
                                             Ti.upload,

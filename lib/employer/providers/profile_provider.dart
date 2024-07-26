@@ -118,3 +118,61 @@ class EditProfilChangeNotifier with ChangeNotifier, UseApi1 {
 
 final editProfilChangeNotifier =
     ChangeNotifierProvider((ref) => EditProfilChangeNotifier());
+
+class EditImageChangeNotifier with ChangeNotifier, UseApi1 {
+  final ImagePicker _picker = ImagePicker();
+  File image = File('');
+  String filePath = '';
+
+  void pickImage(BuildContext context, id) async {
+    final pickedFile = await _picker.pickImage(
+      source: ImageSource.gallery,
+      maxWidth: 1500,
+      maxHeight: 1500,
+      imageQuality: 90,
+    );
+
+    if (pickedFile != null) {
+      showDialog(
+          context: context,
+          builder: (context) =>
+              WidImagePreview(file: File(pickedFile.path))).then((value) {
+        if (value != null) {
+          image = File(pickedFile.path);
+          edit(context, id);
+        }
+      });
+      filePath = pickedFile.path;
+    }
+  }
+
+  Future edit(BuildContext context, int id) async {
+    try {
+        Map<String, dynamic> map = {};
+        LzToast.overlay('Editing profile...');
+
+        map['portofolio_attachment'] = filePath;
+
+        map['_method'] = 'put';
+        ResHandler res = await profileEmployeeApi.updateImageProfile(map);
+
+        LzToast.dismiss();
+
+        if (!res.status) {
+          LzToast.show(res.message);
+
+          Navigator.pop(context);
+        } else {
+          LzToast.show('Successfully Edited Profile Freelancer');
+
+          Navigator.pop(context);
+        }
+
+    } catch (e, s) {
+      Errors.check(e, s);
+    }
+  }
+}
+
+final editImageChangeNotifier =
+    ChangeNotifierProvider((ref) => EditImageChangeNotifier());

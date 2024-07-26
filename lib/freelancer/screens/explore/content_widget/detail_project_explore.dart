@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:homecare_app/freelancer/providers/explore/detail_project_provider.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lazyui/lazyui.dart';
 
 import '../../../data/models/setting/project_freelancer_model.dart';
@@ -77,7 +75,7 @@ class DetailProjectExplore extends StatelessWidget {
                                 .fsize(15)
                                 .bold),
                         Textr(
-                          data!.title!,
+                          data.title!,
                           style: Gfont.color(LzColors.hex('595959')).fsize(13),
                           margin: Ei.only(t: 5),
                           width: context.width,
@@ -90,7 +88,7 @@ class DetailProjectExplore extends StatelessWidget {
                           margin: Ei.only(t: 20),
                         ),
                         Textr(
-                          data!.description!,
+                          data.description!,
                           style: Gfont.color(LzColors.hex('595959')).fsize(13),
                           margin: Ei.only(t: 5),
                           width: 350,
@@ -102,7 +100,7 @@ class DetailProjectExplore extends StatelessWidget {
                           margin: Ei.only(t: 20),
                         ),
                         Textr(
-                          data!.user!['address'],
+                          data.user!['address'],
                           style: Gfont.color(LzColors.hex('595959')).fsize(13),
                           margin: Ei.only(t: 5),
                           width: 350,
@@ -136,7 +134,7 @@ class DetailProjectExplore extends StatelessWidget {
                           margin: Ei.only(t: 20),
                         ),
                         Textr(
-                          'From ${data!.startSalary} - ${data!.endSalary}',
+                          'From ${data.startSalary} - ${data.endSalary}',
                           style: Gfont.color(LzColors.hex('595959')).fsize(13),
                           margin: Ei.only(t: 5),
                           width: 350,
@@ -161,7 +159,7 @@ class DetailProjectExplore extends StatelessWidget {
                             children: [
                               Expanded(
                                 child: Textr(
-                                  data!.attachment!.split('/')[1],
+                                  data.attachment!.split('/')[1],
                                   style: Gfont.color(LzColors.hex('A9A6CD'))
                                       .fsize(15),
                                 ),
@@ -187,7 +185,7 @@ class DetailProjectExplore extends StatelessWidget {
                           margin: Ei.only(t: 20, b: 5),
                         ),
                         Textr(
-                          '${DateFormat('dd/MM/yyyy').format(data!.startDate!)} - ${DateFormat('dd/MM/yyyy').format(data!.endDate!)}',
+                          '${DateFormat('dd/MM/yyyy').format(data.startDate!)} - ${DateFormat('dd/MM/yyyy').format(data.endDate!)}',
                           style: Gfont.color(LzColors.hex('A9A6CD')).fsize(13),
                         ),
                       ],

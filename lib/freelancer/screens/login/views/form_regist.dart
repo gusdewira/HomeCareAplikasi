@@ -122,8 +122,8 @@ class RegistView extends ConsumerWidget {
                   },
                   style: ButtonStyle(
                       backgroundColor:
-                          MaterialStateProperty.all<Color>(colorLogin),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          WidgetStateProperty.all<Color>(colorLogin),
+                      shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
                         ),

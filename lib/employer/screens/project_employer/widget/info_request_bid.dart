@@ -8,15 +8,17 @@ class InfoRequestBid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String formatNumber(double number) {
-    if (number >= 1000000000) {
-      return '${(number / 1000000000).toStringAsFixed(1)}B';
-    } else if (number >= 1000000) {
-      return '${(number / 1000000).toStringAsFixed(1)}M';
-    } else if (number >= 1000) {
-      return '${(number / 1000).toStringAsFixed(1)}k';
-    } else {
-      return number.toStringAsFixed(0);
-    }}
+      if (number >= 1000000000) {
+        return '${(number / 1000000000).toStringAsFixed(1)}B';
+      } else if (number >= 1000000) {
+        return '${(number / 1000000).toStringAsFixed(1)}M';
+      } else if (number >= 1000) {
+        return '${(number / 1000).toStringAsFixed(1)}k';
+      } else {
+        return number.toStringAsFixed(0);
+      }
+    }
+
     DateTime offerDate = DateTime.parse(bid['offer_date']);
     print(bid);
     return Scaffold(
@@ -43,11 +45,17 @@ class InfoRequestBid extends StatelessWidget {
           children: [
             Row(
               children: [
-                const LzImage(
-                  'profile.jpg',
-                  radius: 40,
-                  size: 50,
-                ),
+                bid["user"]["profile_photo"]
+                    ? LzImage(
+                        'https://homecare.galkasoft.id/storage/${bid["user"]["profile_photo"]}',
+                        radius: 50,
+                        size: 50,
+                      )
+                    : const Icon(
+                        Icons.account_circle,
+                        size: 50,
+                        color: Colors.white,
+                      ),
                 Expanded(
                   child: Container(
                     margin: Ei.only(l: 10),
@@ -138,18 +146,23 @@ class InfoRequestBid extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  height: 30,
-                  width: 100,
-                  margin: const EdgeInsets.only(top: 15),
-                  decoration: BoxDecoration(
-                    color: LzColors.hex('0047E3'),
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: Textr(
-                    alignment: Alignment.center,
-                    'Approve Bid',
-                    style: Gfont.color(LzColors.hex('ffffff')).fsize(12),
+                InkTouch(
+                  onTap: () {
+                    print("Hello World!");
+                  },
+                  child: Container(
+                    height: 30,
+                    width: 100,
+                    margin: const EdgeInsets.only(top: 15),
+                    decoration: BoxDecoration(
+                      color: LzColors.hex('0047E3'),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    child: Textr(
+                      alignment: Alignment.center,
+                      'Approve Bid',
+                      style: Gfont.color(LzColors.hex('ffffff')).fsize(12),
+                    ),
                   ),
                 ),
                 const Spacer(),

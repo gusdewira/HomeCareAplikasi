@@ -160,7 +160,7 @@ class ProfileHome extends StatelessWidget {
                               children: [
                                 Row(
                                   children: [
-                                    Icon(Ti.mail, color: Colors.white,).margin(r: 8),
+                                    const Icon(Ti.mail, color: Colors.white,).margin(r: 8),
                                     Expanded(
                                       child: Textr(email,
                                           width: context.width,
@@ -172,7 +172,7 @@ class ProfileHome extends StatelessWidget {
                                 ),
                                  Row(
                                   children: [
-                                    Icon(Ti.phone, color: Colors.white).margin(r: 8),
+                                    const Icon(Ti.phone, color: Colors.white).margin(r: 8),
                                     Textr(numberPhone,
                                         width: 130,
                                         maxLines: 1,
@@ -182,7 +182,7 @@ class ProfileHome extends StatelessWidget {
                                 ).margin(t: 5, b: 5),
                                 Row(
                                   children: [
-                                    Icon(Ti.mapPin, color: Colors.white).margin(r: 8),
+                                    const Icon(Ti.mapPin, color: Colors.white).margin(r: 8),
                                     Textr(address,
                                         width: 130,
                                         maxLines: 1,

@@ -66,7 +66,7 @@ class AddMorePortofolio extends ConsumerWidget {
                         
                         ref.read(editProfilChangeNotifier.notifier).pickImage(context,data!.id);
                       },
-                    child: Icon(
+                    child: const Icon(
                           Icons.add,
                           color: Colors.white,
                         ),)

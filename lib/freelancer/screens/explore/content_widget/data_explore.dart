@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:homecare_app/freelancer/routes/paths.dart';
 import 'package:homecare_app/freelancer/screens/explore/content_widget/detail_project_explore.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lazyui/lazyui.dart';

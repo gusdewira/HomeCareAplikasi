@@ -63,7 +63,7 @@ class SettingEmployerView extends ConsumerWidget {
                             borderRadius: BorderRadius.circular(50),
                             border: Border.all(color: Colors.white, width: 4)),
                         child:
-                            const LzImage('profile.jpg', size: 80, radius: 40),
+                            LzImage(profile.photoProfile, size: 80, radius: 40),
                       ),
                       const SizedBox(
                         height: 10,

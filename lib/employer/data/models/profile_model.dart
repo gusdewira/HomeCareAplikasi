@@ -6,7 +6,7 @@ class ProfileEmployerModel {
   String? numberPhone;
   String? address;
   String? password;
-  dynamic photoProfile;
+  String? photoProfile; // Ubah ke String untuk konsistensi
   dynamic summary;
   dynamic earning;
   dynamic portofolioAttachment;
@@ -21,7 +21,7 @@ class ProfileEmployerModel {
     required this.numberPhone,
     required this.address,
     required this.password,
-    this.photoProfile,
+    required this.photoProfile,
     this.summary,
     this.earning,
     this.portofolioAttachment,
@@ -39,7 +39,7 @@ class ProfileEmployerModel {
         numberPhone: json["number_phone"] as String?,
         address: json["address"] as String?,
         password: json["password"] as String?,
-        photoProfile: json["photo_profile"],
+        photoProfile: json["profile_photo"] as String?,
         summary: json["summary"],
         earning: json["earning"],
         portofolioAttachment: json["portofolio_attachment"],
@@ -54,20 +54,20 @@ class ProfileEmployerModel {
   }
 
   Map<String, dynamic> toJson() => {
-        "id": id,
-        "first_name": firstName,
-        "last_name": lastName,
-        "email": email,
-        "number_phone": numberPhone,
-        "address": address,
-        "password": password,
-        "photo_profile": photoProfile,
-        "summary": summary,
-        "earning": earning,
-        "portofolio_attachment": portofolioAttachment,
-        "profession": profession,
-        "role": List<dynamic>.from(role.map((x) => x)),
-      };
+    "id": id,
+    "first_name": firstName,
+    "last_name": lastName,
+    "email": email,
+    "number_phone": numberPhone,
+    "address": address,
+    "password": password,
+    "profile_photo": photoProfile,
+    "summary": summary,
+    "earning": earning,
+    "portofolio_attachment": portofolioAttachment,
+    "profession": profession,
+    "role": List<dynamic>.from(role.map((x) => x)),
+  };
 }
 
 
@@ -114,7 +114,7 @@ class ProfileEmployerModel1 {
       numberPhone: json["number_phone"] as String?,
       address: json["address"] as String?,
       password: json["password"] as String?,
-      photoProfile: json["photo_profile"],
+      photoProfile: json["profile_photo"],
       summary: json["summary"],
       earning: json["earning"],
       portofolioAttachment: json["portofolio_attachment"],
@@ -139,7 +139,7 @@ class ProfileEmployerModel1 {
       "number_phone": numberPhone,
       "address": address,
       "password": password,
-      "photo_profile": photoProfile,
+      "profile_photo": photoProfile,
       "summary": summary,
       "earning": earning,
       "portofolio_attachment": portofolioAttachment,

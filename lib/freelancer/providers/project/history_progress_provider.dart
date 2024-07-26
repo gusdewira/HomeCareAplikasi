@@ -6,7 +6,6 @@ import 'package:homecare_app/freelancer/data/models/project/history_progress_mod
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lazyui/lazyui.dart';
 import '../../data/api/api.dart';
-import '../../data/models/setting/project_freelancer_model.dart';
 
 class HistoryProgressProvider
     extends StateNotifier<AsyncValue<HistoryProgressModel>> with UseApi {

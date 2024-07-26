@@ -1,6 +1,7 @@
 import 'package:fetchly/fetchly.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:lazyui/lazyui.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -13,6 +14,7 @@ import 'freelancer/routes/routes.dart';
 void main() async {
   // init flutter, to make sure all the widgets are ready
   WidgetsFlutterBinding.ensureInitialized();
+  await initializeDateFormatting('id_ID', null);
 
   // init lazyui
   LazyUi.config(alwaysPortrait: true);

@@ -5,15 +5,11 @@ import 'package:homecare_app/employer/screens/home_employer/widget/belancewithdr
 import 'package:homecare_app/employer/screens/home_employer/widget/posting_project.dart';
 import 'package:homecare_app/employer/screens/home_employer/widget/recenttransaction_employee.dart';
 import 'package:homecare_app/employer/screens/home_employer/widget/topup_employer.dart';
-import 'package:homecare_app/employer/screens/project_employer/widget/info_request_bid.dart';
 import 'package:homecare_app/employer/screens/project_employer/widget/see_history_progress.dart';
-import 'package:homecare_app/employer/screens/project_employer/widget/see_request_employer.dart';
-import 'package:homecare_app/employer/screens/setting_employer/widget/edit_profile_employer.dart';
 
 import '../../home_page.dart';
 import '../../home_page2.dart';
 import '../screens/explore/content_widget/bid_explore.dart';
-import '../screens/explore/content_widget/detail_project_explore.dart';
 import '../screens/home/views/click_notification.dart';
 import '../screens/home/views/invoice_recent_transaction.dart';
 import '../screens/home/views/my_portofolios.dart';

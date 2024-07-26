@@ -30,7 +30,7 @@ class MyPortofolios extends ConsumerWidget {
          notifier.watch((state) => Column(
   children: [
     Container(
-      margin: EdgeInsets.only(left: 25, right: 25, top: 120),
+      margin: const EdgeInsets.only(left: 25, right: 25, top: 120),
       height: context.height/2,
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(

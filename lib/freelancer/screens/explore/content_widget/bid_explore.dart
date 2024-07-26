@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lazyui/lazyui.dart';
-import '../../../data/models/explore/bid_project_model.dart';
 import '../../../data/models/setting/project_freelancer_model.dart';
 import '../../../providers/explore/bid_project_provider.dart';
 import '../../../providers/explore/project_freelancer_provider.dart';

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:homecare_app/freelancer/data/models/setting/project_freelancer_model.dart';
 import 'package:lazyui/lazyui.dart';
 
 import '../../../widgets/color_widget.dart';

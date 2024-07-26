@@ -195,28 +195,28 @@ class _ExploreViewState extends ConsumerState<ExploreView> {
                                             activeColor: color1,
                                             label: 'Category',
                                             options: [
-                                              Option(
+                                              const Option(
                                                   option: 'Mobile Development',
                                                   value: 'Mobile Development'),
-                                              Option(
+                                              const Option(
                                                   option: 'Content Writing',
                                                   value: 'Content Writing'),
-                                              Option(
+                                              const Option(
                                                   option: 'Digital Marketing',
                                                   value: 'Digital Marketing'),
-                                              Option(
+                                              const Option(
                                                   option: 'Video Editing',
                                                   value: 'Video Editing'),
-                                              Option(
+                                              const Option(
                                                   option: 'UI/UX Design',
                                                   value: 'UI/UX Design'),
-                                              Option(
+                                              const Option(
                                                   option: 'Game Development',
                                                   value: 'Game Development'),
-                                              Option(
+                                              const Option(
                                                   option: 'Data Entry',
                                                   value: 'Data Entry'),
-                                              Option(
+                                              const Option(
                                                   option: 'Virtual Assistance',
                                                   value: 'Virtual Assistance'),
                                             ],

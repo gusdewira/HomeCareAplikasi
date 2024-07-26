@@ -4,9 +4,7 @@ import 'package:fetchly/fetchly.dart';
 import 'package:flutter/material.dart';
 import 'package:homecare_app/employer/data/api/api.dart';
 import 'package:homecare_app/employer/data/models/project_model.dart';
-import 'package:homecare_app/freelancer/providers/setting/edit_profile_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:lazyui/lazyui.dart';
 
 class ProjectProvider
@@ -27,13 +25,9 @@ class ProjectProvider
         print("Data get project");
         List data = res.data;
         print("Data received: $data");
-        if (data != null) {
-          state = AsyncValue.data(
-              data.map((e) => ProjectEmployerModel.fromJson(e)).toList());
-        } else {
-          LzToast.show("Unexpected data type received");
-        }
-      } else {
+        state = AsyncValue.data(
+            data.map((e) => ProjectEmployerModel.fromJson(e)).toList());
+            } else {
         LzToast.show(res.message);
       }
     } catch (e, s) {

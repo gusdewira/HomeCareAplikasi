@@ -12,6 +12,7 @@ class EditProfileEmployer extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final notifier = ref.read(editProfilChangeNotifier.notifier);
+    final notifier2 = ref.read(editImageChangeNotifier.notifier);
 
 if (data != null) {
       notifier.fillForm(data!);
@@ -87,32 +88,37 @@ if (data != null) {
                                         borderRadius: BorderRadius.circular(50),
                                         border: Border.all(
                                             color: Colors.white, width: 4)),
-                                    child: const LzImage('profile.jpg',
+                                    child: LzImage(data!.photoProfile,
                                         size: 80, radius: 40),
                                   ),
                                   const SizedBox(
                                     height: 10,
                                   ),
-                                  Container(
-                                    padding: Ei.only(l: 5, r: 5),
-                                    height: 35,
-                                    width: 130,
-                                    decoration: BoxDecoration(
-                                        color: LzColors.hex('0047E3'),
-                                        borderRadius:
-                                            BorderRadius.circular(30)),
-                                    child: Row(
-                                      children: [
-                                        const Icon(
-                                          Ti.edit,
-                                          color: Colors.white,
-                                          size: 20,
-                                        ),
-                                        Text(
-                                          'change photo',
-                                          style: Gfont.white.fsize(15),
-                                        )
-                                      ],
+                                  InkTouch(
+                                    onTap: (){
+                                      notifier2.pickImage(context, data!.id!);
+                                    },
+                                    child: Container(
+                                      padding: Ei.only(l: 5, r: 5),
+                                      height: 35,
+                                      width: 130,
+                                      decoration: BoxDecoration(
+                                          color: LzColors.hex('0047E3'),
+                                          borderRadius:
+                                              BorderRadius.circular(30)),
+                                      child: Row(
+                                        children: [
+                                          const Icon(
+                                            Ti.edit,
+                                            color: Colors.white,
+                                            size: 20,
+                                          ),
+                                          Text(
+                                            'change photo',
+                                            style: Gfont.white.fsize(15),
+                                          )
+                                        ],
+                                      ),
                                     ),
                                   ),
                                   Column(

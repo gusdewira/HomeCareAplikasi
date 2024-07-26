@@ -79,7 +79,7 @@ class SeeRequestEmployer extends StatelessWidget {
               mainAxisSize: Mas.min,
               crossAxisAlignment: Caa.start,
               children: [
-                Container(
+                SizedBox(
                   width: context.width,
                   child: Text(
                     project.title!,
@@ -111,7 +111,7 @@ class SeeRequestEmployer extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: Caa.start,
                         children: [
-                          Textr(
+                          const Textr(
                             maxLines: 1,
                             overflow: Tof.ellipsis,
                             'Duration',
@@ -129,7 +129,7 @@ class SeeRequestEmployer extends StatelessWidget {
                 Row(
                   mainAxisAlignment: Maa.start,
                   children: [
-                    Icon(Ti.mapPin).margin(r: 5),
+                    const Icon(Ti.mapPin).margin(r: 5),
                     Textr(
                       alignment: Alignment.centerRight,
                       margin: Ei.only(r: 10),
