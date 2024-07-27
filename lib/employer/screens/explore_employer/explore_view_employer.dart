@@ -23,9 +23,37 @@ class ExploreEmployerView extends ConsumerState<ExploreView> {
   final List<String> selectedCategories = [];
 
   @override
+  void initState() {
+    super.initState();
+    _searchQuery.addListener(_onSearchChanged);
+  }
+
+  @override
+  void dispose() {
+    _searchQuery.removeListener(_onSearchChanged);
+    _searchQuery.dispose();
+    super.dispose();
+  }
+
+  void _onSearchChanged() {
+    _refreshProfiles();
+  }
+
+  void _refreshProfiles() {
+    ref.watch(freelancerProvider.notifier).getFreelancer(
+      query: {
+        'start_salary': fromSalary,
+        'end_salary': toSalary,
+        'name_category': selectedCategories.join(','),
+        'location': location,
+        'search': _searchQuery.text,
+      },
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
     var profiles = ref.watch(freelancerProvider);
-    print(profiles);
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -144,6 +172,7 @@ class ExploreEmployerView extends ConsumerState<ExploreView> {
                                           IconButton(
                                               onPressed: () {
                                                 Navigator.of(context).pop();
+                                                _refreshProfiles();
                                               },
                                               icon: const Icon(Ti.x))
                                         ],
@@ -161,6 +190,7 @@ class ExploreEmployerView extends ConsumerState<ExploreView> {
                                                     setState(() {
                                                       fromSalary = value;
                                                     });
+                                                    _refreshProfiles();
                                                   },
                                                   labelStyle: LzFormLabelStyle(
                                                       color: color1),
@@ -176,6 +206,7 @@ class ExploreEmployerView extends ConsumerState<ExploreView> {
                                                     setState(() {
                                                       toSalary = value;
                                                     });
+                                                    _refreshProfiles();
                                                   },
                                                   labelStyle: LzFormLabelStyle(
                                                       color: color1),
@@ -227,6 +258,7 @@ class ExploreEmployerView extends ConsumerState<ExploreView> {
                                                 selectedCategories
                                                     .remove(value);
                                               }
+                                              _refreshProfiles();
                                             },
                                           ),
                                           LzForm.input(
@@ -235,6 +267,7 @@ class ExploreEmployerView extends ConsumerState<ExploreView> {
                                               setState(() {
                                                 location = value;
                                               });
+                                              _refreshProfiles();
                                             },
                                             labelStyle:
                                                 LzFormLabelStyle(color: color1),
@@ -242,19 +275,15 @@ class ExploreEmployerView extends ConsumerState<ExploreView> {
                                           ).margin(b: 10),
                                           InkTouch(
                                             onTap: () {
-                                              final query = {
-                                                'start_salary': fromSalary,
-                                                'end_salary': toSalary,
-                                                'name_category': selectedCategories
-                                                    .join(','),
-                                                'location': location,
-                                              };
-
-                                              // ref
-                                              //     .read(projectProvider
-                                              //         .notifier)
-                                              //     .getProjectEmployerQuery(
-                                              //         query);
+                                              Navigator.of(context).pop();
+                                              _refreshProfiles();
+                                              print({
+        'start_salary': fromSalary,
+        'end_salary': toSalary,
+        'name_category': selectedCategories.join(','),
+        'location': location,
+        'search': _searchQuery.text,
+      },);
                                             },
                                             child: Container(
                                               height: 50,
@@ -315,8 +344,8 @@ class ExploreEmployerView extends ConsumerState<ExploreView> {
                       ),
                       Expanded(
                         child: TextField(
-                          onChanged: (query) async {
-                            profiles = ref.watch(freelancerProvider);
+                          onChanged: (query) {
+                            _refreshProfiles();
                           },
                           controller: _searchQuery,
                           decoration: const InputDecoration(

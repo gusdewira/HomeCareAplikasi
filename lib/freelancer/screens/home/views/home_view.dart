@@ -22,7 +22,6 @@ class HomeView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     final profileData = ref.watch(profileFreelancerProvider);
     final projectActive = ref.watch(projectProgress);
     final projectCompleted = ref.watch(projectComplated);
@@ -45,7 +44,8 @@ class HomeView extends ConsumerWidget {
           String email = profile.email ?? '';
           String fistName = profile.firstName ?? '';
           String lastName = profile.lastName ?? '';
-          String earn = profile.earning != null ? profile.earning.split('.')[0] : '';
+          String earn =
+              profile.earning != null ? profile.earning.split('.')[0] : '';
           int? profileId = profile.id;
 
           if (profileId == null) {
@@ -67,11 +67,18 @@ class HomeView extends ConsumerWidget {
                   },
                   child: Row(
                     children: [
-                      const LzImage(
-                        'profile.jpg',
-                        radius: 50,
-                        size: 50,
-                      ),
+                      profile.photoProfile != null &&
+                              profile.photoProfile is String
+                          ? LzImage(
+                              profile.photoProfile,
+                              radius: 50,
+                              size: 50,
+                            )
+                          : const Icon(
+                              Icons.account_circle,
+                              size: 50,
+                              color: Colors.white,
+                            ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -143,18 +150,26 @@ class HomeView extends ConsumerWidget {
                             data: (List<ProjectFreelancerModel> active) {
                               return projectCompleted.when(
                                 data: (List<ProjectFreelancerModel> completed) {
-                                  return AllProjectHome(projects: projects.length, active: active.length, completed: completed.length, rejected: 0,);
-                            }, error: (error, _) {
-                              return LzNoData(message: 'Oops! $error');
-                            }, loading: () {
-                              return LzLoader.bar(message: 'Loading...');
-                            },);
+                                  return AllProjectHome(
+                                    projects: projects.length,
+                                    active: active.length,
+                                    completed: completed.length,
+                                    rejected: 0,
+                                  );
+                                },
+                                error: (error, _) {
+                                  return LzNoData(message: 'Oops! $error');
+                                },
+                                loading: () {
+                                  return LzLoader.bar(message: 'Loading1...');
+                                },
+                              );
                             },
                             error: (error, _) {
                               return LzNoData(message: 'Oops! $error');
                             },
                             loading: () {
-                              return LzLoader.bar(message: 'Loading...');
+                              return LzLoader.bar(message: 'Loading2...');
                             },
                           )
                         ],
@@ -164,7 +179,7 @@ class HomeView extends ConsumerWidget {
                       return LzNoData(message: 'Oops! $error');
                     },
                     loading: () {
-                      return LzLoader.bar(message: 'Loading...');
+                      return LzLoader.bar(message: 'Loading3...');
                     },
                   ),
                 ],
@@ -176,7 +191,7 @@ class HomeView extends ConsumerWidget {
           return LzNoData(message: 'Oops! $error');
         },
         loading: () {
-          return LzLoader.bar(message: 'Loading...');
+          return LzLoader.bar(message: 'Loading4...');
         },
       ),
     );

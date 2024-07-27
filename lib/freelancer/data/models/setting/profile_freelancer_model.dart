@@ -15,11 +15,11 @@ class ProfileFreelancerModel {
 
   ProfileFreelancerModel({
     this.id,
-    required this.firstName, 
-    required this.lastName, 
-    required this.email, 
-    required this.numberPhone, 
-    required this.address, 
+    required this.firstName,
+    required this.lastName,
+    required this.email,
+    required this.numberPhone,
+    required this.address,
     required this.password,
     this.photoProfile,
     this.summary,
@@ -39,7 +39,7 @@ class ProfileFreelancerModel {
         numberPhone: json["number_phone"] as String?,
         address: json["address"] as String?,
         password: json["password"] as String?,
-        photoProfile: json["photo_profile"],
+        photoProfile: json["profile_photo"],
         summary: json["summary"],
         earning: json["earning"],
         portofolioAttachment: json["portofolio_attachment"],
@@ -61,7 +61,7 @@ class ProfileFreelancerModel {
         "number_phone": numberPhone,
         "address": address,
         "password": password,
-        "photo_profile": photoProfile,
+        "profile_photo": photoProfile,
         "summary": summary,
         "earning": earning,
         "portofolio_attachment": portofolioAttachment,
@@ -69,7 +69,6 @@ class ProfileFreelancerModel {
         "role": List<dynamic>.from(role.map((x) => x)),
       };
 }
-
 
 class ProfileFreelancerModel1 {
   int? id;
@@ -114,7 +113,7 @@ class ProfileFreelancerModel1 {
       numberPhone: json["number_phone"] as String?,
       address: json["address"] as String?,
       password: json["password"] as String?,
-      photoProfile: json["photo_profile"],
+      photoProfile: json["profile_photo"],
       summary: json["summary"],
       earning: json["earning"],
       portofolioAttachment: json["portofolio_attachment"],
@@ -127,7 +126,8 @@ class ProfileFreelancerModel1 {
     if (jsonList == null || jsonList.isEmpty) {
       throw const FormatException("Invalid format for ProfileFreelancerModel");
     }
-    return ProfileFreelancerModel1.fromJson(jsonList.first as Map<String, dynamic>);
+    return ProfileFreelancerModel1.fromJson(
+        jsonList.first as Map<String, dynamic>);
   }
 
   Map<String, dynamic> toJson() {
@@ -139,7 +139,7 @@ class ProfileFreelancerModel1 {
       "number_phone": numberPhone,
       "address": address,
       "password": password,
-      "photo_profile": photoProfile,
+      "profile_photo": photoProfile,
       "summary": summary,
       "earning": earning,
       "portofolio_attachment": portofolioAttachment,

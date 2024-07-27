@@ -1,4 +1,6 @@
+import 'package:fetchly/fetchly.dart';
 import 'package:flutter/material.dart';
+import 'package:homecare_app/employer/data/api/api.dart';
 import 'package:lazyui/lazyui.dart';
 
 class InfoRequestBid extends StatelessWidget {
@@ -8,19 +10,12 @@ class InfoRequestBid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String formatNumber(double number) {
-      if (number >= 1000000000) {
-        return '${(number / 1000000000).toStringAsFixed(1)}B';
-      } else if (number >= 1000000) {
-        return '${(number / 1000000).toStringAsFixed(1)}M';
-      } else if (number >= 1000) {
-        return '${(number / 1000).toStringAsFixed(1)}k';
-      } else {
-        return number.toStringAsFixed(0);
-      }
+      final formatCurrency = NumberFormat.currency(
+          locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
+      return formatCurrency.format(number);
     }
 
     DateTime offerDate = DateTime.parse(bid['offer_date']);
-    print(bid);
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -45,7 +40,7 @@ class InfoRequestBid extends StatelessWidget {
           children: [
             Row(
               children: [
-                bid["user"]["profile_photo"]
+                bid["user"]["profile_photo"] != null
                     ? LzImage(
                         'https://homecare.galkasoft.id/storage/${bid["user"]["profile_photo"]}',
                         radius: 50,
@@ -75,7 +70,7 @@ class InfoRequestBid extends StatelessWidget {
                               style: Gfont.color(LzColors.hex('001380')),
                             ),
                             Textr(
-                              bid["user"]["profession"],
+                              bid["user"]["profession"] ?? "No Profession",
                               overflow: Tof.ellipsis,
                               width: 150,
                               style: Gfont.grey,
@@ -147,8 +142,18 @@ class InfoRequestBid extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 InkTouch(
-                  onTap: () {
-                    print("Hello World!");
+                  onTap: () async {
+                    ProjectsApi projectsApi = ProjectsApi();
+                    ResHandler res = await projectsApi.approveBid(bid['id']);
+                    LzToast.dismiss();
+                    if (!res.status) {
+                      LzToast.show(res.message);
+                      return false;
+                    } else {
+                      LzToast.show('Successfully approved bid project...');
+                      Navigator.pop(context);
+                      return true;
+                    }
                   },
                   child: Container(
                     height: 30,
@@ -166,18 +171,33 @@ class InfoRequestBid extends StatelessWidget {
                   ),
                 ),
                 const Spacer(),
-                Container(
-                  height: 30,
-                  width: 100,
-                  margin: const EdgeInsets.only(top: 15),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
-                    border: Border.all(color: Colors.red, width: 2),
-                  ),
-                  child: Textr(
-                    alignment: Alignment.center,
-                    'Reject Bid',
-                    style: Gfont.red.fsize(12),
+                InkTouch(
+                  onTap: () async {
+                    ProjectsApi projectsApi = ProjectsApi();
+                    ResHandler res = await projectsApi.rejectBid(bid['id']);
+                    LzToast.dismiss();
+                    if (!res.status) {
+                      LzToast.show(res.message);
+                      return false;
+                    } else {
+                      LzToast.show('Successfully reject bid project...');
+                      Navigator.pop(context);
+                      return true;
+                    }
+                  },
+                  child: Container(
+                    height: 30,
+                    width: 100,
+                    margin: const EdgeInsets.only(top: 15),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30),
+                      border: Border.all(color: Colors.red, width: 2),
+                    ),
+                    child: Textr(
+                      alignment: Alignment.center,
+                      'Reject Bid',
+                      style: Gfont.red.fsize(12),
+                    ),
                   ),
                 ),
               ],

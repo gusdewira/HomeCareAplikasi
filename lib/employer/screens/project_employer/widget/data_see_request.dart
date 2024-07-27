@@ -11,15 +11,9 @@ class DataSeeRequest extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String formatNumber(double number) {
-      if (number >= 1000000000) {
-        return '${(number / 1000000000).toStringAsFixed(1)}B';
-      } else if (number >= 1000000) {
-        return '${(number / 1000000).toStringAsFixed(1)}M';
-      } else if (number >= 1000) {
-        return '${(number / 1000).toStringAsFixed(1)}k';
-      } else {
-        return number.toStringAsFixed(0);
-      }
+      final formatCurrency = NumberFormat.currency(
+          locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
+      return formatCurrency.format(number);
     }
 
     DateTime offerDate = DateTime.parse(bid['offer_date']);
@@ -115,7 +109,7 @@ class DataSeeRequest extends StatelessWidget {
                       color: LzColors.hex('001380'),
                       size: 15,
                     ),
-                    Text(bid['user']['address'],
+                    Text(bid['user']['address'] ?? "No Address",
                         overflow: Tof.ellipsis,
                         style: Gfont.color(LzColors.hex('001380'))),
                   ],

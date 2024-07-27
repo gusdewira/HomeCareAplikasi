@@ -30,6 +30,25 @@ class ProfileEmployeeProvider extends StateNotifier<AsyncValue<ProfileEmployerMo
       state = AsyncValue.error(e, s);
     }
   }
+
+  Future<ProfileEmployerModel> getDataProfile() async {
+    try {
+      state = const AsyncValue.loading();
+      ResHandler res = await profileEmployeeApi.getProfileEmployee();
+
+      if (res.status) {
+        state = AsyncValue.data(ProfileEmployerModel.fromJson(res.data ?? {}));
+        return ProfileEmployerModel.fromJson(res.data ?? {});
+      } else {
+        LzToast.show(res.message);
+        state = AsyncValue.error(res.message ?? 'Unknown error occurred', StackTrace.current);
+        throw Exception('Failed to fetch profile');
+      }
+    } catch (e, s) {
+      Errors.check(e, s);
+      throw Exception('An error occurred');
+    }
+  }
 }
 
 final profileEmployeeProvider = StateNotifierProvider<ProfileEmployeeProvider, AsyncValue<ProfileEmployerModel>>((ref) {
@@ -99,10 +118,8 @@ class EditProfilChangeNotifier with ChangeNotifier, UseApi1 {
         LzToast.dismiss();
 
         if (!res.status) {
-          forms.reset();
           LzToast.show(res.message);
         } else {
-          forms.reset();
           LzToast.show('Successfully Edited Profile Employee');
         }
       }
