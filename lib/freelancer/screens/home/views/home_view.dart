@@ -26,6 +26,13 @@ class HomeView extends ConsumerWidget {
     final projectActive = ref.watch(projectProgress);
     final projectCompleted = ref.watch(projectComplated);
 
+    Future<void> _refreshData() async {
+      ref.refresh(profileFreelancerProvider);
+      ref.refresh(projectFreelancer);
+      ref.refresh(projectProgress);
+      ref.refresh(projectComplated);
+    }
+
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -52,140 +59,143 @@ class HomeView extends ConsumerWidget {
             return const LzNoData(message: 'Profile ID is missing');
           }
 
-          final projectData = ref.watch(projectFreelancerByProfile(profileId));
+          final projectData = ref.watch(projectFreelancer);
 
-          return Expanded(
-              child: SingleChildScrollView(
-                  child: Stack(
-            children: [
-              Positioned(
-                top: 60,
-                left: 25,
-                child: InkTouch(
-                  onTap: () {
-                    context.push(Paths.profileHome);
-                  },
-                  child: Row(
-                    children: [
-                      profile.photoProfile != null &&
-                              profile.photoProfile is String
-                          ? LzImage(
-                              profile.photoProfile,
-                              radius: 50,
-                              size: 50,
-                            )
-                          : const Icon(
-                              Icons.account_circle,
-                              size: 50,
-                              color: Colors.white,
-                            ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Textr(
-                            '$fistName $lastName',
-                            width: 200,
-                            maxLines: 1,
-                            overflow: Tof.clip,
-                            style: Gfont.bold.white,
-                          ),
-                          Textr(
-                            email,
-                            width: 200,
-                            maxLines: 1,
-                            overflow: Tof.clip,
-                            style: Gfont.white.fsize(12),
-                          )
-                        ],
-                      ).margin(l: 15),
-                    ],
-                  ),
-                ),
-              ),
-              Positioned(
-                  top: 50,
-                  right: 25,
-                  child: IconButton(
-                      onPressed: () {
-                        context.push(Paths.notificationHome);
-                      },
-                      icon: const Icon(
-                        Ti.bell,
-                        size: 30,
-                        color: Colors.white,
-                      ))),
-              Container(
-                margin: Ei.only(t: 160),
-                width: context.width,
-                height: context.height,
-                decoration: BoxDecoration(
-                  color: color2,
-                  borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20)),
-                ),
-              ),
-              const SaldoHome(),
-              Column(
-                mainAxisAlignment: Maa.start,
+          return RefreshIndicator(
+            onRefresh: _refreshData,
+            child: SingleChildScrollView(
+              child: Stack(
                 children: [
-                  Row(
-                    mainAxisSize: Mas.min,
-                    children: [
-                      BalanceWithDrawl(
-                        earning: earn,
-                      ),
-                      const RecentTransaction()
-                    ],
-                  ),
-                  projectData.when(
-                    data: (List<ProjectFreelancerModel> projects) {
-                      late List<ProjectFreelancerModel> project =
-                          projects.take(2).toList();
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                  Positioned(
+                    top: 60,
+                    left: 25,
+                    child: InkTouch(
+                      onTap: () {
+                        context.push(Paths.profileHome);
+                      },
+                      child: Row(
                         children: [
-                          YourProjectHome(projects: project),
-                          projectActive.when(
-                            data: (List<ProjectFreelancerModel> active) {
-                              return projectCompleted.when(
-                                data: (List<ProjectFreelancerModel> completed) {
-                                  return AllProjectHome(
-                                    projects: projects.length,
-                                    active: active.length,
-                                    completed: completed.length,
-                                    rejected: 0,
+                          profile.photoProfile != null &&
+                                  profile.photoProfile is String
+                              ? LzImage(
+                                  profile.photoProfile,
+                                  radius: 50,
+                                  size: 50,
+                                )
+                              : const Icon(
+                                  Icons.account_circle,
+                                  size: 50,
+                                  color: Colors.white,
+                                ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Textr(
+                                '$fistName $lastName',
+                                width: 200,
+                                maxLines: 1,
+                                overflow: Tof.clip,
+                                style: Gfont.bold.white,
+                              ),
+                              Textr(
+                                email,
+                                width: 200,
+                                maxLines: 1,
+                                overflow: Tof.clip,
+                                style: Gfont.white.fsize(12),
+                              )
+                            ],
+                          ).margin(l: 15),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                      top: 50,
+                      right: 25,
+                      child: IconButton(
+                          onPressed: () {
+                            context.push(Paths.notificationHome);
+                          },
+                          icon: const Icon(
+                            Ti.bell,
+                            size: 30,
+                            color: Colors.white,
+                          ))),
+                  Container(
+                    margin: Ei.only(t: 160),
+                    width: context.width,
+                    height: context.height,
+                    decoration: BoxDecoration(
+                      color: color2,
+                      borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20)),
+                    ),
+                  ),
+                  const SaldoHome(),
+                  Column(
+                    mainAxisAlignment: Maa.start,
+                    children: [
+                      Row(
+                        mainAxisSize: Mas.min,
+                        children: [
+                          BalanceWithDrawl(
+                            earning: earn,
+                          ),
+                          const RecentTransaction()
+                        ],
+                      ),
+                      projectData.when(
+                        data: (List<ProjectFreelancerModel> projects) {
+                          late List<ProjectFreelancerModel> project =
+                              projects.take(2).toList();
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              YourProjectHome(projects: project),
+                              projectActive.when(
+                                data: (List<ProjectFreelancerModel> active) {
+                                  return projectCompleted.when(
+                                    data: (List<ProjectFreelancerModel> completed) {
+                                      return AllProjectHome(
+                                        projects: projects.length,
+                                        active: active.length,
+                                        completed: completed.length,
+                                        rejected: 0,
+                                      );
+                                    },
+                                    error: (error, _) {
+                                      return LzNoData(message: 'Oops! $error');
+                                    },
+                                    loading: () {
+                                      return LzLoader.bar(message: 'Loading1...');
+                                    },
                                   );
                                 },
                                 error: (error, _) {
                                   return LzNoData(message: 'Oops! $error');
                                 },
                                 loading: () {
-                                  return LzLoader.bar(message: 'Loading1...');
+                                  return LzLoader.bar(message: 'Loading2...');
                                 },
-                              );
-                            },
-                            error: (error, _) {
-                              return LzNoData(message: 'Oops! $error');
-                            },
-                            loading: () {
-                              return LzLoader.bar(message: 'Loading2...');
-                            },
-                          )
-                        ],
-                      );
-                    },
-                    error: (error, _) {
-                      return LzNoData(message: 'Oops! $error');
-                    },
-                    loading: () {
-                      return LzLoader.bar(message: 'Loading3...');
-                    },
-                  ),
+                              )
+                            ],
+                          );
+                        },
+                        error: (error, _) {
+                          return LzNoData(message: 'Oops! $error');
+                        },
+                        loading: () {
+                          return LzLoader.bar(message: 'Loading3...');
+                        },
+                      ),
+                    ],
+                  ).margin(l: 25, r: 25, t: 220),
                 ],
-              ).margin(l: 25, r: 25, t: 220),
-            ],
-          )));
+              ),
+            ),
+          );
         },
         error: (error, _) {
           return LzNoData(message: 'Oops! $error');

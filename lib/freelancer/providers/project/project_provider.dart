@@ -7,8 +7,7 @@ import '../../data/models/setting/project_freelancer_model.dart';
 class ProjectProvider
     extends StateNotifier<AsyncValue<List<ProjectFreelancerModel>>>
     with UseApi {
-  final int freelancerId;
-  ProjectProvider(this.freelancerId) : super(const AsyncValue.loading()) {
+  ProjectProvider() : super(const AsyncValue.loading()) {
     getProjectFreelancer();
   }
 
@@ -16,16 +15,12 @@ class ProjectProvider
     try {
       state = const AsyncValue.loading();
 
-      ResHandler res = await projectFreelancerApi
-          .getProjectFreelancerByProfile(freelancerId);
-
+      ResHandler res = await projectFreelancerApi.getProjectFreelancer();
+print(res.message);
       if (res.status) {
-        dynamic data = res.data;
-        if (data is List) {
-          state = AsyncValue.data(data.map((e) => ProjectFreelancerModel.fromJson(e)).toList());
-        } else {
-          LzToast.show("Unexpected data type received");
-        }
+        List data = res.data;
+        state = AsyncValue.data(
+            data.map((e) => ProjectFreelancerModel.fromJson(e)).toList());
       } else {
         LzToast.show(res.message);
       }
@@ -35,8 +30,7 @@ class ProjectProvider
   }
 }
 
-final projectFreelancerByProfile = StateNotifierProvider.autoDispose
-    .family<ProjectProvider, AsyncValue<List<ProjectFreelancerModel>>, int>(
-        (ref, freelancerId) {
-  return ProjectProvider(freelancerId);
+final projectFreelancer = StateNotifierProvider.autoDispose<ProjectProvider,
+    AsyncValue<List<ProjectFreelancerModel>>>((ref) {
+  return ProjectProvider();
 });
