@@ -101,13 +101,9 @@ class EditProfilChangeNotifier with ChangeNotifier, UseApi1 {
         if (!res.status) {
           forms.reset();
           LzToast.show(res.message);
-
-          Navigator.pop(context);
         } else {
           forms.reset();
           LzToast.show('Successfully Edited Profile Employee');
-
-          Navigator.pop(context);
         }
       }
     } catch (e, s) {
@@ -142,6 +138,7 @@ class EditImageChangeNotifier with ChangeNotifier, UseApi1 {
           edit(context, id);
         }
       });
+      notifyListeners();
       filePath = pickedFile.path;
     }
   }
@@ -151,8 +148,7 @@ class EditImageChangeNotifier with ChangeNotifier, UseApi1 {
         Map<String, dynamic> map = {};
         LzToast.overlay('Editing profile...');
 
-        map['portofolio_attachment'] = filePath;
-
+        map['profile_photo'] = await projectsApi.toFile(filePath, filename: "profile_photo");
         map['_method'] = 'put';
         ResHandler res = await profileEmployeeApi.updateImageProfile(map);
 
@@ -160,12 +156,8 @@ class EditImageChangeNotifier with ChangeNotifier, UseApi1 {
 
         if (!res.status) {
           LzToast.show(res.message);
-
-          Navigator.pop(context);
         } else {
           LzToast.show('Successfully Edited Profile Freelancer');
-
-          Navigator.pop(context);
         }
 
     } catch (e, s) {
