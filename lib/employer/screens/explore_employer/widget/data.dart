@@ -88,26 +88,19 @@ class DataExploreFreelancer extends StatelessWidget {
                           //   width: 100,
                           //   style: Gfont.color(LzColors.hex('001380')),
                           // ),
-                          SizedBox(
-                            width: 100,
-                            child: Container(
-                              margin: Ei.only(l: 5),
-                              width: 100,
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    Ti.mapPin,
-                                    color: LzColors.hex('001380'),
-                                    size: 15,
-                                  ),
-                                  Text(
-                                    address,
-                                    overflow: Tof.ellipsis,
-                                    style: Gfont.color(LzColors.hex('001380')),
-                                  ),
-                                ],
+                          Row(
+                            children: [
+                              Icon(
+                                Ti.mapPin,
+                                color: LzColors.hex('001380'),
+                                size: 15,
                               ),
-                            ),
+                              Textr(
+                                address,
+                                overflow: Tof.fade,
+                                style: Gfont.color(LzColors.hex('001380')).fsize(13),
+                              ),
+                            ],
                           ),
                         ],
                       ),
@@ -117,11 +110,15 @@ class DataExploreFreelancer extends StatelessWidget {
               ),
             ],
           ),
-          Textr(
+          Container(
+            width: context.width,
+            height: 80,
             margin: Ei.only(t: 10),
-            maxLines: 4,
-            summary,
-            style: Gfont.color(LzColors.hex('747474')).fsize(14),
+            child: Text(
+              maxLines: 4,
+              summary,
+              style: Gfont.color(LzColors.hex('747474')).fsize(14),
+            ),
           ),
           SizedBox(
             width: context.width,

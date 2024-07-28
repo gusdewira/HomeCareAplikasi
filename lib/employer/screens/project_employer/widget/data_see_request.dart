@@ -94,6 +94,7 @@ class DataSeeRequest extends StatelessWidget {
                       overflow: Tof.ellipsis,
                       style: Gfont.color(LzColors.hex('001380'))),
                   Textr(formatNumber(double.parse(bid["offer_amount"])),
+                      maxLines: 1,
                       overflow: Tof.ellipsis,
                       width: 150,
                       style: Gfont.color(LzColors.hex('B9B9B9'))),
@@ -101,27 +102,44 @@ class DataSeeRequest extends StatelessWidget {
               ),
               Container(
                 margin: Ei.only(l: 5),
-                width: 100,
-                child: Row(
+                width: 150,
+                child: Column(
                   children: [
-                    Icon(
-                      Ti.mapPin,
-                      color: LzColors.hex('001380'),
-                      size: 15,
+                    Row(
+                      children: [
+                        Icon(
+                          Ti.mapPin,
+                          color: LzColors.hex('001380'),
+                          size: 15,
+                        ),
+                        Container(
+                          width: 100,
+                          child: Text(bid['user']['address'] ?? "No Address",
+                              overflow: Tof.ellipsis,
+                              style: Gfont.color(LzColors.hex('001380'))
+                                  .fsize(14)),
+                        ),
+                      ],
                     ),
-                    Text(bid['user']['address'] ?? "No Address",
+                    const Textr(
+                        alignment: Alignment.center,
+                        maxLines: 1,
                         overflow: Tof.ellipsis,
-                        style: Gfont.color(LzColors.hex('001380'))),
+                        ''),
                   ],
                 ),
               ),
             ],
           ).margin(t: 10),
-          Textr(
+          Container(
+            width: context.width,
+            height: 90,
             margin: Ei.only(t: 10),
-            maxLines: 4,
-            bid['user']['summary'] ?? 'No Summary',
-            style: Gfont.color(LzColors.hex('747474')).fsize(14),
+            child: Text(
+              maxLines: 4,
+              bid['user']['summary'] ?? 'No Summary',
+              style: Gfont.color(LzColors.hex('747474')).fsize(14),
+            ),
           ),
           SizedBox(
             width: context.width,

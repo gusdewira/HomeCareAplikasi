@@ -75,67 +75,81 @@ class Tabbar1ProjectEmployer extends ConsumerWidget {
                           style: Gfont.color(LzColors.hex('001380')).fsize(18),
                         ),
                       ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: Caa.start,
-                              children: [
-                                Textr(margin: Ei.only(r: 10), 'Salary'),
-                                Textr(
-                                    margin: Ei.only(r: 10),
-                                    '$startSalary - $endSalary',
-                                    style: Gfont.color(LzColors.hex('001380'))),
-                              ],
+                      Container(
+                        width: context.width,
+                        height: 70,
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: Caa.start,
+                                children: [
+                                  Textr(margin: Ei.only(r: 10), 'Salary'),
+                                  Textr(
+                                    maxLines: 2,
+                                      overflow: Tof.ellipsis,
+                                      margin: Ei.only(r: 10),
+                                      '$startSalary - $endSalary',
+                                      style: Gfont.color(LzColors.hex('001380'))
+                                          .fsize(12)),
+                                ],
+                              ),
                             ),
-                          ),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: Caa.start,
-                              children: [
-                                const Textr(
-                                    maxLines: 1,
-                                    overflow: Tof.ellipsis,
-                                    'duration'),
-                                Textr(
-                                    alignment: Alignment.center,
-                                    maxLines: 1,
-                                    overflow: Tof.ellipsis,
-                                    '$startDate - $endDate',
-                                    style: Gfont.color(LzColors.hex('001380'))),
-                              ],
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: Caa.start,
+                                children: [
+                                  const Textr(
+                                      maxLines: 1,
+                                      overflow: Tof.ellipsis,
+                                      'duration'),
+                                  Textr(
+                                      alignment: Alignment.center,
+                                      maxLines: 1,
+                                      overflow: Tof.ellipsis,
+                                      '$startDate - $endDate',
+                                      style: Gfont.color(LzColors.hex('001380'))
+                                          .fsize(12)),
+                                ],
+                              ),
                             ),
-                          ),
-                          Expanded(
-                            child: Column(
-                              children: [
-                                Row(
-                                  mainAxisAlignment: Maa.end,
-                                  children: [
-                                    const Icon(Ti.mapPin),
-                                    Textr(
-                                        alignment: Alignment.centerRight,
-                                        margin: Ei.only(r: 10),
-                                        '${location ?? "Dendapasar"}',
-                                        style: Gfont.color(
-                                            LzColors.hex('001380'))),
-                                  ],
-                                ),
-                                const Textr(
-                                    alignment: Alignment.center,
-                                    maxLines: 1,
-                                    overflow: Tof.ellipsis,
-                                    ''),
-                              ],
+                            Expanded(
+                              child: Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: Maa.end,
+                                    children: [
+                                      Icon(
+                                        Ti.mapPin,
+                                        size: 15,
+                                      ),
+                                      Textr(
+                                          alignment: Alignment.centerRight,
+                                          margin: Ei.only(r: 10),
+                                          '${location ?? "Dendapasar"}',
+                                          style: Gfont.color(
+                                                  LzColors.hex('001380'))
+                                              .fsize(12)),
+                                    ],
+                                  ),
+                                  const Textr(
+                                      alignment: Alignment.center,
+                                      maxLines: 1,
+                                      overflow: Tof.ellipsis,
+                                      ''),
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
-                      ).margin(t: 10),
-                      Textr(
-                          margin: Ei.only(t: 10),
-                          maxLines: 3,
-                          overflow: Tof.ellipsis,
-                          description),
+                          ],
+                        ).margin(t: 10),
+                      ),
+                      Container(
+                        width: context.width,
+                        height: 40,
+                        margin: Ei.only(t: 10),
+                        child: Text(
+                            maxLines: 3, overflow: Tof.ellipsis, description),
+                      ),
                       InkTouch(
                         onTap: () {
                           context.lzPush(SeeRequestEmployer(

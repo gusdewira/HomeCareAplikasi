@@ -110,10 +110,10 @@ class LoginView extends ConsumerWidget {
                   print('ok: ${ok["role"]}');
                   if(ok['status']){
                     if(ok['role'] == "freelancer"){
-                      context.push(Paths.home);
+                      context.go(Paths.home);
                       LzToast.show("Login success as Freelancer");
                     }else{
-                      context.push(Paths.home2);
+                      context.go(Paths.home2);
                       LzToast.show("Login success as Freelancer");
                     }
                   }else{
