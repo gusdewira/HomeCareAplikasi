@@ -36,20 +36,22 @@ class HomeView extends ConsumerWidget {
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
-            begin: Alignment.centerLeft,
-            end: Alignment.centerRight,
-            colors: [color3, color4],
-            stops: const [0.1, 0.7]),
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
+          colors: [color3, color4],
+          stops: const [0.1, 0.7],
+        ),
       ),
       child: profileData.when(
         data: (ProfileFreelancerModel profile) {
           if (profile.id == null) {
             return const LzNoData(
-                message:
-                    'There is no data yet, please add data in the add experience menu');
+              message:
+                  'There is no data yet, please add data in the add experience menu',
+            );
           }
           String email = profile.email ?? '';
-          String fistName = profile.firstName ?? '';
+          String firstName = profile.firstName ?? '';
           String lastName = profile.lastName ?? '';
           String earn =
               profile.earning != null ? profile.earning.split('.')[0] : '';
@@ -78,7 +80,7 @@ class HomeView extends ConsumerWidget {
                           profile.photoProfile != null &&
                                   profile.photoProfile is String
                               ? LzImage(
-                                  profile.photoProfile,
+                                  profile.photoProfile!,
                                   radius: 50,
                                   size: 50,
                                 )
@@ -91,7 +93,7 @@ class HomeView extends ConsumerWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Textr(
-                                '$fistName $lastName',
+                                '$firstName $lastName',
                                 width: 200,
                                 maxLines: 1,
                                 overflow: Tof.clip,
@@ -103,7 +105,7 @@ class HomeView extends ConsumerWidget {
                                 maxLines: 1,
                                 overflow: Tof.clip,
                                 style: Gfont.white.fsize(12),
-                              )
+                              ),
                             ],
                           ).margin(l: 15),
                         ],
@@ -111,17 +113,19 @@ class HomeView extends ConsumerWidget {
                     ),
                   ),
                   Positioned(
-                      top: 50,
-                      right: 25,
-                      child: IconButton(
-                          onPressed: () {
-                            context.push(Paths.notificationHome);
-                          },
-                          icon: const Icon(
-                            Ti.bell,
-                            size: 30,
-                            color: Colors.white,
-                          ))),
+                    top: 50,
+                    right: 25,
+                    child: IconButton(
+                      onPressed: () {
+                        context.push(Paths.notificationHome);
+                      },
+                      icon: const Icon(
+                        Ti.bell,
+                        size: 30,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
                   Container(
                     margin: Ei.only(t: 160),
                     width: context.width,
@@ -129,8 +133,9 @@ class HomeView extends ConsumerWidget {
                     decoration: BoxDecoration(
                       color: color2,
                       borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(20),
-                          topRight: Radius.circular(20)),
+                        topLeft: Radius.circular(20),
+                        topRight: Radius.circular(20),
+                      ),
                     ),
                   ),
                   const SaldoHome(),
@@ -140,10 +145,8 @@ class HomeView extends ConsumerWidget {
                       Row(
                         mainAxisSize: Mas.min,
                         children: [
-                          BalanceWithDrawl(
-                            earning: earn,
-                          ),
-                          const RecentTransaction()
+                          BalanceWithDrawl(earning: earn),
+                          const RecentTransaction(),
                         ],
                       ),
                       projectData.when(
@@ -157,7 +160,8 @@ class HomeView extends ConsumerWidget {
                               projectActive.when(
                                 data: (List<ProjectFreelancerModel> active) {
                                   return projectCompleted.when(
-                                    data: (List<ProjectFreelancerModel> completed) {
+                                    data: (List<ProjectFreelancerModel>
+                                        completed) {
                                       return AllProjectHome(
                                         projects: projects.length,
                                         active: active.length,
@@ -165,29 +169,41 @@ class HomeView extends ConsumerWidget {
                                         rejected: 0,
                                       );
                                     },
-                                    error: (error, _) {
-                                      return LzNoData(message: 'Oops! $error');
+                                    error: (error, stackTrace) {
+                                      return LzNoData(
+                                        message: 'Oops! $error',
+                                      );
                                     },
                                     loading: () {
-                                      return LzLoader.bar(message: 'Loading1...');
+                                      return LzLoader.bar(
+                                        message: 'Loading1...',
+                                      );
                                     },
                                   );
                                 },
-                                error: (error, _) {
-                                  return LzNoData(message: 'Oops! $error');
+                                error: (error, stackTrace) {
+                                  return LzNoData(
+                                    message: 'Oops! $error',
+                                  );
                                 },
                                 loading: () {
-                                  return LzLoader.bar(message: 'Loading2...');
+                                  return LzLoader.bar(
+                                    message: 'Loading2...',
+                                  );
                                 },
-                              )
+                              ),
                             ],
                           );
                         },
-                        error: (error, _) {
-                          return LzNoData(message: 'Oops! $error');
+                        error: (error, stackTrace) {
+                          return LzNoData(
+                            message: 'Oops! $error',
+                          );
                         },
                         loading: () {
-                          return LzLoader.bar(message: 'Loading3...');
+                          return LzLoader.bar(
+                            message: 'Loading3...',
+                          );
                         },
                       ),
                     ],
@@ -197,7 +213,7 @@ class HomeView extends ConsumerWidget {
             ),
           );
         },
-        error: (error, _) {
+        error: (error, stackTrace) {
           return LzNoData(message: 'Oops! $error');
         },
         loading: () {

@@ -16,15 +16,17 @@ class ProjectProvider
       state = const AsyncValue.loading();
 
       ResHandler res = await projectFreelancerApi.getProjectFreelancer();
-print(res.message);
+      print(res.message);
       if (res.status) {
         List data = res.data;
         state = AsyncValue.data(
             data.map((e) => ProjectFreelancerModel.fromJson(e)).toList());
       } else {
-        LzToast.show(res.message);
+        state = AsyncValue.error(res.message ?? 'Unknown error', StackTrace.current);
+        LzToast.show(res.message ?? 'Unknown error');
       }
     } catch (e, s) {
+      state = AsyncValue.error(e.toString(), s);
       Errors.check(e, s);
     }
   }

@@ -3,8 +3,8 @@ class ProjectFreelancerModel {
   String? title;
   String? description;
   String? attachment;
-  double? longitude;
-  double? latitude;
+  num? longitude;
+  num? latitude;
   DateTime? startDate;
   DateTime? endDate;
   List<String>? nameCategories;
