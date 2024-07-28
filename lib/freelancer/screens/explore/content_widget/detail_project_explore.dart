@@ -9,6 +9,13 @@ class DetailProjectExplore extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String formatNumber(double number) {
+      final formatCurrency = NumberFormat.currency(
+          locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
+      return formatCurrency.format(number);
+    }
+    final categoryNames = data.nameCategories!;
+
     return Scaffold(
       body: Container(
           decoration: BoxDecoration(
@@ -100,7 +107,7 @@ class DetailProjectExplore extends StatelessWidget {
                           margin: Ei.only(t: 20),
                         ),
                         Textr(
-                          data.user!['address'],
+                          data.user?['address'] ?? "No Adress",
                           style: Gfont.color(LzColors.hex('595959')).fsize(13),
                           margin: Ei.only(t: 5),
                           width: 350,
@@ -113,18 +120,18 @@ class DetailProjectExplore extends StatelessWidget {
                         ),
                         Row(
                           children: [
-                            Container(
-                              margin: Ei.only(r: 5),
-                              padding: Ei.all(8),
-                              decoration: BoxDecoration(
-                                  color: LzColors.hex('94BDFF'),
-                                  borderRadius: BorderRadius.circular(5)),
-                              child: Textr(
-                                'Frontend',
-                                style:
-                                    Gfont.color(LzColors.hex('000000')).fsize(13),
-                              ),
-                            ),
+                            ...categoryNames.map((name) => Container(
+      margin: const EdgeInsets.only(right: 5),
+      padding: const EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        color: LzColors.hex('94BDFF'),
+        borderRadius: BorderRadius.circular(5),
+      ),
+      child: Text(
+        name,
+        style: Gfont.color(LzColors.hex('000000')).fsize(13),
+      ),
+    )).toList(),
                           ],
                         ).margin(t: 10),
                         Textr(
@@ -134,7 +141,7 @@ class DetailProjectExplore extends StatelessWidget {
                           margin: Ei.only(t: 20),
                         ),
                         Textr(
-                          'From ${data.startSalary} - ${data.endSalary}',
+                          'From ${formatNumber(data.startSalary ?? 0.0)} - ${formatNumber(data.endSalary ?? 0.0)}',
                           style: Gfont.color(LzColors.hex('595959')).fsize(13),
                           margin: Ei.only(t: 5),
                           width: 350,

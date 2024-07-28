@@ -80,7 +80,7 @@ class BidExplore extends ConsumerWidget {
                     right: 0,
                     child: Center(
                         child: Textr(
-                      'Make an offer ${data!.id!}',
+                      'Make an offer',
                       style: Gfont.white.bold.fsize(18),
                     ))),
                 Column(

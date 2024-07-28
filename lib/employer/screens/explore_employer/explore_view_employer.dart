@@ -89,7 +89,6 @@ class ExploreEmployerView extends ConsumerState<ExploreView> {
                       Expanded(
                           child: profiles.when(
                         data: (List<ProfileFreelancerModel> profile) {
-                          // Log data from API
                           print('Data from API: $profile');
                           final bool hasFilters = fromSalary > 0 ||
                               toSalary > 0 ||

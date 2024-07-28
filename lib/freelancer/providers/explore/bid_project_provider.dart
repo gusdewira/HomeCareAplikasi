@@ -5,7 +5,8 @@ import 'package:lazyui/lazyui.dart';
 import '../../data/api/api.dart';
 
 class BidProvider with ChangeNotifier, UseApi {
-  final forms =   LzForm.make(['offer_amount', 'estimated_duration', 'offer_reason']);
+  final forms =
+      LzForm.make(['offer_amount', 'estimated_duration', 'offer_reason']);
 
   Future postbid(BuildContext context, int id) async {
     try {
@@ -23,21 +24,21 @@ class BidProvider with ChangeNotifier, UseApi {
       if (form.ok) {
         LzToast.overlay('send an offer');
 
-
         payload['project_id'] = id;
         ResHandler res = await bidProjectApi.postBidProject(payload);
 
-       if (!res.status) {
+        print(res.status);
+        print(res.message);
+
+        if (!res.status) {
           forms.reset();
           LzToast.show(res.message);
 
-          // ignore: use_build_context_synchronously
           Navigator.pop(context);
         } else {
           forms.reset();
           LzToast.show('Offer successfully sent');
 
-          // ignore: use_build_context_synchronously
           Navigator.pop(context);
         }
       }
@@ -48,9 +49,6 @@ class BidProvider with ChangeNotifier, UseApi {
       LzToast.dismiss();
     }
   }
-
-
 }
 
-final bidProvider =
-    ChangeNotifierProvider((ref) => BidProvider());
+final bidProvider = ChangeNotifierProvider((ref) => BidProvider());
