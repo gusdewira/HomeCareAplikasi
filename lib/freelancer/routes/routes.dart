@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:homecare_app/employer/screens/explore_employer/profille_freelancer.dart';
@@ -6,6 +8,7 @@ import 'package:homecare_app/employer/screens/home_employer/widget/posting_proje
 import 'package:homecare_app/employer/screens/home_employer/widget/recenttransaction_employee.dart';
 import 'package:homecare_app/employer/screens/home_employer/widget/topup_employer.dart';
 import 'package:homecare_app/employer/screens/project_employer/widget/see_history_progress.dart';
+import 'package:homecare_app/freelancer/data/local/storage.dart';
 
 import '../../home_page.dart';
 import '../../home_page2.dart';
@@ -44,12 +47,10 @@ final GoRouter router = GoRouter(
         return const SplashScreen();
       },
     ),
-    GoRoute(
-      path: Paths.login,
-      builder: (BuildContext context, GoRouterState state) {
-        return const LoginView ();
-      },
-    ),
+  Route.set(Paths.login, (state) => const LoginView()),
+    Route.set(Paths.home, (state) => const HomePage(), redirect: (_) => _redirect()),
+   
+    
      GoRoute(
       path: Paths.signup,
       builder: (BuildContext context, GoRouterState state) {
@@ -68,12 +69,7 @@ final GoRouter router = GoRouter(
         return  const ForgetpassVerifCode();
       },
     ),
-   GoRoute(
-      path: Paths.home,
-      builder: (BuildContext context, GoRouterState state) {
-        return const HomePage();
-      },
-    ),
+  
     GoRoute(
       path: Paths.home2,
       builder: (BuildContext context, GoRouterState state) {
@@ -244,3 +240,23 @@ final GoRouter router = GoRouter(
     ),
   ],
 );
+
+
+
+
+String _redirect() {
+  String? token = prefs.getString('token');
+  print('token = $token' );
+  return token == null ? Paths.login:Paths.home;
+}
+
+class Route {
+  static GoRoute set(String path, Widget Function(GoRouterState state) builder,
+      {FutureOr<String?> Function(GoRouterState)? redirect}) {
+    return GoRoute(
+      path: path,
+      builder: (BuildContext context, GoRouterState state) => builder(state),
+      redirect: (_, GoRouterState state) => redirect?.call(state),
+);
+}
+}

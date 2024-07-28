@@ -237,10 +237,14 @@ class Tabbar2ProjectEmployer extends ConsumerWidget {
                               .toList(),
                         ),
                       ),
-                      Text(
-                        project.description ?? "No Description",
-                        maxLines: 4,
-                        overflow: Tof.ellipsis,
+                      Container(
+                        width: context.width,
+                        height: 80,
+                        child: Text(
+                          project.description ?? "No Description",
+                          maxLines: 4,
+                          overflow: Tof.ellipsis,
+                        ),
                       ),
                       SizedBox(
                         width: context.width,

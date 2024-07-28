@@ -129,59 +129,54 @@ class EditProfilChangeNotifier with ChangeNotifier, UseApi1 {
   }
 }
 
-final editProfilChangeNotifier =
-    ChangeNotifierProvider((ref) => EditProfilChangeNotifier());
+final editProfilChangeNotifier = ChangeNotifierProvider((ref) => EditProfilChangeNotifier());
 
+// EditImageChangeNotifier
 class EditImageChangeNotifier with ChangeNotifier, UseApi1 {
   final ImagePicker _picker = ImagePicker();
+  final ProfileEmployeeProvider profileProvider;
   File image = File('');
   String filePath = '';
 
-  void pickImage(BuildContext context, id) async {
-    final pickedFile = await _picker.pickImage(
-      source: ImageSource.gallery,
-      maxWidth: 1500,
-      maxHeight: 1500,
-      imageQuality: 90,
-    );
+  EditImageChangeNotifier(this.profileProvider);
 
+  void pickImage(BuildContext context, id) async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.gallery, maxWidth: 1500, maxHeight: 1500, imageQuality: 90);
     if (pickedFile != null) {
-      showDialog(
-          context: context,
-          builder: (context) =>
-              WidImagePreview(file: File(pickedFile.path))).then((value) {
+      showDialog(context: context, builder: (context) => WidImagePreview(file: File(pickedFile.path))).then((value) {
         if (value != null) {
           image = File(pickedFile.path);
           edit(context, id);
         }
       });
-      notifyListeners();
       filePath = pickedFile.path;
+      notifyListeners();
     }
   }
 
-  Future edit(BuildContext context, int id) async {
+  Future<void> edit(BuildContext context, int id) async {
     try {
-        Map<String, dynamic> map = {};
-        LzToast.overlay('Editing profile...');
-
-        map['profile_photo'] = await projectsApi.toFile(filePath, filename: "profile_photo");
-        map['_method'] = 'put';
-        ResHandler res = await profileEmployeeApi.updateImageProfile(map);
-
-        LzToast.dismiss();
-
-        if (!res.status) {
-          LzToast.show(res.message);
-        } else {
-          LzToast.show('Successfully Edited Profile Freelancer');
-        }
-
+      final map = <String, dynamic>{};
+      LzToast.overlay('Editing profile...');
+      map['profile_photo'] = await projectsApi.toFile(filePath, filename: "profile_photo");
+      map['_method'] = 'put';
+      ResHandler res = await profileEmployeeApi.updateImageProfile(map);
+      LzToast.dismiss();
+      if (!res.status) {
+        LzToast.show(res.message);
+      } else {
+        LzToast.show('Successfully Edited Profile Freelancer');
+        await profileProvider.getProfile();
+        await profileProvider.getDataProfile();
+      }
     } catch (e, s) {
       Errors.check(e, s);
     }
   }
 }
 
-final editImageChangeNotifier =
-    ChangeNotifierProvider((ref) => EditImageChangeNotifier());
+final editImageChangeNotifier = ChangeNotifierProvider((ref) {
+  final profileProvider = ref.read(profileEmployeeProvider.notifier);
+  
+  return EditImageChangeNotifier(profileProvider);
+});

@@ -70,6 +70,7 @@ class YourProjectEmployer extends StatelessWidget {
           ),
           Expanded(
             child: ListView.builder(
+              padding: Ei.zero,
                 itemCount: projects.length,
                 itemBuilder: (contect, index) {
                   final project = projects[index];
@@ -118,7 +119,7 @@ class YourProjectEmployer extends StatelessWidget {
                       ),
                     ],
                   );
-                }),
+                }).margin(t: 10),
           ),
         ],
       ),
