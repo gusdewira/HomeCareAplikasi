@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:homecare_app/freelancer/screens/explore/content_widget/detail_project_explore.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lazyui/lazyui.dart';
+import 'package:intl/intl.dart'; // Pastikan Anda menambahkan ini untuk DateFormat
 
 import '../../../../data/models/setting/project_freelancer_model.dart';
 import '../../../../providers/project/project_waiting_provider.dart';
@@ -12,36 +13,48 @@ class Tabbar1 extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final profileData = ref.watch(projectBid);
+    final projectOffers = ref.watch(projectBid);
+
+    Future<void> _refreshProjects() async {
+      await ref.refresh(projectBid.notifier).getProjectBid();
+    }
+
+    String formatNumber(double number) {
+      final formatCurrency = NumberFormat.currency(
+          locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
+      return formatCurrency.format(number);
+    }
 
     return Column(
       children: [
         Expanded(
-          child: profileData.when(
+          child: projectOffers.when(
             data: (List<ProjectFreelancerModel> projectBids) {
               return projectBids.isNotEmpty
-                  ? ListView.builder(
-                      itemCount: projectBids.length,
-                      itemBuilder: (context, index) {
-                        final projectBid = projectBids[index];
-                        String title = projectBid.title!;
-                        String description = projectBid.description!;
-                        double startSalary = projectBid.startSalary!;
-                        double endSalary = projectBid.endSalary!;
-                        DateTime startDate = projectBid.startDate!;
-                        DateTime endDate = projectBid.endDate!;
-                        String address = projectBid.user!['address'];
+                  ? RefreshIndicator(
+                      onRefresh: _refreshProjects,
+                      child: ListView.builder(
+                        itemCount: projectBids.length,
+                        itemBuilder: (context, index) {
+                          final projectBid = projectBids[index];
+                          String title = projectBid.title!;
+                          String description = projectBid.description!;
+                          double startSalary = projectBid.startSalary!;
+                          double endSalary = projectBid.endSalary!;
+                          DateTime startDate = projectBid.startDate!;
+                          DateTime endDate = projectBid.endDate!;
+                          String address = projectBid.user!['address'];
 
-                        return Column(
-                          children: [
-                            Column(
-                              children: [
-                                Container(
-                                  padding: Ei.only(l: 20, r: 20, t: 10),
-                                  margin: Ei.only(l: 25, r: 25, b: 20),
-                                  height: 235,
-                                  width: context.width / 1,
-                                  decoration: BoxDecoration(
+                          return Column(
+                            children: [
+                              Column(
+                                children: [
+                                  Container(
+                                    padding: Ei.only(l: 20, r: 20, t: 10),
+                                    margin: Ei.only(l: 25, r: 25, b: 20),
+                                    height: 235,
+                                    width: context.width / 1,
+                                    decoration: BoxDecoration(
                                       color: LzColors.hex('FFFFFF'),
                                       borderRadius: BorderRadius.circular(20),
                                       boxShadow: [
@@ -50,43 +63,44 @@ class Tabbar1 extends ConsumerWidget {
                                           spreadRadius: 2,
                                           blurRadius: 10,
                                         )
-                                      ]),
-                                  child: Column(
-                                    mainAxisSize: Mas.min,
-                                    crossAxisAlignment: Caa.start,
-                                    children: [
-                                      SizedBox(
-                                        width: context.width,
-                                        height: 20,
-                                        child: Row(
-                                          mainAxisSize: Mas.min,
-                                          mainAxisAlignment: Maa.spaceBetween,
-                                          children: [
-                                            Expanded(
-                                              child: Textr(
-                                                title,
-                                                style: Gfont.color(color1)
-                                                    .bold
-                                                    .fsize(16),
-                                                margin: Ei.only(r: 30),
-                                                width: context.width,
-                                                maxLines: 1,
-                                                overflow: Tof.ellipsis,
+                                      ],
+                                    ),
+                                    child: Column(
+                                      mainAxisSize: Mas.min,
+                                      crossAxisAlignment: Caa.start,
+                                      children: [
+                                        SizedBox(
+                                          width: context.width,
+                                          height: 20,
+                                          child: Row(
+                                            mainAxisSize: Mas.min,
+                                            mainAxisAlignment: Maa.spaceBetween,
+                                            children: [
+                                              Expanded(
+                                                child: Textr(
+                                                  title,
+                                                  style: Gfont.color(color1)
+                                                      .bold
+                                                      .fsize(16),
+                                                  margin: Ei.only(r: 30),
+                                                  width: context.width,
+                                                  maxLines: 1,
+                                                  overflow: Tof.ellipsis,
+                                                ),
                                               ),
-                                            ),
-                                            InkTouch(
-                                                onTap: () {
-                                                  context.lzPush(DetailProjectExplore(data: projectBid));
-                                                },
-                                                child: Icon(
-                                                  Ti.infoCircle,
-                                                  size: 25,
-                                                  color: LzColors.hex('0047E3'),
-                                                ))
-                                          ],
+                                              InkTouch(
+                                                  onTap: () {
+                                                    context.lzPush(DetailProjectExplore(data: projectBid));
+                                                  },
+                                                  child: Icon(
+                                                    Ti.infoCircle,
+                                                    size: 25,
+                                                    color: LzColors.hex('0047E3'),
+                                                  )),
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                      SizedBox(
+                                        SizedBox(
                                           width: context.width,
                                           child: Column(
                                             children: [
@@ -97,26 +111,26 @@ class Tabbar1 extends ConsumerWidget {
                                                     color: Colors.green,
                                                   ).margin(r: 5),
                                                   Textr(
-                                                    '$startSalary - $endSalary',
-                                                    style: Gfont.color(black)
-                                                        .fsize(12),
+                                                    '${formatNumber(startSalary)} - ${formatNumber(endSalary)}',
+                                                    style: Gfont.color(black).fsize(12),
                                                   ),
                                                 ],
                                               ).margin(t: 10),
-                                              Row(children: [
-                                                const Icon(
-                                                  Ti.clock,
-                                                  color: Colors.red,
-                                                ).margin(r: 5),
-                                                Textr(
-                                                  '${DateFormat('dd/MM/yyyy').format(startDate)} - ${DateFormat('dd/MM/yyyy').format(endDate)}',
-                                                  style: Gfont.color(black)
-                                                      .fsize(12),
-                                                  width: context.width / 3 + 10,
-                                                  maxLines: 1,
-                                                  overflow: Tof.ellipsis,
-                                                ),
-                                              ]).margin(t: 5),
+                                              Row(
+                                                children: [
+                                                  const Icon(
+                                                    Ti.clock,
+                                                    color: Colors.red,
+                                                  ).margin(r: 5),
+                                                  Textr(
+                                                    '${DateFormat('dd/MM/yyyy').format(startDate)} - ${DateFormat('dd/MM/yyyy').format(endDate)}',
+                                                    style: Gfont.color(black).fsize(12),
+                                                    width: context.width / 3 + 10,
+                                                    maxLines: 1,
+                                                    overflow: Tof.ellipsis,
+                                                  ),
+                                                ],
+                                              ).margin(t: 5),
                                               Row(
                                                 children: [
                                                   Icon(
@@ -125,51 +139,49 @@ class Tabbar1 extends ConsumerWidget {
                                                   ).margin(r: 5),
                                                   Textr(
                                                     address,
-                                                    style: Gfont.color(black)
-                                                        .fsize(12),
+                                                    style: Gfont.color(black).fsize(12),
                                                     width: context.width / 3,
                                                     maxLines: 1,
                                                     overflow: Tof.ellipsis,
                                                   ),
                                                 ],
-                                              ).margin(t: 5)
+                                              ).margin(t: 5),
                                             ],
-                                          )),
-                                      Textr(
-                                        description,
-                                        style:
-                                            Gfont.color(LzColors.hex('747474'))
-                                                .fsize(12),
-                                        margin: Ei.only(t: 10),
-                                        maxLines: 3,
-                                        overflow: Tof.ellipsis,
-                                      ),
-                                      Container(
-                                        margin: Ei.only(t: 15),
-                                        width: 70,
-                                        height: 30,
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(20),
-                                          color: Colors.orangeAccent,
+                                          ),
                                         ),
-                                        child: Textr(
-                                          'Waiting',
-                                          style: Gfont.white.bold.fsize(15),
-                                          alignment: Alignment.center,
+                                        Textr(
+                                          description,
+                                          style: Gfont.color(LzColors.hex('747474')).fsize(12),
+                                          margin: Ei.only(t: 10),
+                                          maxLines: 3,
+                                          overflow: Tof.ellipsis,
                                         ),
-                                      )
-                                    ],
+                                        Container(
+                                          margin: Ei.only(t: 15),
+                                          width: 70,
+                                          height: 30,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(20),
+                                            color: Colors.orangeAccent,
+                                          ),
+                                          child: Textr(
+                                            'Waiting',
+                                            style: Gfont.white.bold.fsize(15),
+                                            alignment: Alignment.center,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        );
-                      },
+                                ],
+                              ),
+                            ],
+                          );
+                        },
+                      ),
                     )
                   : const LzNoData(
-                      message:
-                          'You don\'t have an offer yet');
+                      message: 'You don\'t have an offer yet');
             },
             error: (error, _) {
               ref.read(projectBid.notifier).getProjectBid();

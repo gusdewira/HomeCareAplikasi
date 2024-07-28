@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:homecare_app/freelancer/screens/explore/content_widget/detail_project_explore.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lazyui/lazyui.dart';
+import 'package:intl/intl.dart'; // Pastikan Anda menambahkan ini untuk DateFormat
 
 import '../../../../data/models/setting/project_freelancer_model.dart';
 import '../../../../providers/project/project_complated_provider.dart';
@@ -13,36 +14,47 @@ class Tabbar3 extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final profileData = ref.watch(projectComplated);
+    final projectFinished = ref.watch(projectComplated);
+
+    Future<void> _refreshProjects() async {
+      await ref.refresh(projectComplated.notifier).getProjectComplated();
+    }
+
+    String formatNumber(double number) {
+      final formatCurrency = NumberFormat.currency(
+          locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
+      return formatCurrency.format(number);
+    }
 
     return Column(
       children: [
         Expanded(
-          child: profileData.when(
+          child: projectFinished.when(
             data: (List<ProjectFreelancerModel> projectComplateds) {
               return projectComplateds.isNotEmpty
-                  ? ListView.builder(
-                      itemCount: projectComplateds.length,
-                      itemBuilder: (context, index) {
-                        final projectComplated = projectComplateds[index];
-                        String title = projectComplated.title!;
-                        double startSalary = projectComplated.startSalary!;
-                        double endSalary = projectComplated.endSalary!;
-                        DateTime startDate = projectComplated.startDate!;
-                        DateTime endDate = projectComplated.endDate!;
-                        String description = projectComplated.description!;
-                        String address = projectComplated.user!['address'];
-                        int id = projectComplated.id!;
+                  ? RefreshIndicator(
+                      onRefresh: _refreshProjects,
+                      child: ListView.builder(
+                        itemCount: projectComplateds.length,
+                        itemBuilder: (context, index) {
+                          final projectComplated = projectComplateds[index];
+                          String title = projectComplated.title!;
+                          String startSalary = formatNumber(projectComplated.startSalary ?? 0.0);
+                          String endSalary = formatNumber(projectComplated.endSalary ?? 0.0);
+                          DateTime startDate = projectComplated.startDate!;
+                          DateTime endDate = projectComplated.endDate!;
+                          String description = projectComplated.description!;
+                          String address = projectComplated.user!['address'];
+                          int id = projectComplated.id!;
 
-                        return Column(
-                          children: [
-                            Container(
-                              padding: Ei.only(l: 20, r: 20, t: 10),
-                              margin: Ei.only(l: 25,r: 25,b: 20,
-                              ),
-                              height: 200,
-                              width: context.width / 1,
-                              decoration: BoxDecoration(
+                          return Column(
+                            children: [
+                              Container(
+                                padding: Ei.only(l: 20, r: 20, t: 10),
+                                margin: Ei.only(l: 25, r: 25, b: 20),
+                                height: 200,
+                                width: context.width / 1,
+                                decoration: BoxDecoration(
                                   color: LzColors.hex('FFFFFF'),
                                   borderRadius: BorderRadius.circular(20),
                                   boxShadow: [
@@ -51,31 +63,32 @@ class Tabbar3 extends ConsumerWidget {
                                       spreadRadius: 2,
                                       blurRadius: 10,
                                     )
-                                  ]),
-                              child: Column(
-                                mainAxisSize: Mas.min,
-                                crossAxisAlignment: Caa.start,
-                                children: [
-                                  SizedBox(
-                                    width: context.width,
-                                    height: 20,
-                                    child: Row(
-                                      mainAxisSize: Mas.min,
-                                      mainAxisAlignment: Maa.spaceBetween,
-                                      children: [
-                                        Expanded(
-                                          child: Textr(
-                                            title,
-                                            style: Gfont.color(color1)
-                                                .bold
-                                                .fsize(16),
-                                            margin: Ei.only(r: 30),
-                                            width: context.width,
-                                            maxLines: 1,
-                                            overflow: Tof.ellipsis,
+                                  ],
+                                ),
+                                child: Column(
+                                  mainAxisSize: Mas.min,
+                                  crossAxisAlignment: Caa.start,
+                                  children: [
+                                    SizedBox(
+                                      width: context.width,
+                                      height: 20,
+                                      child: Row(
+                                        mainAxisSize: Mas.min,
+                                        mainAxisAlignment: Maa.spaceBetween,
+                                        children: [
+                                          Expanded(
+                                            child: Textr(
+                                              title,
+                                              style: Gfont.color(color1)
+                                                  .bold
+                                                  .fsize(16),
+                                              margin: Ei.only(r: 30),
+                                              width: context.width,
+                                              maxLines: 1,
+                                              overflow: Tof.ellipsis,
+                                            ),
                                           ),
-                                        ),
-                                        InkTouch(
+                                          InkTouch(
                                             onTap: () {
                                               context.lzPush(DetailProjectExplore(data: projectComplated));
                                             },
@@ -83,11 +96,12 @@ class Tabbar3 extends ConsumerWidget {
                                               Ti.infoCircle,
                                               size: 25,
                                               color: LzColors.hex('0047E3'),
-                                            ))
-                                      ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  SizedBox(
+                                    SizedBox(
                                       width: context.width,
                                       child: Column(
                                         children: [
@@ -98,9 +112,8 @@ class Tabbar3 extends ConsumerWidget {
                                                 color: Colors.green,
                                               ).margin(r: 5),
                                               Textr(
-                                               '$startSalary - $endSalary',
-                                                style: Gfont.color(black)
-                                                    .fsize(12),
+                                                '$startSalary - $endSalary',
+                                                style: Gfont.color(black).fsize(12),
                                               ),
                                             ],
                                           ).margin(t: 10),
@@ -112,8 +125,7 @@ class Tabbar3 extends ConsumerWidget {
                                               ).margin(r: 5),
                                               Textr(
                                                 '${DateFormat('dd/MM/yyyy').format(startDate)} - ${DateFormat('dd/MM/yyyy').format(endDate)}',
-                                                style: Gfont.color(black)
-                                                    .fsize(12),
+                                                style: Gfont.color(black).fsize(12),
                                                 width: context.width / 3,
                                                 maxLines: 1,
                                                 overflow: Tof.ellipsis,
@@ -128,38 +140,37 @@ class Tabbar3 extends ConsumerWidget {
                                               ).margin(r: 5),
                                               Textr(
                                                 address,
-                                                style: Gfont.color(black)
-                                                    .fsize(12),
+                                                style: Gfont.color(black).fsize(12),
                                                 width: context.width / 3,
                                                 maxLines: 1,
                                                 overflow: Tof.ellipsis,
                                               ),
                                             ],
-                                          ).margin(t: 5)
+                                          ).margin(t: 5),
                                         ],
-                                      )),
-                                  Textr(
-                                    description,
-                                    style:
-                                        Gfont.color(LzColors.hex('747474'))
-                                            .fsize(12),
-                                    margin: Ei.only(t: 10),
-                                    maxLines: 3,
-                                    overflow: Tof.ellipsis,
-                                  ),
-                                ],
+                                      ),
+                                    ),
+                                    Textr(
+                                      description,
+                                      style: Gfont.color(LzColors.hex('747474')).fsize(12),
+                                      margin: Ei.only(t: 10),
+                                      maxLines: 3,
+                                      overflow: Tof.ellipsis,
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
-                        );
-                      },
+                            ],
+                          );
+                        },
+                      ),
                     )
                   : const LzNoData(
-                      message:
-                          'No projects have been completed yet');
+                      message: 'No projects have been completed yet',
+                    );
             },
             error: (error, _) {
-              ref.read(projectBid.notifier).getProjectBid();
+              ref.read(projectComplated.notifier).getProjectComplated();
               return LzNoData(message: 'Oops! $error');
             },
             loading: () {
