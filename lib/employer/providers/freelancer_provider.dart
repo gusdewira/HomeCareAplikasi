@@ -12,17 +12,18 @@ class FreelancerProvider extends StateNotifier<AsyncValue<List<ProfileFreelancer
     getFreelancer();
   }
 
-  Future<void> getFreelancer({Map<String, dynamic>? query}) async {
+  Future<void> getFreelancer() async {
     try {
       state = const AsyncValue.loading();
 
-      ResHandler res = await dashboardApi.getFreelancer(query ?? {});
+      ResHandler res = await dashboardApi.getFreelancer();
 
       if (res.status) {
-        List data = res.data;
-        state = AsyncValue.data(
-            data.map((e) => ProfileFreelancerModel.fromJson(e)).toList());
-            } else {
+        List<ProfileFreelancerModel> data = (res.data as List<dynamic>)
+            .map((e) => ProfileFreelancerModel.fromJson(e))
+            .toList();
+        state = AsyncValue.data(data);
+      } else {
         LzToast.show(res.message);
       }
     } catch (e, s) {
