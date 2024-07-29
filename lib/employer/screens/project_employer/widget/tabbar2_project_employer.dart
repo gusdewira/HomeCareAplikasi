@@ -184,15 +184,15 @@ class Tabbar2ProjectEmployer extends ConsumerWidget {
                                           "${project.user?['first_name']} ${project.user?['last_name']}",
                                           width: 150,
                                           overflow: Tof.ellipsis,
-                                          style:
-                                              Gfont.color(LzColors.hex('001380'))),
+                                          style: Gfont.color(
+                                              LzColors.hex('001380'))),
                                       Textr(
                                           project.user?['profession'] ??
                                               "No Profession",
                                           overflow: Tof.ellipsis,
                                           width: 150,
-                                          style:
-                                              Gfont.color(LzColors.hex('B9B9B9'))),
+                                          style: Gfont.color(
+                                              LzColors.hex('B9B9B9'))),
                                     ],
                                   ),
                                 ],
@@ -216,12 +216,12 @@ class Tabbar2ProjectEmployer extends ConsumerWidget {
                         child: Row(
                           children: project.nameCategories!
                               .map((name) => Padding(
-                                    padding:
-                                        const EdgeInsets.only(right: 8.0),
+                                    padding: const EdgeInsets.only(right: 8.0),
                                     child: Container(
                                       constraints: BoxConstraints(
-                                          maxWidth:
-                                              MediaQuery.of(context).size.width),
+                                          maxWidth: MediaQuery.of(context)
+                                              .size
+                                              .width),
                                       child: Text(
                                         name,
                                         style: const TextStyle(
@@ -264,8 +264,8 @@ class Tabbar2ProjectEmployer extends ConsumerWidget {
                                 child: Textr(
                                   alignment: Alignment.center,
                                   'See history Progress',
-                                  style:
-                                      Gfont.color(LzColors.hex('ffffff')).fsize(12),
+                                  style: Gfont.color(LzColors.hex('ffffff'))
+                                      .fsize(12),
                                 ),
                               ),
                             ),
@@ -273,8 +273,8 @@ class Tabbar2ProjectEmployer extends ConsumerWidget {
                               onTap: () async {
                                 showEndContractDialog(context);
 
-                                var response =
-                                    await ProjectCompletedApi().endProject(project.offer![0]['id']);
+                                var response = await ProjectCompletedApi()
+                                    .endProject(project.offer![0]['id']);
                                 print(response);
                               },
                               child: Container(
@@ -283,7 +283,8 @@ class Tabbar2ProjectEmployer extends ConsumerWidget {
                                 width: 100,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(30),
-                                  border: Border.all(color: Colors.red, width: 2),
+                                  border:
+                                      Border.all(color: Colors.red, width: 2),
                                 ),
                                 child: Row(
                                   mainAxisAlignment: Maa.center,
