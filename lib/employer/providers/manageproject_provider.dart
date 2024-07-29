@@ -11,7 +11,6 @@ class ApproveProjectNotifier with ChangeNotifier, UseApi1 {
         ResHandler res = await projectsApi.approveBid(1);
 
         LzToast.dismiss();
-        print(res.message);
         if (!res.status) {
           LzToast.show(res.message);
           return false;

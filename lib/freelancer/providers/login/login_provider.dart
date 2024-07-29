@@ -90,7 +90,6 @@ class Auth with ChangeNotifier, UseApi, UseApi1 {
         }
 
         String token = res.body['data']['token'];
-        print(token);
 
         if (!context.mounted) return;
 

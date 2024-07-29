@@ -69,9 +69,6 @@ class HomePage2 extends ConsumerWidget {
                     return Expanded(
                         child: InkTouch(
                             onTap: () {
-                              if(i == 3){
-                                print("Hello World!");
-                              }
                               final notifier =
                                   ref.read(appStateProvider.notifier);
                               notifier.navigateTo(i);

@@ -106,7 +106,6 @@ class Tabbar3ProjectEmployer extends ConsumerWidget {
                         ResHandler res =
                             await ReviewProject().postReview(data);
                         LzToast.dismiss();
-                        print(res.message);
                         if (!res.status) {
                           LzToast.show(res.message);
                           return false;
@@ -273,7 +272,6 @@ class Tabbar3ProjectEmployer extends ConsumerWidget {
                                 ),
                                 InkTouch(
                                     onTap: () {
-                                      print("Message click");
                                     },
                                     child: SizedBox(
                                       width: 100,

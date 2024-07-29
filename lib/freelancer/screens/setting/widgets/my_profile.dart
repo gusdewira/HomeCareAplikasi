@@ -249,7 +249,6 @@ class _MyProfileState extends ConsumerState<MyProfile> {
                             children: [
                               InkTouch(
                                 onTap: () {
-                                  print(newdata.portofolioAttachments.toString());
                                   context.lzPush(AddMorePortofolio(
                                     data: newdata,
                                   ));

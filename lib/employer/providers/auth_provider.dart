@@ -5,16 +5,12 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthProvider with ChangeNotifier, UseApi {
-
   Future<bool> logout() async {
     try {
       ResHandler res = await authApi.logout();
       final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-
-      print('logout');
-
-      if(res.status){
+      if (res.status) {
         await prefs.remove('token');
         dio.options.headers.remove('Authorization');
         return true;
@@ -28,4 +24,4 @@ class AuthProvider with ChangeNotifier, UseApi {
   }
 }
 
-final authProvider = ChangeNotifierProvider((ref)=>AuthProvider());
+final authProvider = ChangeNotifierProvider((ref) => AuthProvider());

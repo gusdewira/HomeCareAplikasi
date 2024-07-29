@@ -91,7 +91,6 @@ class _ExploreViewState extends ConsumerState<ExploreView> {
                           child: project.when(
                         data:
                             (List<ProjectFreelancerModel> projectFreelancers) {
-                          print("Data from API: $projectFreelancers");
                           final bool hasFilters = fromSalary > 0 ||
                               toSalary > 0 ||
                               selectedCategories.isNotEmpty ||
@@ -331,17 +330,6 @@ class _ExploreViewState extends ConsumerState<ExploreView> {
                                               onTap: () {
                                                 Navigator.of(context).pop();
                                                 _refreshProject();
-                                                print(
-                                                  {
-                                                    'start_salary': fromSalary,
-                                                    'end_salary': toSalary,
-                                                    'name_category':
-                                                        selectedCategories
-                                                            .join(','),
-                                                    'location': location,
-                                                    'search': _searchQuery.text,
-                                                  },
-                                                );
                                               },
                                               child: Container(
                                                 height: 50,

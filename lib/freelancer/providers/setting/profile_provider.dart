@@ -21,9 +21,6 @@ class ProfileFreelancerProvider
     try {
       state = const AsyncValue.loading();
       ResHandler res = await profileFreelancerApi.getProfileFreelancer();
-      print("Ini data profile: ${res.data['portofolio_attachments']}");
-      print(res.status);
-      print(res.message);
       if (res.status) {
         state =
             AsyncValue.data(ProfileFreelancerModel.fromJson(res.data ?? {}));
@@ -43,10 +40,6 @@ class ProfileFreelancerProvider
     try {
       state = const AsyncValue.loading();
       ResHandler res = await profileFreelancerApi.getProfileFreelancer();
-
-      print("Ini data profile: ${res.data}");
-      print(res.status);
-      print(res.message);
 
       if (res.status) {
         state =

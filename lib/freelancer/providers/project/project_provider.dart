@@ -16,7 +16,7 @@ class ProjectProvider
       state = const AsyncValue.loading();
 
       ResHandler res = await projectFreelancerApi.getProjectFreelancer();
-      print(res.message);
+
       if (res.status) {
         List data = res.data;
         state = AsyncValue.data(

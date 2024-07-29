@@ -107,14 +107,13 @@ class LoginView extends ConsumerWidget {
               child: ElevatedButton(
                 onPressed: () async {
                   final ok = await notifier.login(context, ref);
-                  print('ok: ${ok["role"]}');
                   if(ok['status']){
                     if(ok['role'] == "freelancer"){
                       context.go(Paths.home);
                       LzToast.show("Login success as Freelancer");
                     }else{
                       context.go(Paths.home2);
-                      LzToast.show("Login success as Freelancer");
+                      LzToast.show("Login success as Employer");
                     }
                   }else{
                       LzToast.show("Login Failed!");

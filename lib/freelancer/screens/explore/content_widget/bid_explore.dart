@@ -145,8 +145,6 @@ class BidExplore extends ConsumerWidget {
           text: 'Bid Project',
           onTap: (state) async {
             notifier.postbid(context, data!.id!);
-            // forms['project_id'] = data!.id as FormModel;
-            print(forms);
           },
         ).theme1().margin(b: 30),
       ),

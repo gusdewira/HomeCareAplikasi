@@ -18,16 +18,11 @@ class ProjectProvider
       state = const AsyncValue.loading();
 
       ResHandler res = await projectsApi.getProject();
-      print("API response: ${res.status}");
-
-      print("Data loading project");
       if (res.status) {
-        print("Data get project");
         List data = res.data;
-        print("Data received: $data");
         state = AsyncValue.data(
             data.map((e) => ProjectEmployerModel.fromJson(e)).toList());
-            } else {
+      } else {
         LzToast.show(res.message);
       }
     } catch (e, s) {
@@ -112,13 +107,11 @@ class PostProjectNotifier with ChangeNotifier, UseApi1 {
 
       if (validate.ok && fileAttachment != null) {
         final map = forms.toMap();
-        
+
         LzToast.overlay('Loading Post Project...');
         if (map['name_category'] is String) {
           map['name_category[0]'] = map['name_category'];
         }
-
-        print(map);
 
         if (fileAttachment!.existsSync()) {
           final attachment = await projectsApi.toFile(fileAttachment!.path);
@@ -130,7 +123,6 @@ class PostProjectNotifier with ChangeNotifier, UseApi1 {
         ResHandler res = await projectsApi.postProject(map);
 
         LzToast.dismiss();
-        print(res.message);
         if (!res.status) {
           LzToast.show(res.message);
           return false;

@@ -275,7 +275,6 @@ class Tabbar2ProjectEmployer extends ConsumerWidget {
 
                                 var response =
                                     await ProjectCompletedApi().endProject(project.offer![0]['id']);
-                                print(response);
                               },
                               child: Container(
                                 margin: Ei.only(l: 10),

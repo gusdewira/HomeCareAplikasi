@@ -124,9 +124,6 @@ class _DialogCategoryState extends State<DialogCategory> {
                   ).margin(b: 10),
                   InkTouch(
                     onTap: () {
-                      print('Salary Range: $fromSalary - $toSalary');
-                      print('Categories: $selectedCategories');
-                      print('Location: $location');
                     },
                     child: Container(
                       height: 50,

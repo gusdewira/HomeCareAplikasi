@@ -27,9 +27,6 @@ class BidProvider with ChangeNotifier, UseApi {
         payload['project_id'] = id;
         ResHandler res = await bidProjectApi.postBidProject(payload);
 
-        print(res.status);
-        print(res.message);
-
         if (!res.status) {
           forms.reset();
           LzToast.show(res.message);

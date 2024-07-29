@@ -246,7 +246,6 @@ final GoRouter router = GoRouter(
 
 String _redirect() {
   String? token = prefs.getString('token');
-  print('token = $token' );
   return token == null ? Paths.login:Paths.home;
 }
 

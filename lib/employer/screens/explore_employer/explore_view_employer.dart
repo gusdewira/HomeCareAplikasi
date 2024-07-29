@@ -89,7 +89,6 @@ class ExploreEmployerView extends ConsumerState<ExploreView> {
                       Expanded(
                           child: profiles.when(
                         data: (List<ProfileFreelancerModel> profile) {
-                          print('Data from API: $profile');
                           final bool hasFilters = fromSalary > 0 ||
                               toSalary > 0 ||
                               selectedCategories.isNotEmpty ||
@@ -137,9 +136,6 @@ class ExploreEmployerView extends ConsumerState<ExploreView> {
                                       matchesSearch;
                                 }).toList()
                               : profile;
-
-                          print(fromSalary);
-                          print('Filtered Profiles: $filteredProfiles');
 
                           return filteredProfiles.isNotEmpty
                               ? ListView.builder(
@@ -327,17 +323,6 @@ class ExploreEmployerView extends ConsumerState<ExploreView> {
                                               onTap: () {
                                                 Navigator.of(context).pop();
                                                 _refreshProfiles();
-                                                print(
-                                                  {
-                                                    'start_salary': fromSalary,
-                                                    'end_salary': toSalary,
-                                                    'name_category':
-                                                        selectedCategories
-                                                            .join(','),
-                                                    'location': location,
-                                                    'search': _searchQuery.text,
-                                                  },
-                                                );
                                               },
                                               child: Container(
                                                 height: 50,

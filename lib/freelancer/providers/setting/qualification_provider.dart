@@ -139,7 +139,6 @@ class QualificationPostProvider with ChangeNotifier, UseApi {
           }));
 
       if (!form.ok) {
-        print(form.value);
         LzToast.show('Please fill all required fields.');
         return false;
       }

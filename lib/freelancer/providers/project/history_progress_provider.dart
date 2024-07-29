@@ -7,9 +7,10 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lazyui/lazyui.dart';
 import '../../data/api/api.dart';
 
-class HistoryProgressProvider extends StateNotifier<AsyncValue<HistoryProgressModel>> with UseApi {
+class HistoryProgressProvider
+    extends StateNotifier<AsyncValue<HistoryProgressModel>> with UseApi {
   final int id;
-  
+
   HistoryProgressProvider(this.id) : super(const AsyncValue.loading()) {
     getHistoryProgress(id);
   }
@@ -31,7 +32,9 @@ class HistoryProgressProvider extends StateNotifier<AsyncValue<HistoryProgressMo
   }
 }
 
-final historyProgressProvider = StateNotifierProvider.autoDispose.family<HistoryProgressProvider, AsyncValue<HistoryProgressModel>, int>((ref, id) {
+final historyProgressProvider = StateNotifierProvider.autoDispose
+    .family<HistoryProgressProvider, AsyncValue<HistoryProgressModel>, int>(
+        (ref, id) {
   return HistoryProgressProvider(id);
 });
 
@@ -64,18 +67,12 @@ class ProgressPostProvider with ChangeNotifier, UseApi {
       final payload = form.value;
       payload['project_accept_id'] = id;
 
-      if (form.ok == false) {
-        print(form.error!.message);
-      }
-
       if (form.ok && fileAttachment != null) {
         LzToast.overlay('Loading...');
 
         if (fileAttachment!.existsSync()) {
-          print('File exists: ${fileAttachment!.path}');
           payload['attachment'] =
               await projectProgressApi.toFile(fileAttachment!.path);
-          print('Attachment: ${payload['attachment']}');
         } else {
           print('File does not exist.');
           LzToast.show('Attachment file is missing.');
