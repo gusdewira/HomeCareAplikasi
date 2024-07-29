@@ -9,22 +9,24 @@ import '../../../widgets/color_widget.dart';
 
 class AddMoreExperience extends ConsumerWidget {
   final ExperienceModel? data;
+  bool? edit = false;
 
-  const AddMoreExperience({Key? key, this.data}) : super(key: key);
+  AddMoreExperience({Key? key, this.data, this.edit}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final notifier = ref.read(experienceProvider.notifier);
     final forms = notifier.forms;
 
-    // Jangan gunakan ?? null di sini, karena data pasti tidak null
     if (!data.hasNull) {
       forms.fill(data!.toJson());
+    }else{
+      forms.reset();
     }
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add More Experience'),
+        title: Text('${edit != null && edit == true ? "Edit" : "Add"} More Experience'),
         leading: IconButton(
           onPressed: () {
             Navigator.of(context).pop();

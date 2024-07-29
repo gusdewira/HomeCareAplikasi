@@ -8,23 +8,42 @@ import '../../../data/models/setting/qualification_model.dart';
 import '../../../providers/setting/qualification_provider.dart';
 import '../../../widgets/color_widget.dart';
 
-class AddMoreQualification extends ConsumerWidget {
+class AddMoreQualification extends ConsumerStatefulWidget {
   final QualificationModel? data;
+  final bool? edit;
 
-  const AddMoreQualification({Key? key, this.data}) : super(key: key);
+  const AddMoreQualification({Key? key, this.data, this.edit}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final notifier = ref.watch(qualificationPostProvider.notifier);
+  _AddMoreQualificationState createState() => _AddMoreQualificationState();
+}
+
+class _AddMoreQualificationState extends ConsumerState<AddMoreQualification> {
+  bool isFormFilled = false;
+
+  @override
+  void initState() {
+    super.initState();
+    final notifier = ref.read(qualificationPostProvider.notifier);
     final forms = notifier.forms;
 
-    if (!data.hasNull) {
-      forms.fill(data!.toJson());
+    if (widget.data != null && !widget.data!.hasNull) {
+      forms.fill(widget.data!.toJson());
+    } else {
+      forms.reset();
     }
+
+    isFormFilled = true;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final notifier = ref.read(qualificationPostProvider.notifier);
+    final forms = notifier.forms;
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add More Qualification'),
+        title: Text('${widget.edit != null && widget.edit! ? "Edit" : "Add"} More Qualification'),
         leading: IconButton(
           onPressed: () {
             Navigator.of(context).pop();
@@ -171,12 +190,17 @@ class AddMoreQualification extends ConsumerWidget {
         textColor: Colors.white,
         onTap: (state) async {
           state.submit();
-          bool ok = await notifier.qualifiPost(context);
+
+          bool ok = widget.edit != null && widget.edit! 
+            ? await notifier.qualifiEdit(context, widget.data!.id) 
+            : await notifier.qualifiPost(context);
 
           if (ok && context.mounted) {
             context.pop();
-            LzToast.show("Qualification has been created.");
-          }else{
+            LzToast.show("Qualification has been ${widget.edit != null && widget.edit! ? "updated" : "created"}.");
+
+            ref.refresh(qualificationProvider);
+          } else {
             state.abort();
             LzToast.show("Please fill all required fields.");
           }

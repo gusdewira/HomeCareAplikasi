@@ -91,19 +91,19 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: Paths.addmoreexperience,
       builder: (BuildContext context, GoRouterState state) {
-        return const AddMoreExperience();
+        return AddMoreExperience();
       },
     ),
     GoRoute(
       path: Paths.addmorequalification,
       builder: (BuildContext context, GoRouterState state) {
-        return const AddMoreQualification();
+        return AddMoreQualification();
       },
     ),
     GoRoute(
       path: Paths.addmoreskills,
       builder: (BuildContext context, GoRouterState state) {
-        return const AddMoreSkill();
+        return AddMoreSkill();
       },
     ),
     GoRoute(

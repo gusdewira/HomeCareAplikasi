@@ -7,33 +7,33 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lazyui/lazyui.dart';
 import '../../data/api/api.dart';
 
-class HistoryProgressProvider
-    extends StateNotifier<AsyncValue<HistoryProgressModel>> with UseApi {
-  HistoryProgressProvider() : super(const AsyncValue.loading()) {
-    getHistoryProgress();
-    }
+class HistoryProgressProvider extends StateNotifier<AsyncValue<HistoryProgressModel>> with UseApi {
+  final int id;
+  
+  HistoryProgressProvider(this.id) : super(const AsyncValue.loading()) {
+    getHistoryProgress(id);
+  }
 
-  Future<void> getHistoryProgress() async {
-  try {
-    state = const AsyncValue.loading();
+  Future<void> getHistoryProgress(int id) async {
+    try {
+      state = const AsyncValue.loading();
 
-    ResHandler res = await projectProgressApi.getHistoryProgress(19);
+      ResHandler res = await projectProgressApi.getHistoryProgress(id);
 
-    if (res.status) {
+      if (res.status) {
         state = AsyncValue.data(HistoryProgressModel.fromJson(res.data));
-    } else {
-      LzToast.show(res.message);
+      } else {
+        LzToast.show(res.message);
+      }
+    } catch (e, s) {
+      Errors.check(e, s);
     }
-  } catch (e, s) {
-    Errors.check(e, s);
   }
 }
-    }
 
-final historyProgress = StateNotifierProvider.autoDispose<HistoryProgressProvider, AsyncValue<HistoryProgressModel>>((ref) {
-  return HistoryProgressProvider();
+final historyProgressProvider = StateNotifierProvider.autoDispose.family<HistoryProgressProvider, AsyncValue<HistoryProgressModel>, int>((ref, id) {
+  return HistoryProgressProvider(id);
 });
-
 
 class ProgressPostProvider with ChangeNotifier, UseApi {
   final forms = LzForm.make([
@@ -64,7 +64,7 @@ class ProgressPostProvider with ChangeNotifier, UseApi {
       final payload = form.value;
       payload['project_accept_id'] = id;
 
-      if(form.ok == false){
+      if (form.ok == false) {
         print(form.error!.message);
       }
 
@@ -72,20 +72,21 @@ class ProgressPostProvider with ChangeNotifier, UseApi {
         LzToast.overlay('Loading...');
 
         if (fileAttachment!.existsSync()) {
-        print('File exists: ${fileAttachment!.path}');
-        payload['attachment'] = await projectProgressApi.toFile(fileAttachment!.path);
-        print('Attachment: ${payload['attachment']}');
-      } else {
-        print('File does not exist.');
-        LzToast.show('Attachment file is missing.');
-        return false;
-      }
+          print('File exists: ${fileAttachment!.path}');
+          payload['attachment'] =
+              await projectProgressApi.toFile(fileAttachment!.path);
+          print('Attachment: ${payload['attachment']}');
+        } else {
+          print('File does not exist.');
+          LzToast.show('Attachment file is missing.');
+          return false;
+        }
 
-      ResHandler res = await projectProgressApi.postProgress(payload);
+        ResHandler res = await projectProgressApi.postProgress(payload);
 
-      forms.reset();
-      setFile(null);
-      return res.status;
+        forms.reset();
+        setFile(null);
+        return res.status;
       }
 
       return false;
@@ -98,4 +99,5 @@ class ProgressPostProvider with ChangeNotifier, UseApi {
   }
 }
 
-final progressPostProvider = ChangeNotifierProvider((ref) => ProgressPostProvider());
+final progressPostProvider =
+    ChangeNotifierProvider((ref) => ProgressPostProvider());

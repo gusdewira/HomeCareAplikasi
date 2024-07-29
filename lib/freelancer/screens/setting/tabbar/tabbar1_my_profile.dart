@@ -152,7 +152,7 @@ class Tabbar1MyProfile extends ConsumerWidget {
                                               MaterialPageRoute(
                                                 builder: (context) =>
                                                     AddMoreExperience(
-                                                  data: experience,
+                                                  data: experience, edit: true,
                                                 ),
                                               ),
                                             );

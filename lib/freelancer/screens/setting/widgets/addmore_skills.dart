@@ -9,22 +9,24 @@ import '../../../widgets/color_widget.dart';
 
 class AddMoreSkill extends ConsumerWidget {
   final SkillModel? data;
+  bool? edit = false;
 
-  const AddMoreSkill({Key? key, this.data}) : super(key: key);
+  AddMoreSkill({Key? key, this.data, this.edit}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final notifier = ref.read(skillProvider.notifier);
     final forms = notifier.forms;
 
-    // Jangan gunakan ?? null di sini, karena data pasti tidak null
     if (!data.hasNull) {
       forms.fill(data!.toJson());
+    }else{
+      forms.reset();
     }
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add More skill'),
+        title: Text('${edit != null && edit == true ? "Edit" : "Add"} More skill'),
         leading: IconButton(
           onPressed: () {
             Navigator.of(context).pop();

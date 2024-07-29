@@ -12,7 +12,7 @@ class HistoryProgress extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final history = ref.watch(historyProgress);
+    final history = ref.watch(historyProgressProvider(id));
     return Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(

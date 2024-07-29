@@ -9,7 +9,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lazyui/lazyui.dart';
 
-class ProfileEmployeeProvider extends StateNotifier<AsyncValue<ProfileEmployerModel>> with UseApi1 {
+class ProfileEmployeeProvider
+    extends StateNotifier<AsyncValue<ProfileEmployerModel>> with UseApi1 {
   ProfileEmployeeProvider() : super(const AsyncValue.loading()) {
     getProfile();
   }
@@ -23,7 +24,8 @@ class ProfileEmployeeProvider extends StateNotifier<AsyncValue<ProfileEmployerMo
         state = AsyncValue.data(ProfileEmployerModel.fromJson(res.data ?? {}));
       } else {
         LzToast.show(res.message);
-        state = AsyncValue.error(res.message ?? 'Unknown error occurred', StackTrace.current);
+        state = AsyncValue.error(
+            res.message ?? 'Unknown error occurred', StackTrace.current);
       }
     } catch (e, s) {
       Errors.check(e, s);
@@ -41,7 +43,8 @@ class ProfileEmployeeProvider extends StateNotifier<AsyncValue<ProfileEmployerMo
         return ProfileEmployerModel.fromJson(res.data ?? {});
       } else {
         LzToast.show(res.message);
-        state = AsyncValue.error(res.message ?? 'Unknown error occurred', StackTrace.current);
+        state = AsyncValue.error(
+            res.message ?? 'Unknown error occurred', StackTrace.current);
         throw Exception('Failed to fetch profile');
       }
     } catch (e, s) {
@@ -51,7 +54,8 @@ class ProfileEmployeeProvider extends StateNotifier<AsyncValue<ProfileEmployerMo
   }
 }
 
-final profileEmployeeProvider = StateNotifierProvider<ProfileEmployeeProvider, AsyncValue<ProfileEmployerModel>>((ref) {
+final profileEmployeeProvider = StateNotifierProvider<ProfileEmployeeProvider,
+    AsyncValue<ProfileEmployerModel>>((ref) {
   return ProfileEmployeeProvider();
 });
 
@@ -129,7 +133,8 @@ class EditProfilChangeNotifier with ChangeNotifier, UseApi1 {
   }
 }
 
-final editProfilChangeNotifier = ChangeNotifierProvider((ref) => EditProfilChangeNotifier());
+final editProfilChangeNotifier =
+    ChangeNotifierProvider((ref) => EditProfilChangeNotifier());
 
 // EditImageChangeNotifier
 class EditImageChangeNotifier with ChangeNotifier, UseApi1 {
@@ -141,9 +146,16 @@ class EditImageChangeNotifier with ChangeNotifier, UseApi1 {
   EditImageChangeNotifier(this.profileProvider);
 
   void pickImage(BuildContext context, id) async {
-    final pickedFile = await _picker.pickImage(source: ImageSource.gallery, maxWidth: 1500, maxHeight: 1500, imageQuality: 90);
+    final pickedFile = await _picker.pickImage(
+        source: ImageSource.gallery,
+        maxWidth: 1500,
+        maxHeight: 1500,
+        imageQuality: 90);
     if (pickedFile != null) {
-      showDialog(context: context, builder: (context) => WidImagePreview(file: File(pickedFile.path))).then((value) {
+      showDialog(
+          context: context,
+          builder: (context) =>
+              WidImagePreview(file: File(pickedFile.path))).then((value) {
         if (value != null) {
           image = File(pickedFile.path);
           edit(context, id);
@@ -158,7 +170,8 @@ class EditImageChangeNotifier with ChangeNotifier, UseApi1 {
     try {
       final map = <String, dynamic>{};
       LzToast.overlay('Editing profile...');
-      map['profile_photo'] = await projectsApi.toFile(filePath, filename: "profile_photo");
+      map['profile_photo'] =
+          await projectsApi.toFile(filePath, filename: "profile_photo");
       map['_method'] = 'put';
       ResHandler res = await profileEmployeeApi.updateImageProfile(map);
       LzToast.dismiss();
@@ -177,6 +190,6 @@ class EditImageChangeNotifier with ChangeNotifier, UseApi1 {
 
 final editImageChangeNotifier = ChangeNotifierProvider((ref) {
   final profileProvider = ref.read(profileEmployeeProvider.notifier);
-  
+
   return EditImageChangeNotifier(profileProvider);
 });

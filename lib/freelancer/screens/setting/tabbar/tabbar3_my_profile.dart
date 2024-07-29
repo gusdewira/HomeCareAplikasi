@@ -125,7 +125,7 @@ class Tabbar3MyProfile extends ConsumerWidget {
                                         Navigator.of(context).push(
                                           MaterialPageRoute(
                                             builder: (context) => AddMoreSkill(
-                                              data: skill,
+                                              data: skill, edit: true
                                             ),
                                           ),
                                         );

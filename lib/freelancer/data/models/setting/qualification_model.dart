@@ -1,5 +1,5 @@
 class QualificationModel {
-    int? id;
+    int id;
     int userId;
     String title;
     String orgQualification;

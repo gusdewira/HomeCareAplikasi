@@ -6,7 +6,8 @@ import 'package:lazyui/lazyui.dart';
 import '../../data/api/api.dart';
 import '../../data/models/setting/qualification_model.dart';
 
-class QualificationProvider extends StateNotifier<AsyncValue<List<QualificationModel>>> with UseApi {
+class QualificationProvider
+    extends StateNotifier<AsyncValue<List<QualificationModel>>> with UseApi {
   QualificationProvider() : super(const AsyncValue.loading()) {
     getQualif();
   }
@@ -19,7 +20,8 @@ class QualificationProvider extends StateNotifier<AsyncValue<List<QualificationM
 
       if (res.status) {
         List data = res.data ?? [];
-        state = AsyncValue.data(data.map((e) => QualificationModel.fromJson(e)).toList());
+        state = AsyncValue.data(
+            data.map((e) => QualificationModel.fromJson(e)).toList());
       } else {
         LzToast.show(res.message);
       }
@@ -51,7 +53,8 @@ class QualificationProvider extends StateNotifier<AsyncValue<List<QualificationM
   }
 }
 
-final qualificationProvider = StateNotifierProvider.autoDispose<QualificationProvider, AsyncValue<List<QualificationModel>>>((ref) {
+final qualificationProvider = StateNotifierProvider.autoDispose<
+    QualificationProvider, AsyncValue<List<QualificationModel>>>((ref) {
   return QualificationProvider();
 });
 
@@ -69,7 +72,7 @@ class QualificationPostProvider with ChangeNotifier, UseApi {
     notifyListeners();
   }
 
-  Future qualifiPost(BuildContext context) async {
+  Future<bool> qualifiPost(BuildContext context) async {
     try {
       final form = LzForm.validate(forms,
           required: ['*'],
@@ -77,39 +80,106 @@ class QualificationPostProvider with ChangeNotifier, UseApi {
           notifierType: LzFormNotifier.text,
           messages: FormMessages(required: {
             "title": "The title form must be filled in",
-            "org_qualification": "The Organitation Qualification form must be filled in",
-            "attachment": "The attachment form must be filled in",
+            "org_qualification":
+                "The Organization Qualification form must be filled in",
             "date": "The date form must be filled in"
           }));
 
-      final payload = form.value;
-
-      if (form.ok && fileAttachment != null) {
-        LzToast.overlay('Loading...');
-
-        if (fileAttachment!.existsSync()) {
-        print('File exists: ${fileAttachment!.path}');
-        payload['attachment'] = await qualificationApi.toFile(fileAttachment!.path);
-        print('Attachment: ${payload['attachment']}');
-      } else {
-        print('File does not exist.');
-        LzToast.show('Attachment file is missing.');
+      if (!form.ok) {
+        LzToast.show('Please fill all required fields.');
         return false;
       }
 
-      ResHandler res = await qualificationApi.postQualification(payload);
+      final payload = form.value;
 
-      return res.status;
+      if (fileAttachment != null) {
+        if (fileAttachment!.existsSync()) {
+          payload['attachment'] =
+              await qualificationApi.toFile(fileAttachment!.path);
+        } else {
+          LzToast.show('Attachment file is missing.');
+          return false;
+        }
+      } else {
+        LzToast.show('Please attach a file.');
+        return false;
       }
 
-      return false;
+      LzToast.overlay('Loading...');
+
+      ResHandler res = await qualificationApi.postQualification(payload);
+
+      if (res.status) {
+        LzToast.show('Qualification has been created.');
+        return true;
+      } else {
+        LzToast.show(res.message);
+        return false;
+      }
     } catch (e, s) {
       logg('Error: $e, StackTrace: $s');
-      LzToast.show('error');
+      LzToast.show('Error occurred while creating qualification.');
+      return false;
+    } finally {
+      LzToast.dismiss();
+    }
+  }
+
+  Future<bool> qualifiEdit(BuildContext context, int id) async {
+    try {
+      final form = LzForm.validate(forms,
+          required: ['*'],
+          singleNotifier: true,
+          notifierType: LzFormNotifier.text,
+          messages: FormMessages(required: {
+            "title": "The title form must be filled in",
+            "org_qualification":
+                "The Organization Qualification form must be filled in",
+            "date": "The date form must be filled in"
+          }));
+
+      if (!form.ok) {
+        print(form.value);
+        LzToast.show('Please fill all required fields.');
+        return false;
+      }
+
+      final payload = form.value;
+
+      payload['_method'] = "put";
+
+      if (fileAttachment != null) {
+        if (fileAttachment!.existsSync()) {
+          payload['attachment'] = fileAttachment!.path;
+        } else {
+          LzToast.show('Attachment file is missing.');
+          return false;
+        }
+      } else {
+        LzToast.show('Please attach a file.');
+        return false;
+      }
+
+      LzToast.overlay('Loading...');
+
+      ResHandler res = await qualificationApi.updateQualification(payload, id);
+
+      if (res.status) {
+        LzToast.show('Qualification has been updated.');
+        return true;
+      } else {
+        LzToast.show(res.message);
+        return false;
+      }
+    } catch (e, s) {
+      logg('Error: $e, StackTrace: $s');
+      LzToast.show('Error occurred while updating qualification.');
+      return false;
     } finally {
       LzToast.dismiss();
     }
   }
 }
 
-final qualificationPostProvider = ChangeNotifierProvider((ref) => QualificationPostProvider());
+final qualificationPostProvider =
+    ChangeNotifierProvider((ref) => QualificationPostProvider());

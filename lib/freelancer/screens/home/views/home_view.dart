@@ -54,7 +54,7 @@ class HomeView extends ConsumerWidget {
           String firstName = profile.firstName ?? '';
           String lastName = profile.lastName ?? '';
           String earn =
-              profile.earning != null ? profile.earning.split('.')[0] : '';
+              profile.earning != null ? profile.earning!.split('.')[0] : '';
           int? profileId = profile.id;
 
           if (profileId == null) {

@@ -15,8 +15,8 @@ class Tabbar2MyProfile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final AsyncValue<List<QualificationModel>> qualificationData = ref.watch(
-        qualificationProvider);
+    final AsyncValue<List<QualificationModel>> qualificationData =
+        ref.watch(qualificationProvider);
 
     return Column(
       children: [
@@ -38,7 +38,7 @@ class Tabbar2MyProfile extends ConsumerWidget {
               ),
               InkTouch(
                 onTap: () {
-                  context.push(Paths.addmorequalification);
+                  context.lzPush(AddMoreQualification());
                 },
                 child: Container(
                   height: 40,
@@ -94,8 +94,7 @@ class Tabbar2MyProfile extends ConsumerWidget {
                                 children: [
                                   Textr(
                                     title,
-                                    style: Gfont.color(color1)
-                                        .fsize(12),
+                                    style: Gfont.color(color1).fsize(12),
                                   ),
                                   Textr(
                                     date,
@@ -145,7 +144,7 @@ class Tabbar2MyProfile extends ConsumerWidget {
                                           MaterialPageRoute(
                                             builder: (context) =>
                                                 AddMoreQualification(
-                                              data: qualification,
+                                              data: qualification, edit: true,
                                             ),
                                           ),
                                         );
@@ -221,7 +220,8 @@ class Tabbar2MyProfile extends ConsumerWidget {
                   : const LzNoData(
                       message:
                           'There is no data yet, please add data in the add experience menu',
-                          iconWidget: Icon(Ti.alertTriangle, color: Colors.grey, size: 50));
+                      iconWidget:
+                          Icon(Ti.alertTriangle, color: Colors.grey, size: 50));
             },
             error: (error, _) {
               ref.read(qualificationProvider.notifier).getQualif();
