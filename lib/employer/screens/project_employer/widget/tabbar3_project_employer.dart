@@ -13,7 +13,7 @@ class Tabbar3ProjectEmployer extends ConsumerWidget {
 
   Future<void> _refreshData(WidgetRef ref) async {
     final projectProvider = ref.read(projectCompletedProvider.notifier);
-    await projectProvider.getDataProject(); // Pastikan ini adalah fungsi yang benar di provider Anda
+    await projectProvider.getDataProject();
   }
 
   void showEndContractDialog(
@@ -52,8 +52,7 @@ class Tabbar3ProjectEmployer extends ConsumerWidget {
                         onTap: () {
                           Navigator.of(context).pop();
                         },
-                        child:
-                            const Icon(Ti.x, color: Colors.black, size: 25),
+                        child: const Icon(Ti.x, color: Colors.black, size: 25),
                       ),
                     ],
                   ),
@@ -103,8 +102,7 @@ class Tabbar3ProjectEmployer extends ConsumerWidget {
                           "review_text": description,
                           "review_for_id": freelancerId
                         };
-                        ResHandler res =
-                            await ReviewProject().postReview(data);
+                        ResHandler res = await ReviewProject().postReview(data);
                         LzToast.dismiss();
                         if (!res.status) {
                           LzToast.show(res.message);
@@ -117,7 +115,8 @@ class Tabbar3ProjectEmployer extends ConsumerWidget {
                       },
                       child: Center(
                         child: Container(
-                          margin: const EdgeInsets.only(bottom: 20, right: 10, left: 10),
+                          margin: const EdgeInsets.only(
+                              bottom: 20, right: 10, left: 10),
                           width: MediaQuery.of(context).size.width,
                           height: 35,
                           decoration: BoxDecoration(
@@ -168,6 +167,14 @@ class Tabbar3ProjectEmployer extends ConsumerWidget {
       onRefresh: () => _refreshData(ref),
       child: projectCompleted.when(
         data: (List<ProjectEmployerModel> projects) {
+          if (projects.isEmpty) {
+            return Center(
+              child: Text(
+                'No data available',
+                style: Gfont.color(LzColors.hex('001380')).fsize(16),
+              ),
+            );
+          }
           return ListView.builder(
             itemCount: projects.length,
             itemBuilder: (context, index) {
@@ -271,19 +278,19 @@ class Tabbar3ProjectEmployer extends ConsumerWidget {
                                   ],
                                 ),
                                 InkTouch(
-                                    onTap: () {
-                                    },
+                                    onTap: () {},
                                     child: SizedBox(
                                       width: 100,
                                       child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
                                         children: [
                                           Container(
                                             height: 30,
                                             width: 100,
                                             decoration: BoxDecoration(
-                                              border:
-                                                  Border.all(color: Colors.blue),
+                                              border: Border.all(
+                                                  color: Colors.blue),
                                               borderRadius:
                                                   BorderRadius.circular(30),
                                             ),
