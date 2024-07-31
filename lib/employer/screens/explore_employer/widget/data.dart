@@ -90,8 +90,10 @@ class DataExploreFreelancer extends StatelessWidget {
                                 size: 15,
                               ),
                               Textr(
+                                width: 60,
+                                maxLines: 1,
                                 address,
-                                overflow: Tof.fade,
+                                overflow: Tof.ellipsis,
                                 style: Gfont.color(LzColors.hex('001380')).fsize(13),
                               ),
                             ],

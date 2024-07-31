@@ -202,7 +202,10 @@ class Tabbar2ProjectEmployer extends ConsumerWidget {
                           ),
                         ],
                       ),
-                      Text('Hired date : ${formatTanggal(project.startDate, project.endDate)}')
+                      Text(
+                        maxLines: 1,
+                        overflow: Tof.ellipsis,
+                        'Hired date : ${formatTanggal(project.startDate, project.endDate)}')
                           .margin(t: 10),
                       Text(
                           'Salary: Rp. ${project.startSalary!.toStringAsFixed(0)} - Rp. ${project.endSalary!.toStringAsFixed(0)}'),

@@ -40,7 +40,7 @@ class ProjectEmployerView extends StatelessWidget {
             Positioned(
                 top: 50,
                 left: 25,
-                child: Textr('Project Activities', style: Gfont.bold.white.fsize(25),) ),
+                child: Textr('Project', style: Gfont.bold.white.fsize(25),) ),
             Container(
               margin: Ei.only(t: 100 ,l: 25, r: 25),
               height: 50,

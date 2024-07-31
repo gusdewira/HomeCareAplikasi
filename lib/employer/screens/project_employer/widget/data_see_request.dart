@@ -75,8 +75,7 @@ class DataSeeRequest extends StatelessWidget {
                         children: [
                           Textr(offerDate.format('yy/MM/dd'),
                               overflow: Tof.ellipsis,
-                              width: 100,
-                              style: Gfont.color(LzColors.hex('001380'))),
+                              style: Gfont.color(LzColors.hex('001380')).fsize(11)),
                         ],
                       )
                     ],
@@ -102,7 +101,6 @@ class DataSeeRequest extends StatelessWidget {
               ),
               Container(
                 margin: Ei.only(l: 5),
-                width: 150,
                 child: Column(
                   children: [
                     Row(
@@ -113,7 +111,6 @@ class DataSeeRequest extends StatelessWidget {
                           size: 15,
                         ),
                         Container(
-                          width: 100,
                           child: Text(bid['user']['address'] ?? "No Address",
                               overflow: Tof.ellipsis,
                               style: Gfont.color(LzColors.hex('001380'))

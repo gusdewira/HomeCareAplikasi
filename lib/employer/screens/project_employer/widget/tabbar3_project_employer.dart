@@ -209,11 +209,13 @@ class Tabbar3ProjectEmployer extends ConsumerWidget {
                             children: [
                               const Text('Salary'),
                               Text(
+                                maxLines: 1,
+                                overflow: Tof.ellipsis,
                                 '${project.startSalary!} - ${project.endSalary!}',
                                 style: Gfont.color(LzColors.hex('001380')),
                               ),
                             ],
-                          ),
+                          ).margin(r: 5),
                         ),
                         Expanded(
                           child: Column(
