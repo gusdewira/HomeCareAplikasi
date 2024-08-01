@@ -105,7 +105,6 @@ class Tabbar1ProjectEmployer extends ConsumerWidget {
                                       overflow: Tof.ellipsis,
                                       'duration'),
                                   Textr(
-                                      alignment: Alignment.center,
                                       maxLines: 1,
                                       overflow: Tof.ellipsis,
                                       '$startDate - $endDate',

@@ -18,11 +18,11 @@ class ListMenuSetting extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Textr(
-              'Account',
-              style: Gfont.color(black).fsize(15),
-              alignment: Alignment.centerLeft,
-            ),
+            // Textr(
+            //   'Account',
+            //   style: Gfont.color(black).fsize(15),
+            //   alignment: Alignment.centerLeft,
+            // ),
             Column(
               children: [
                 InkTouch(
@@ -30,34 +30,8 @@ class ListMenuSetting extends ConsumerWidget {
                       context.push(Paths.myprofile);
                     },
                     child: RowItem('My Profile', Ti.user, color1)),
-                InkTouch(
-                    onTap: () {
-                      context.push(Paths.paymentaccount);
-                    },
-                    child: RowItem('Payment Account', Ti.creditCard, color1)),
-                RowItem('Review history', Ti.message2Cog, color1),
-              ],
-            ).margin(t: 10, b: 20),
-            Textr(
-              'About',
-              alignment: Alignment.centerLeft,
-              style: Gfont.color(black).fsize(15),
-            ),
-            Column(
-              children: [
-                RowItem('Privacy & Policy', Ti.shieldLock, color1),
-                RowItem('Tema & Conditions', Ti.file, color1),
-              ],
-            ).margin(t: 10, b: 20),
-            Textr(
-              'Settings',
-              alignment: Alignment.centerLeft,
-              style: Gfont.color(black).fsize(15),
-            ),
-            Column(
-              children: [
-                RowItem('Notification', Ti.bell, color1),
-                RowItem('Changes Password', Ti.key, color1),
+                    RowItem('Notification', Ti.bell, color1),
+                // RowItem('Changes Password', Ti.key, color1),
                 RowItem(
                   'Logout',
                   Ti.logout,
@@ -73,8 +47,51 @@ class ListMenuSetting extends ConsumerWidget {
                     }
                   },
                 )
+                // InkTouch(
+                //     onTap: () {
+                //       context.push(Paths.paymentaccount);
+                //     },
+                //     child: RowItem('Payment Account', Ti.creditCard, color1)),
+                // RowItem('Review history', Ti.message2Cog, color1),
               ],
-            ).margin(t: 10)
+            ).margin(t: 10, b: 20),
+            // Textr(
+            //   'About',
+            //   alignment: Alignment.centerLeft,
+            //   style: Gfont.color(black).fsize(15),
+            // ),
+            // Column(
+            //   children: [
+            //     RowItem('Privacy & Policy', Ti.shieldLock, color1),
+            //     RowItem('Tema & Conditions', Ti.file, color1),
+            //   ],
+            // ).margin(t: 10, b: 20),
+            // Textr(
+            //   'Settings',
+            //   alignment: Alignment.centerLeft,
+            //   style: Gfont.color(black).fsize(15),
+            // ),
+            // Column(
+            //   children: [
+            //     RowItem('Notification', Ti.bell, color1),
+            //     RowItem('Changes Password', Ti.key, color1),
+            //     RowItem(
+            //       'Logout',
+            //       Ti.logout,
+            //       Colors.red,
+            //       onTap: () async {
+            //         bool ok = await notifier.logout();
+
+            //         if (ok) {
+            //           LzToast.show("Anda telah logout!");
+            //           context.pushReplacement(Paths.login);
+            //         } else {
+            //           LzToast.show("Anda gagal logout!");
+            //         }
+            //       },
+            //     )
+            //   ],
+            // ).margin(t: 10)
           ],
         ),
       ),

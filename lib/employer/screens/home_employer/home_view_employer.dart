@@ -127,16 +127,16 @@ class HomeEmployerView extends ConsumerWidget {
                     Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        const Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            BelanceWithDrawEmployer(),
-                            SizedBox(width: 10),
-                            TopUpEmployer(),
-                            SizedBox(width: 10),
-                            RecentTransactionEmployer(),
-                          ],
-                        ),
+                        // const Row(
+                        //   mainAxisSize: MainAxisSize.min,
+                        //   children: [
+                        //     BelanceWithDrawEmployer(),
+                        //     SizedBox(width: 10),
+                        //     TopUpEmployer(),
+                        //     SizedBox(width: 10),
+                        //     RecentTransactionEmployer(),
+                        //   ],
+                        // ),
                         InkTouch(
                           onTap: () {
                             context.push(Paths.postingProjectEmployer);
@@ -212,44 +212,44 @@ class HomeEmployerView extends ConsumerWidget {
                           },
                         )
                       ],
-                    ).margin(l: 25, r: 25, t: 220),
-                    Positioned(
-                        top: 120,
-                        left: 25,
-                        right: 25,
-                        child: Container(
-                            padding: Ei.only(l: 20, r: 20),
-                            height: 80,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              border: Border.all(color: color1, width: 1),
-                              color: Colors.white,
-                            ),
-                            child: Row(
-                              mainAxisAlignment: Maa.spaceBetween,
-                              children: [
-                                Column(
-                                  mainAxisSize: Mas.min,
-                                  crossAxisAlignment: Caa.start,
-                                  children: [
-                                    Text(
-                                      'Saldo Anda',
-                                      style: Gfont.bold.fsize(15),
-                                    ),
-                                    Text(
-                                      'Rp. 500.000,00',
-                                      style: Gfont.bold.fsize(20),
-                                    )
-                                  ],
-                                ),
-                                IconButton(
-                                    onPressed: () {},
-                                    icon: const Icon(
-                                      Ti.chevronRight,
-                                      size: 30,
-                                    ))
-                              ],
-                            ))),
+                    ).margin(l: 25, r: 25, t: 130),
+                    // Positioned(
+                    //     top: 120,
+                    //     left: 25,
+                    //     right: 25,
+                    //     child: Container(
+                    //         padding: Ei.only(l: 20, r: 20),
+                    //         height: 80,
+                    //         decoration: BoxDecoration(
+                    //           borderRadius: BorderRadius.circular(10),
+                    //           border: Border.all(color: color1, width: 1),
+                    //           color: Colors.white,
+                    //         ),
+                    //         child: Row(
+                    //           mainAxisAlignment: Maa.spaceBetween,
+                    //           children: [
+                    //             Column(
+                    //               mainAxisSize: Mas.min,
+                    //               crossAxisAlignment: Caa.start,
+                    //               children: [
+                    //                 Text(
+                    //                   'Saldo Anda',
+                    //                   style: Gfont.bold.fsize(15),
+                    //                 ),
+                    //                 Text(
+                    //                   'Rp. 500.000,00',
+                    //                   style: Gfont.bold.fsize(20),
+                    //                 )
+                    //               ],
+                    //             ),
+                    //             IconButton(
+                    //                 onPressed: () {},
+                    //                 icon: const Icon(
+                    //                   Ti.chevronRight,
+                    //                   size: 30,
+                    //                 ))
+                    //           ],
+                    //         ))),
                   ],
                 ),
               ],

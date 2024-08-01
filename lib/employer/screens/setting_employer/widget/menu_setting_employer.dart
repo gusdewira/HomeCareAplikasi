@@ -9,6 +9,7 @@ import 'package:lazyui/lazyui.dart';
 
 import '../../../../freelancer/widgets/color_widget.dart';
 
+// ignore: must_be_immutable
 class MenuSettingEmployer extends ConsumerWidget {
 ProfileEmployerModel profile;
   MenuSettingEmployer({Key? key, required this.profile}) : super(key: key);
@@ -25,10 +26,12 @@ ProfileEmployerModel profile;
               context.lzPush(EditProfileEmployer(data: profile,));
             },
             child: RowItem('Edit Profile', Ti.edit, color1)),
-          RowItem('Payment Account', Ti.creditCard, color1),
-          RowItem('Changes Password', Ti.key, color1),
-          RowItem('Privacy & Policy', Ti.key, color1),
+          // RowItem('Payment Account', Ti.creditCard, color1),
+          // RowItem('Changes Password', Ti.key, color1),
+          // RowItem('Privacy & Policy', Ti.key, color1),
           // ignore: prefer_const_constructors
+                              RowItem('Notification', Ti.bell, color1),
+
           RowItem('Logout', Ti.logout, Colors.red, onTap: () async {
               bool ok = await notifier.logout();
 
