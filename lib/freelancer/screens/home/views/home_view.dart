@@ -12,9 +12,6 @@ import '../../../providers/setting/profile_provider.dart';
 import '../../../routes/paths.dart';
 import '../../../widgets/color_widget.dart';
 import '../widgets/all_project_home.dart';
-import '../widgets/balance_withdrawl.dart';
-import '../widgets/recent_transaction.dart';
-import '../widgets/saldo_home.dart';
 import '../widgets/your_project_home.dart';
 
 class HomeView extends ConsumerWidget {
@@ -138,17 +135,17 @@ class HomeView extends ConsumerWidget {
                       ),
                     ),
                   ),
-                  const SaldoHome(),
+                  // const SaldoHome(),
                   Column(
                     mainAxisAlignment: Maa.start,
                     children: [
-                      Row(
-                        mainAxisSize: Mas.min,
-                        children: [
-                          BalanceWithDrawl(earning: earn),
-                          const RecentTransaction(),
-                        ],
-                      ),
+                      // Row(
+                      //   mainAxisSize: Mas.min,
+                      //   children: [
+                      //     BalanceWithDrawl(earning: earn),
+                      //     const RecentTransaction(),
+                      //   ],
+                      // ),
                       projectData.when(
                         data: (List<ProjectFreelancerModel> projects) {
                           late List<ProjectFreelancerModel> project =
@@ -207,7 +204,7 @@ class HomeView extends ConsumerWidget {
                         },
                       ),
                     ],
-                  ).margin(l: 25, r: 25, t: 220),
+                  ).margin(l: 25, r: 25, t: 130),
                 ],
               ),
             ),
