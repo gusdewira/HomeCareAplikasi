@@ -256,7 +256,7 @@ class Tabbar2ProjectEmployer extends ConsumerWidget {
                           children: [
                             InkTouch(
                               onTap: () {
-                                context.lzPush(const SeeHistoryProgressEmployer());
+                                context.lzPush(SeeHistoryProgressEmployer(id: project.id!,));
                               },
                               child: Container(
                                 height: 30,

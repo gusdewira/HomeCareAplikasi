@@ -47,7 +47,8 @@ class Tabbar2 extends ConsumerWidget {
                           double endSalary = projectProgress.endSalary!;
                           DateTime startDate = projectProgress.startDate!;
                           DateTime endDate = projectProgress.endDate!;
-                          String client = '${projectProgress.user!['first_name']} ${projectProgress.user!['last_name']}';
+                          String client =
+                              '${projectProgress.user!['first_name']} ${projectProgress.user!['last_name']}';
                           DateTime hireDate = projectProgress.createdAt!;
 
                           return Column(
@@ -76,16 +77,13 @@ class Tabbar2 extends ConsumerWidget {
                                       alignment: Alignment.topRight,
                                       child: Text(
                                         'Hired date: ${DateFormat('dd-MM-yyyy').format(hireDate)}',
-                                        style: Gfont.color(color1)
-                                            .fsize(12)
-                                            .bold,
+                                        style:
+                                            Gfont.color(color1).fsize(12).bold,
                                       ),
                                     ),
                                     Text(
                                       title,
-                                      style: Gfont.color(color1)
-                                          .fsize(15)
-                                          .bold,
+                                      style: Gfont.color(color1).fsize(15).bold,
                                     ).margin(b: 5),
                                     Text(
                                       'Client : $client $id',
@@ -122,7 +120,8 @@ class Tabbar2 extends ConsumerWidget {
                                       children: [
                                         InkTouch(
                                           onTap: () {
-                                            context.push(Paths.sendProgressProject);
+                                            context.push(
+                                                Paths.sendProgressProject);
                                           },
                                           child: Container(
                                             margin: Ei.only(t: 20),
@@ -130,7 +129,8 @@ class Tabbar2 extends ConsumerWidget {
                                             width: context.width / 3,
                                             decoration: BoxDecoration(
                                               color: LzColors.hex('006FFF'),
-                                              borderRadius: BorderRadius.circular(20),
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
                                             ),
                                             child: Center(
                                               child: Textr(
@@ -142,7 +142,8 @@ class Tabbar2 extends ConsumerWidget {
                                         ),
                                         InkTouch(
                                           onTap: () {
-                                            context.lzPush(HistoryProgress(id: id));
+                                            context.lzPush(
+                                                HistoryProgress(id: id));
                                           },
                                           child: Container(
                                             margin: Ei.only(t: 20, l: 10),
@@ -150,7 +151,8 @@ class Tabbar2 extends ConsumerWidget {
                                             width: context.width / 3,
                                             decoration: BoxDecoration(
                                               color: LzColors.hex('006FFF'),
-                                              borderRadius: BorderRadius.circular(20),
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
                                             ),
                                             child: Center(
                                               child: Textr(
@@ -164,7 +166,9 @@ class Tabbar2 extends ConsumerWidget {
                                           child: InkTouch(
                                             margin: Ei.only(t: 15, l: 20),
                                             onTap: () {
-                                              context.lzPush(DetailProjectExplore(data: projectProgress));
+                                              context.lzPush(
+                                                  DetailProjectExplore(
+                                                      data: projectProgress));
                                             },
                                             child: Icon(
                                               Ti.infoCircle,

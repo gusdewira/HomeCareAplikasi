@@ -30,7 +30,7 @@ class SettingView extends ConsumerWidget {
           data: (ProfileFreelancerModel profile) {
             if (profile.id == null) {
               return const LzNoData(
-                  message: 'There is no data yet, please add data in the add experience menu');
+                  message: 'There is no data yet, please add data in profile');
             }
             String email = profile.email ?? '';
             String fistName = profile.firstName ?? '';

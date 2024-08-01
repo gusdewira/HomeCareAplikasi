@@ -1,5 +1,6 @@
 library employer_api;
 import 'package:fetchly/fetchly.dart';
+part 'notification_api.dart';
 part 'project_completed_api.dart';
 part 'project_api.dart';
 part 'profile_api.dart';
@@ -13,4 +14,5 @@ mixin UseApi1 {
   ProjectsApi projectsApi = ProjectsApi();
   ProjectCompletedApi projectCompletedApi = ProjectCompletedApi();
   DashboardApi dashboardApi = DashboardApi();
+  NotificationApi notificationApi = NotificationApi();
 }

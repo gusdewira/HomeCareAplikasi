@@ -232,12 +232,6 @@ final GoRouter router = GoRouter(
         return const PostingProjectEmployer();
       },
     ),
-    GoRoute(
-      path: Paths.seeHistoryProgressEmployer,
-      builder: (BuildContext context, GoRouterState state) {
-        return const SeeHistoryProgressEmployer();
-      },
-    ),
   ],
 );
 
