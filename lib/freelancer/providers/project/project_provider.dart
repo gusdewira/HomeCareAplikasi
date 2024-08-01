@@ -19,14 +19,20 @@ class ProjectProvider
 
       if (res.status) {
         List data = res.data;
-        state = AsyncValue.data(
-            data.map((e) => ProjectFreelancerModel.fromJson(e)).toList());
+        if (mounted) {
+          state = AsyncValue.data(
+              data.map((e) => ProjectFreelancerModel.fromJson(e)).toList());
+        }
       } else {
-        state = AsyncValue.error(res.message ?? 'Unknown error', StackTrace.current);
-        LzToast.show(res.message ?? 'Unknown error');
+        if (mounted) {
+          state = AsyncValue.error(res.message ?? 'Unknown error', StackTrace.current);
+          LzToast.show(res.message ?? 'Unknown error');
+        }
       }
     } catch (e, s) {
-      state = AsyncValue.error(e.toString(), s);
+      if (mounted) {
+        state = AsyncValue.error(e.toString(), s);
+      }
       Errors.check(e, s);
     }
   }

@@ -44,6 +44,7 @@ class Tabbar1 extends ConsumerWidget {
                           DateTime startDate = projectBid.startDate!;
                           DateTime endDate = projectBid.endDate!;
                           String address = projectBid.user!['address'];
+                          String status = projectBid.offer![0]['status'];
 
                           return Column(
                             children: [
@@ -90,12 +91,15 @@ class Tabbar1 extends ConsumerWidget {
                                               ),
                                               InkTouch(
                                                   onTap: () {
-                                                    context.lzPush(DetailProjectExplore(data: projectBid));
+                                                    context.lzPush(
+                                                        DetailProjectExplore(
+                                                            data: projectBid));
                                                   },
                                                   child: Icon(
                                                     Ti.infoCircle,
                                                     size: 25,
-                                                    color: LzColors.hex('0047E3'),
+                                                    color:
+                                                        LzColors.hex('0047E3'),
                                                   )),
                                             ],
                                           ),
@@ -112,7 +116,8 @@ class Tabbar1 extends ConsumerWidget {
                                                   ).margin(r: 5),
                                                   Textr(
                                                     '${formatNumber(startSalary)} - ${formatNumber(endSalary)}',
-                                                    style: Gfont.color(black).fsize(12),
+                                                    style: Gfont.color(black)
+                                                        .fsize(12),
                                                   ),
                                                 ],
                                               ).margin(t: 10),
@@ -124,8 +129,10 @@ class Tabbar1 extends ConsumerWidget {
                                                   ).margin(r: 5),
                                                   Textr(
                                                     '${DateFormat('dd/MM/yyyy').format(startDate)} - ${DateFormat('dd/MM/yyyy').format(endDate)}',
-                                                    style: Gfont.color(black).fsize(12),
-                                                    width: context.width / 3 + 10,
+                                                    style: Gfont.color(black)
+                                                        .fsize(12),
+                                                    width:
+                                                        context.width / 3 + 10,
                                                     maxLines: 1,
                                                     overflow: Tof.ellipsis,
                                                   ),
@@ -139,7 +146,8 @@ class Tabbar1 extends ConsumerWidget {
                                                   ).margin(r: 5),
                                                   Textr(
                                                     address,
-                                                    style: Gfont.color(black).fsize(12),
+                                                    style: Gfont.color(black)
+                                                        .fsize(12),
                                                     width: context.width / 3,
                                                     maxLines: 1,
                                                     overflow: Tof.ellipsis,
@@ -151,24 +159,55 @@ class Tabbar1 extends ConsumerWidget {
                                         ),
                                         Textr(
                                           description,
-                                          style: Gfont.color(LzColors.hex('747474')).fsize(12),
+                                          style: Gfont.color(
+                                                  LzColors.hex('747474'))
+                                              .fsize(12),
                                           margin: Ei.only(t: 10),
                                           maxLines: 3,
                                           overflow: Tof.ellipsis,
                                         ),
-                                        Container(
+                                       status == "ACCEPT" ?  Container(
                                           margin: Ei.only(t: 15),
                                           width: 70,
                                           height: 30,
                                           decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(20),
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            color: Colors.greenAccent,
+                                          ),
+                                          child: Textr(
+                                            'Accept',
+                                            style: Gfont.white.bold.fsize(15),
+                                            alignment: Alignment.center,
+                                          )
+                                        )  : status == "REJECT" ? Container(
+                                          margin: Ei.only(t: 15),
+                                          width: 70,
+                                          height: 30,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            color: Colors.redAccent,
+                                          ),
+                                          child: Textr(
+                                            'Reject',
+                                            style: Gfont.white.bold.fsize(15),
+                                            alignment: Alignment.center,
+                                          )
+                                        ) : Container(
+                                          margin: Ei.only(t: 15),
+                                          width: 70,
+                                          height: 30,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
                                             color: Colors.orangeAccent,
                                           ),
                                           child: Textr(
                                             'Waiting',
                                             style: Gfont.white.bold.fsize(15),
                                             alignment: Alignment.center,
-                                          ),
+                                          )
                                         ),
                                       ],
                                     ),
@@ -180,8 +219,7 @@ class Tabbar1 extends ConsumerWidget {
                         },
                       ),
                     )
-                  : const LzNoData(
-                      message: 'You don\'t have an offer yet');
+                  : const LzNoData(message: 'You don\'t have an offer yet');
             },
             error: (error, _) {
               ref.read(projectBid.notifier).getProjectBid();

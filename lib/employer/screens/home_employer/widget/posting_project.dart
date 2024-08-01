@@ -264,7 +264,7 @@ class PostingProjectEmployer extends ConsumerWidget {
                                   bool ok = await notifier.create(context);
 
                                   if (ok && context.mounted) {
-                                    context.pop();
+                                    context.pop(); 
                                     LzToast.show("Project has been created.");
                                   } else {
                                     state.abort();
