@@ -74,7 +74,6 @@ class ProgressPostProvider with ChangeNotifier, UseApi {
           payload['attachment'] =
               await projectProgressApi.toFile(fileAttachment!.path);
         } else {
-          print('File does not exist.');
           LzToast.show('Attachment file is missing.');
           return false;
         }
@@ -83,13 +82,14 @@ class ProgressPostProvider with ChangeNotifier, UseApi {
 
         forms.reset();
         setFile(null);
-        return res.status;
+        return res;
       }
 
-      return false;
+      return {"status": false, "data": {}};
     } catch (e, s) {
       logg('Error: $e, StackTrace: $s');
       LzToast.show('error');
+      return {"status": false, "data": {}};
     } finally {
       LzToast.dismiss();
     }

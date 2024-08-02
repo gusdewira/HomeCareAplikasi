@@ -8,7 +8,7 @@ class BidProvider with ChangeNotifier, UseApi {
   final forms =
       LzForm.make(['offer_amount', 'estimated_duration', 'offer_reason']);
 
-  Future postbid(BuildContext context, int id) async {
+  Future<Map<String, dynamic>> postbid(BuildContext context, int id) async {
     try {
       final form = LzForm.validate(forms,
           required: ['*'],
@@ -27,21 +27,28 @@ class BidProvider with ChangeNotifier, UseApi {
         payload['project_id'] = id;
         ResHandler res = await bidProjectApi.postBidProject(payload);
 
-        if (!res.status) {
+        if (res.status) {
+          forms.reset();
+
+          LzToast.show(res.message);
+          Navigator.pop(context);
+          LzToast.dismiss();
+          return {"status": res.status, "data": res.data};
+        } else {
           forms.reset();
           LzToast.show(res.message);
 
           Navigator.pop(context);
-        } else {
-          forms.reset();
-          LzToast.show('Offer successfully sent');
-
-          Navigator.pop(context);
+          LzToast.dismiss();
+          return {"status": res.status, "data": res.data};
         }
       }
+      LzToast.dismiss();
+      return {"status": false, "data": {}};
     } catch (e, s) {
       logg('Error: $e, StackTrace: $s');
       LzToast.show('An error occurred during postbid.');
+      return {"status": false, "data": {}};
     } finally {
       LzToast.dismiss();
     }

@@ -1,21 +1,25 @@
 import 'package:fetchly/fetchly.dart';
 import 'package:flutter/material.dart';
 import 'package:homecare_app/employer/data/api/api.dart';
+import 'package:homecare_app/employer/providers/notification_provider.dart';
 import 'package:homecare_app/employer/screens/project_employer/widget/info_request_bid.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lazyui/lazyui.dart';
 
-class DataSeeRequest extends StatelessWidget {
+class DataSeeRequest extends ConsumerWidget {
   final Map bid;
-  const DataSeeRequest({super.key, required this.bid});
+  int userId;
+  DataSeeRequest({super.key, required this.bid, required this.userId});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     String formatNumber(double number) {
       final formatCurrency = NumberFormat.currency(
           locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
       return formatCurrency.format(number);
     }
 
+    final notification = ref.read(notificationStatusProvider.notifier);
     DateTime offerDate = DateTime.parse(bid['offer_date']);
     return Container(
       padding: Ei.only(l: 20, r: 20, t: 10),
@@ -75,7 +79,8 @@ class DataSeeRequest extends StatelessWidget {
                         children: [
                           Textr(offerDate.format('yy/MM/dd'),
                               overflow: Tof.ellipsis,
-                              style: Gfont.color(LzColors.hex('001380')).fsize(11)),
+                              style: Gfont.color(LzColors.hex('001380'))
+                                  .fsize(11)),
                         ],
                       )
                     ],
@@ -146,14 +151,24 @@ class DataSeeRequest extends StatelessWidget {
                   onTap: () async {
                     ProjectsApi projectsApi = ProjectsApi();
                     ResHandler res = await projectsApi.approveBid(bid['id']);
+
                     LzToast.dismiss();
-                    if (!res.status) {
+                    if (res.status) {
                       LzToast.show(res.message);
-                      return false;
-                    } else {
-                      LzToast.show('Successfully approved bid project...');
                       Navigator.pop(context);
+
+                      await notification.postNotification({
+                        "sent_to": bid["user"]["id"],
+                        "title": "made",
+                        "notif_text": "made",
+                        "is_read": 1,
+                        "offer_id": bid["id"]
+                      });
+
                       return true;
+                    } else {
+                      LzToast.show('Failed approved bid project...');
+                      return false;
                     }
                   },
                   child: Container(
@@ -165,7 +180,7 @@ class DataSeeRequest extends StatelessWidget {
                     ),
                     child: Textr(
                       alignment: Alignment.center,
-                      'Approve Bid',
+                      'Approve Bid ${bid["user"]["id"]}',
                       style: Gfont.color(LzColors.hex('ffffff')).fsize(12),
                     ),
                   ),
@@ -175,13 +190,20 @@ class DataSeeRequest extends StatelessWidget {
                     ProjectsApi projectsApi = ProjectsApi();
                     ResHandler res = await projectsApi.rejectBid(bid['id']);
                     LzToast.dismiss();
-                    if (!res.status) {
+                    if (res.status) {
                       LzToast.show(res.message);
-                      return false;
-                    } else {
-                      LzToast.show('Successfully reject bid project...');
                       Navigator.pop(context);
+                      await notification.postNotification({
+                        "sent_to": bid["user"]["id"],
+                        "title": "made",
+                        "notif_text": "made",
+                        "is_read": 1,
+                        "offer_id": bid["id"]
+                      });
                       return true;
+                    } else {
+                      LzToast.show('Failed reject bid project...');
+                      return false;
                     }
                   },
                   child: Container(

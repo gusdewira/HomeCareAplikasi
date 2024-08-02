@@ -20,7 +20,7 @@ class HomeView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final profileData = ref.watch(profileFreelancerProvider);
-    final projectActive = ref.watch(projectProgress);
+    final projectActive = ref.read(projectProgress);
     final projectCompleted = ref.watch(projectComplated);
 
     Future<void> _refreshData() async {

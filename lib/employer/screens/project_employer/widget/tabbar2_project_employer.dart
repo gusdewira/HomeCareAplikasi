@@ -1,7 +1,9 @@
+import 'package:fetchly/fetchly.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:homecare_app/employer/data/api/api.dart';
 import 'package:homecare_app/employer/data/models/project_model.dart';
+import 'package:homecare_app/employer/providers/notification_provider.dart';
 import 'package:homecare_app/employer/providers/project_active_provider.dart';
 import 'package:homecare_app/employer/screens/project_employer/widget/see_history_progress.dart';
 import 'package:homecare_app/freelancer/routes/paths.dart';
@@ -14,11 +16,13 @@ class Tabbar2ProjectEmployer extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final notification = ref.read(notificationStatusProvider.notifier);
     Future<void> _refreshData() async {
       ref.refresh(projectActiveProvider);
     }
 
-    void showEndContractDialog(BuildContext context) {
+    void showEndContractDialog(
+        BuildContext context, ProjectEmployerModel project) {
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -34,7 +38,7 @@ class Tabbar2ProjectEmployer extends ConsumerWidget {
                 ),
                 content: Text(
                   textAlign: Ta.center,
-                  'If you complete this project, the system balance will be transferred to the freelancer.',
+                  'If you complete this project ${project.offer![0]['id']}, the system balance will be transferred to the freelancer.',
                   style: Gfont.fs18,
                 ),
                 actions: [
@@ -42,8 +46,22 @@ class Tabbar2ProjectEmployer extends ConsumerWidget {
                     mainAxisAlignment: Maa.center,
                     children: [
                       InkTouch(
-                        onTap: () {
-                          Navigator.of(context).pop();
+                        onTap: () async {
+                          ProjectCompletedApi projectCompletedApi =
+                              ProjectCompletedApi();
+                          ResHandler response = await projectCompletedApi
+                              .endProject(project.offer![0]['id']);
+
+                          if (response != null) {
+                            await notification.postNotification({
+                              "sent_to": project.offer?[0]["user"]["id"],
+                              "title": "made",
+                              "notif_text": "made",
+                              "is_read": 1,
+                              "offer_id": project.offer?[0]["id"]
+                            });
+                            Navigator.of(context).pop();
+                          }
                         },
                         child: Container(
                           width: 90,
@@ -161,7 +179,7 @@ class Tabbar2ProjectEmployer extends ConsumerWidget {
                         children: [
                           project.user?['profile_photo'] != null
                               ? LzImage(
-                                  "https://homecare.galkasoft.id/storage/${project.user?['profile_photo']}",
+                                  "https://homecare.galkasoft.id/storage/${project.offer?[0]['user']['profile_photo']}",
                                   radius: 50,
                                   size: 50,
                                 )
@@ -182,13 +200,14 @@ class Tabbar2ProjectEmployer extends ConsumerWidget {
                                   Column(
                                     children: [
                                       Textr(
-                                          "${project.user?['first_name']} ${project.user?['last_name']}",
+                                          "${project.offer?[0]['user']['first_name']} ${project.offer?[0]['user']['last_name']}",
                                           width: 150,
                                           overflow: Tof.ellipsis,
                                           style: Gfont.color(
                                               LzColors.hex('001380'))),
                                       Textr(
-                                          project.user?['profession'] ??
+                                          project.offer?[0]['user']
+                                                  ['profession'] ??
                                               "No Profession",
                                           overflow: Tof.ellipsis,
                                           width: 150,
@@ -203,9 +222,9 @@ class Tabbar2ProjectEmployer extends ConsumerWidget {
                         ],
                       ),
                       Text(
-                        maxLines: 1,
-                        overflow: Tof.ellipsis,
-                        'Hired date : ${formatTanggal(project.startDate, project.endDate)}')
+                              maxLines: 1,
+                              overflow: Tof.ellipsis,
+                              'Hired date : ${formatTanggal(project.startDate, project.endDate)}')
                           .margin(t: 10),
                       Text(
                           'Salary: Rp. ${project.startSalary!.toStringAsFixed(0)} - Rp. ${project.endSalary!.toStringAsFixed(0)}'),
@@ -256,7 +275,9 @@ class Tabbar2ProjectEmployer extends ConsumerWidget {
                           children: [
                             InkTouch(
                               onTap: () {
-                                context.lzPush(SeeHistoryProgressEmployer(id: project.id!,));
+                                context.lzPush(SeeHistoryProgressEmployer(
+                                  id: project.id!,
+                                ));
                               },
                               child: Container(
                                 height: 30,
@@ -275,10 +296,7 @@ class Tabbar2ProjectEmployer extends ConsumerWidget {
                             ),
                             InkTouch(
                               onTap: () async {
-                                showEndContractDialog(context);
-
-                                var response = await ProjectCompletedApi()
-                                    .endProject(project.offer![0]['id']);
+                                showEndContractDialog(context, project);
                               },
                               child: Container(
                                 margin: Ei.only(l: 10),

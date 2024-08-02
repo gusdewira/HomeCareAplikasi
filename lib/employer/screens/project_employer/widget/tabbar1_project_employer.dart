@@ -46,6 +46,7 @@ class Tabbar1ProjectEmployer extends ConsumerWidget {
                 final endDate = project.endDate!.format('yy/MM/dd');
                 final location = project.user!['location'];
                 final description = project.description!;
+                String status = project.offer!.isNotEmpty ? project.offer![0]['status'] : "WAITING";
 
                 return Container(
                   padding: Ei.only(l: 20, r: 20, t: 10),
@@ -86,7 +87,7 @@ class Tabbar1ProjectEmployer extends ConsumerWidget {
                                 children: [
                                   Textr(margin: Ei.only(r: 10), 'Salary'),
                                   Textr(
-                                    maxLines: 2,
+                                      maxLines: 2,
                                       overflow: Tof.ellipsis,
                                       margin: Ei.only(r: 10),
                                       '$startSalary - $endSalary',
@@ -118,14 +119,14 @@ class Tabbar1ProjectEmployer extends ConsumerWidget {
                                   Row(
                                     mainAxisAlignment: Maa.end,
                                     children: [
-                                      Icon(
+                                      const Icon(
                                         Ti.mapPin,
                                         size: 15,
                                       ),
                                       Textr(
                                           alignment: Alignment.centerRight,
                                           margin: Ei.only(r: 10),
-                                          '${location ?? "Dendapasar"}',
+                                          '${location ?? "Denpasar"}',
                                           style: Gfont.color(
                                                   LzColors.hex('001380'))
                                               .fsize(12)),
@@ -149,7 +150,7 @@ class Tabbar1ProjectEmployer extends ConsumerWidget {
                         child: Text(
                             maxLines: 3, overflow: Tof.ellipsis, description),
                       ),
-                      InkTouch(
+                     status == "WAITING" ?  InkTouch(
                         onTap: () {
                           context.lzPush(SeeRequestEmployer(
                             project: project,
@@ -170,6 +171,30 @@ class Tabbar1ProjectEmployer extends ConsumerWidget {
                                 child: Textr(
                                   alignment: Alignment.center,
                                   'See Request',
+                                  style: Gfont.color(LzColors.hex('ffffff'))
+                                      .fsize(12),
+                                ),
+                              ),
+                            ],
+                          ).margin(t: 20),
+                        ),
+                      ) : InkTouch(
+                        onTap: () {},
+                        child: SizedBox(
+                          width: context.width,
+                          child: Row(
+                            mainAxisAlignment: Maa.end,
+                            children: [
+                              Container(
+                                height: 30,
+                                width: 90,
+                                decoration: BoxDecoration(
+                                  color: status == "ACCEPT" ? LzColors.green : LzColors.red,
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                child: Textr(
+                                  alignment: Alignment.center,
+                                  status,
                                   style: Gfont.color(LzColors.hex('ffffff'))
                                       .fsize(12),
                                 ),
