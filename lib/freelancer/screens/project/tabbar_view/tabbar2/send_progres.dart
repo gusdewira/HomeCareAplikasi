@@ -230,7 +230,6 @@ class SendProgressProject extends ConsumerWidget {
                               "progresses_id": ok.data['id'],
                               "offer_id": offer
                             });
-
                           } else {
                             state.abort();
                             LzToast.show("Please fill all required fields.");

@@ -161,7 +161,7 @@ class Tabbar2ProjectEmployer extends ConsumerWidget {
                         children: [
                           project.user?['profile_photo'] != null
                               ? LzImage(
-                                  "https://homecare.galkasoft.id/storage/${project.user?['profile_photo']}",
+                                  "https://homecare.galkasoft.id/storage/${project.offer?[0]['user']['profile_photo']}",
                                   radius: 50,
                                   size: 50,
                                 )
@@ -182,13 +182,14 @@ class Tabbar2ProjectEmployer extends ConsumerWidget {
                                   Column(
                                     children: [
                                       Textr(
-                                          "${project.user?['first_name']} ${project.user?['last_name']}",
+                                          "${project.offer?[0]['user']['first_name']} ${project.offer?[0]['user']['last_name']}",
                                           width: 150,
                                           overflow: Tof.ellipsis,
                                           style: Gfont.color(
                                               LzColors.hex('001380'))),
                                       Textr(
-                                          project.user?['profession'] ??
+                                          project.offer?[0]['user']
+                                                  ['profession'] ??
                                               "No Profession",
                                           overflow: Tof.ellipsis,
                                           width: 150,
@@ -203,9 +204,9 @@ class Tabbar2ProjectEmployer extends ConsumerWidget {
                         ],
                       ),
                       Text(
-                        maxLines: 1,
-                        overflow: Tof.ellipsis,
-                        'Hired date : ${formatTanggal(project.startDate, project.endDate)}')
+                              maxLines: 1,
+                              overflow: Tof.ellipsis,
+                              'Hired date : ${formatTanggal(project.startDate, project.endDate)}')
                           .margin(t: 10),
                       Text(
                           'Salary: Rp. ${project.startSalary!.toStringAsFixed(0)} - Rp. ${project.endSalary!.toStringAsFixed(0)}'),
@@ -256,7 +257,9 @@ class Tabbar2ProjectEmployer extends ConsumerWidget {
                           children: [
                             InkTouch(
                               onTap: () {
-                                context.lzPush(SeeHistoryProgressEmployer(id: project.id!,));
+                                context.lzPush(SeeHistoryProgressEmployer(
+                                  id: project.id!,
+                                ));
                               },
                               child: Container(
                                 height: 30,

@@ -158,7 +158,7 @@ class SeeRequestEmployer extends StatelessWidget {
                         itemCount: project.offer!.length,
                         itemBuilder: (context, index) {
                           return DataSeeRequest(
-                            bid: project.offer![index],
+                            bid: project.offer![index], userId: project.user!['id']
                           );
                         })),
               ],

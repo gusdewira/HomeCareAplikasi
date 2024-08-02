@@ -14,6 +14,7 @@ import 'package:homecare_app/employer/screens/home_employer/widget/recenttransac
 import 'package:homecare_app/employer/screens/home_employer/widget/topup_employer.dart';
 import 'package:homecare_app/employer/screens/home_employer/widget/yourproject_employer.dart';
 import 'package:homecare_app/freelancer/routes/paths.dart';
+import 'package:homecare_app/freelancer/screens/home/views/notification_home.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lazyui/lazyui.dart';
 
@@ -107,7 +108,9 @@ class HomeEmployerView extends ConsumerWidget {
                         top: 50,
                         right: 25,
                         child: IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              context.lzPush(const NotificationHome());
+                            },
                             icon: const Icon(
                               Ti.bell,
                               size: 30,

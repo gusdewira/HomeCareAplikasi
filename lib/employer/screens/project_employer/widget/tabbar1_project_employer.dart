@@ -46,7 +46,7 @@ class Tabbar1ProjectEmployer extends ConsumerWidget {
                 final endDate = project.endDate!.format('yy/MM/dd');
                 final location = project.user!['location'];
                 final description = project.description!;
-                String status = project.offer![0]['status'];
+                String status = project.offer!.isNotEmpty ? project.offer![0]['status'] : "WAITING";
 
                 return Container(
                   padding: Ei.only(l: 20, r: 20, t: 10),
