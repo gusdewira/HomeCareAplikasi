@@ -22,7 +22,7 @@ class DataExploreFreelancer extends StatelessWidget {
 
     return Container(
       padding: Ei.only(l: 20, r: 20, t: 10),
-      margin: Ei.only(l: 25, r: 25, b: 20, t: 20),
+      margin: Ei.only(l: 25, r: 25, b: 15, t: 10),
       width: context.width / 1,
       height: 220,
       decoration: BoxDecoration(

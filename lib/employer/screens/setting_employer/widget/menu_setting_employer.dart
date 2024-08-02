@@ -36,10 +36,10 @@ ProfileEmployerModel profile;
               bool ok = await notifier.logout();
 
               if(ok){
-                LzToast.show("Anda telah logout!");
+                LzToast.show("Logout Successful!");
                 context.pushReplacement(Paths.login);
               }else{
-                LzToast.show("Anda gagal logout!");
+                LzToast.show("Logout Successful!");
               }
             },)
         ],

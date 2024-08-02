@@ -30,7 +30,7 @@ class ListMenuSetting extends ConsumerWidget {
                       context.push(Paths.myprofile);
                     },
                     child: RowItem('My Profile', Ti.user, color1)),
-                    RowItem('Notification', Ti.bell, color1),
+                RowItem('Notification', Ti.bell, color1),
                 // RowItem('Changes Password', Ti.key, color1),
                 RowItem(
                   'Logout',
@@ -40,10 +40,10 @@ class ListMenuSetting extends ConsumerWidget {
                     bool ok = await notifier.logout();
 
                     if (ok) {
-                      LzToast.show("Anda telah logout!");
+                      LzToast.show("Logout Successful!");
                       context.pushReplacement(Paths.login);
                     } else {
-                      LzToast.show("Anda gagal logout!");
+                      LzToast.show("Logout Successful!");
                     }
                   },
                 )

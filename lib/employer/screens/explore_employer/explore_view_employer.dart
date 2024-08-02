@@ -157,7 +157,7 @@ class ExploreEmployerView extends ConsumerState<ExploreView> {
                         loading: () => LzLoader.bar(message: 'Loading...'),
                       )),
                     ],
-                  ),
+                  ).margin(b: 30),
                 ),
                 Positioned(
                   top: 50,

@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -9,9 +8,6 @@ import 'package:homecare_app/employer/providers/project_active_provider.dart';
 import 'package:homecare_app/employer/providers/project_completed_provider.dart';
 import 'package:homecare_app/employer/providers/project_provider.dart';
 import 'package:homecare_app/employer/screens/home_employer/widget/allproject_employer.dart';
-import 'package:homecare_app/employer/screens/home_employer/widget/belancewithdraw_employer.dart';
-import 'package:homecare_app/employer/screens/home_employer/widget/recenttransaction_employee.dart';
-import 'package:homecare_app/employer/screens/home_employer/widget/topup_employer.dart';
 import 'package:homecare_app/employer/screens/home_employer/widget/yourproject_employer.dart';
 import 'package:homecare_app/freelancer/routes/paths.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -104,7 +100,7 @@ class HomeEmployerView extends ConsumerWidget {
                       ),
                     ),
                     Positioned(
-                        top: 50,
+                        top: 70,
                         right: 25,
                         child: IconButton(
                             onPressed: () {},
@@ -114,7 +110,7 @@ class HomeEmployerView extends ConsumerWidget {
                               color: Colors.white,
                             ))),
                     Container(
-                      margin: Ei.only(t: 160),
+                      margin: Ei.only(t: 140),
                       width: context.width,
                       height: context.height,
                       decoration: BoxDecoration(
@@ -212,7 +208,7 @@ class HomeEmployerView extends ConsumerWidget {
                           },
                         )
                       ],
-                    ).margin(l: 25, r: 25, t: 130),
+                    ).margin(l: 25, r: 25, t: 160),
                     // Positioned(
                     //     top: 120,
                     //     left: 25,
