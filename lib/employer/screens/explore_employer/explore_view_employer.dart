@@ -51,6 +51,15 @@ class ExploreEmployerView extends ConsumerState<ExploreView> {
     selectedCategories = [];
   }
 
+  final List<Map<String, dynamic>> salaryRanges = [
+    {'label': '200.000 - 350.000', 'from': 200000, 'to': 350000},
+    {'label': '350.000 - 500.000', 'from': 350000, 'to': 500000},
+    {'label': '500.000 - 1.000.000', 'from': 500000, 'to': 1000000},
+    {'label': '1.000.000 - 2.500.000', 'from': 1000000, 'to': 2500000},
+    {'label': '2.500.000 - 4.000.000', 'from': 2500000, 'to': 4000000},
+    {'label': '4.000.000 - 5.500.000', 'from': 4000000, 'to': 5500000},
+  ];
+
   @override
   Widget build(BuildContext context) {
     var profiles = ref.watch(freelancerProvider);
@@ -121,8 +130,6 @@ class ExploreEmployerView extends ConsumerState<ExploreView> {
                                   final matchesCategory = selectedCategories
                                           .isEmpty ||
                                       selectedCategories.contains(profession);
-                                  final matchesLocation = location.isEmpty ||
-                                      address.contains(location);
                                   final matchesSearch = _searchQuery
                                           .text.isEmpty ||
                                       name.toLowerCase().contains(
@@ -132,7 +139,6 @@ class ExploreEmployerView extends ConsumerState<ExploreView> {
 
                                   return matchesSalary &&
                                       matchesCategory &&
-                                      matchesLocation &&
                                       matchesSearch;
                                 }).toList()
                               : profile;
@@ -181,8 +187,9 @@ class ExploreEmployerView extends ConsumerState<ExploreView> {
                                 margin: Ei.only(t: 80, l: 35, r: 35, b: 110),
                                 padding: Ei.all(20),
                                 decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(30),
-                                    color: Colors.white),
+                                  borderRadius: BorderRadius.circular(30),
+                                  color: Colors.white,
+                                ),
                                 child: LzFormList(
                                   cleanOnFilled: true,
                                   style: LzFormStyle(
@@ -209,55 +216,39 @@ class ExploreEmployerView extends ConsumerState<ExploreView> {
                                               ),
                                             ),
                                             IconButton(
-                                                onPressed: () {
-                                                  Navigator.of(context).pop();
-                                                  _refreshProfiles();
-                                                },
-                                                icon: const Icon(Ti.x))
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                                _refreshProfiles();
+                                              },
+                                              icon: const Icon(Ti.x),
+                                            ),
                                           ],
                                         ),
                                         Column(
                                           children: [
-                                            Row(
-                                              children: [
-                                                Expanded(
-                                                    child: Padding(
-                                                  padding: Ei.only(r: 10),
-                                                  child: LzForm.input(
-                                                    label: 'From',
-                                                    onChange: (value) {
-                                                      setState(() {
-                                                        fromSalary =
-                                                            int.tryParse(
-                                                                    value) ??
-                                                                0;
-                                                      });
-                                                    },
-                                                    labelStyle:
-                                                        LzFormLabelStyle(
-                                                            color: color1),
-                                                    hint: 'Salary Range',
-                                                  ).margin(t: 10),
-                                                )),
-                                                Expanded(
-                                                    child: Padding(
-                                                  padding: Ei.only(l: 10),
-                                                  child: LzForm.input(
-                                                    label: 'To',
-                                                    onChange: (value) {
-                                                      setState(() {
-                                                        toSalary = int.tryParse(
-                                                                value) ??
-                                                            0;
-                                                      });
-                                                    },
-                                                    labelStyle:
-                                                        LzFormLabelStyle(
-                                                            color: color1),
-                                                    hint: 'Salary Range',
-                                                  ).margin(t: 10),
-                                                )),
-                                              ],
+                                            DropdownButtonFormField<
+                                                Map<String, dynamic>>(
+                                              decoration: InputDecoration(
+                                                labelText: 'Salary Range',
+                                                labelStyle:
+                                                    TextStyle(color: color1),
+                                                hintText: 'Select Salary Range',
+                                              ),
+                                              items: salaryRanges.map((range) {
+                                                return DropdownMenuItem<
+                                                    Map<String, dynamic>>(
+                                                  value: range,
+                                                  child:
+                                                      Text('${range['label']}'),
+                                                );
+                                              }).toList(),
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  fromSalary =
+                                                      value?['from'] ?? 0;
+                                                  toSalary = value?['to'] ?? 0;
+                                                });
+                                              },
                                             ),
                                             LzForm.checkbox(
                                               labelStyle: LzFormLabelStyle(
@@ -308,17 +299,6 @@ class ExploreEmployerView extends ConsumerState<ExploreView> {
                                                 }
                                               },
                                             ),
-                                            LzForm.input(
-                                              label: 'Location',
-                                              onChange: (value) {
-                                                setState(() {
-                                                  location = value;
-                                                });
-                                              },
-                                              labelStyle: LzFormLabelStyle(
-                                                  color: color1),
-                                              hint: 'Input Location',
-                                            ).margin(b: 10),
                                             InkTouch(
                                               onTap: () {
                                                 Navigator.of(context).pop();
@@ -328,10 +308,10 @@ class ExploreEmployerView extends ConsumerState<ExploreView> {
                                                 height: 50,
                                                 width: context.width,
                                                 decoration: BoxDecoration(
-                                                    color: color1,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            15)),
+                                                  color: color1,
+                                                  borderRadius:
+                                                      BorderRadius.circular(15),
+                                                ),
                                                 child: Center(
                                                   child: Text(
                                                     'Search',
@@ -339,7 +319,7 @@ class ExploreEmployerView extends ConsumerState<ExploreView> {
                                                   ),
                                                 ),
                                               ),
-                                            )
+                                            ),
                                           ],
                                         ),
                                       ],

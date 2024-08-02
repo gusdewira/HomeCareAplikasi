@@ -14,6 +14,32 @@ class PostingProjectEmployer extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    String? _getValidCategoryValue(String? currentValue) {
+      const validCategories = [
+        'Mobile App Development',
+        'Content Writing',
+        'Digital Marketing',
+        'Video Editing',
+        'UI/UX Design',
+        'Game Development',
+        'Data Entry',
+        'Virtual Assistance',
+      ];
+      if (currentValue != null && validCategories.contains(currentValue)) {
+        return currentValue;
+      }
+      return null;
+    }
+
+    final List<Map<String, String>> salaryRanges = [
+      {'start': '200.000', 'end': '350.000'},
+      {'start': '350.000', 'end': '500.000'},
+      {'start': '500.000', 'end': '1.000.000'},
+      {'start': '1.000.000', 'end': '2.500.000'},
+      {'start': '2.500.000', 'end': '4.000.000'},
+      {'start': '4.000.000', 'end': '5.500.000'},
+    ];
+
     final notifier = ref.read(postProjectNotifier.notifier);
     return Scaffold(
       body: LzFormList(
@@ -90,12 +116,62 @@ class PostingProjectEmployer extends ConsumerWidget {
                                 labelStyle: LzFormLabelStyle(color: color1),
                                 hint: 'Project Description',
                                 model: notifier.forms['description']),
-                            LzForm.input(
-                              label: 'Category',
-                              labelStyle: LzFormLabelStyle(color: color1),
-                              hint: 'Project Category',
-                              model: notifier.forms['name_category'],
-                              maxLength: 100,
+                            DropdownButtonFormField<String>(
+                              decoration: InputDecoration(
+                                labelText: 'Category',
+                                labelStyle: TextStyle(color: color1),
+                                hintText: 'Select Project Category',
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      12), // Rounded corners
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      12), // Rounded corners
+                                  borderSide: BorderSide(
+                                    color: Colors
+                                        .grey, // Warna border saat tidak fokus
+                                  ),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      12), // Rounded corners
+                                  borderSide: BorderSide(
+                                    color: color1, // Warna border saat fokus
+                                  ),
+                                ),
+                                contentPadding: EdgeInsets.symmetric(
+                                    vertical: 12,
+                                    horizontal: 12), // Adjust padding
+                                isDense: true,
+                              ),
+                              value: _getValidCategoryValue(notifier
+                                  .forms['name_category']?.controller.text),
+                              onChanged: (String? newValue) {
+                                if (newValue != null) {
+                                  notifier.forms['name_category']?.controller
+                                      .text = newValue;
+                                  notifier.notifyListeners();
+                                }
+                              },
+                              items: [
+                                'Mobile App Development',
+                                'Content Writing',
+                                'Digital Marketing',
+                                'Video Editing',
+                                'UI/UX Design',
+                                'Game Development',
+                                'Data Entry',
+                                'Virtual Assistance'
+                              ].map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                            ),
+                            SizedBox(
+                              height: 8,
                             ),
                             SizedBox(
                               height: 70,
@@ -183,20 +259,6 @@ class PostingProjectEmployer extends ConsumerWidget {
                               ]),
                             ),
                             LzForm.input(
-                              label: 'Project Location',
-                              labelStyle: LzFormLabelStyle(color: color1),
-                              hint: 'Longitude',
-                              model: notifier.forms['longitude'],
-                              maxLength: 2000,
-                            ),
-                            LzForm.input(
-                              label: 'Project Location',
-                              labelStyle: LzFormLabelStyle(color: color1),
-                              hint: 'Latitude',
-                              model: notifier.forms['latitude'],
-                              maxLength: 2000,
-                            ),
-                            LzForm.input(
                               label: 'Start Date',
                               labelStyle: LzFormLabelStyle(color: color1),
                               hint: 'Enter Date',
@@ -238,19 +300,53 @@ class PostingProjectEmployer extends ConsumerWidget {
                                 }
                               },
                             ),
-                            LzForm.input(
-                              label: 'Start Salary',
-                              labelStyle: LzFormLabelStyle(color: color1),
-                              hint: 'Start Salary',
-                              model: notifier.forms['start_salary'],
-                              maxLength: 2000,
+                            DropdownButtonFormField<Map<String, String>>(
+                              decoration: InputDecoration(
+                                labelText: 'Salary Range',
+                                labelStyle: TextStyle(color: color1),
+                                hintText: 'Select Salary Range',
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                  borderSide: BorderSide(
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                  borderSide: BorderSide(
+                                    color: color1,
+                                  ),
+                                ),
+                                contentPadding: EdgeInsets.symmetric(
+                                    vertical: 10, horizontal: 12),
+                              ),
+                              value: salaryRanges[0], // Pilihan default
+                              onChanged: (Map<String, String>? newValue) {
+                                if (newValue != null) {
+                                  // Simpan Start Salary dan End Salary secara terpisah
+                                  notifier.forms['start_salary']?.controller
+                                      .text = newValue['start']!;
+                                  notifier.forms['end_salary']?.controller
+                                      .text = newValue['end']!;
+                                  notifier
+                                      .notifyListeners(); // Jika diperlukan, notifikasi perubahan
+                                }
+                              },
+                              items: salaryRanges
+                                  .map<DropdownMenuItem<Map<String, String>>>(
+                                      (Map<String, String> value) {
+                                return DropdownMenuItem<Map<String, String>>(
+                                  value: value,
+                                  child: Text(
+                                      '${value['start']} - ${value['end']}'),
+                                );
+                              }).toList(),
                             ),
-                            LzForm.input(
-                              label: 'End Salary',
-                              labelStyle: LzFormLabelStyle(color: color1),
-                              hint: 'End Salary',
-                              model: notifier.forms['end_salary'],
-                              maxLength: 2000,
+                            SizedBox(
+                              height: 32,
                             ),
                             SizedBox(
                               width: double.infinity,
@@ -264,7 +360,7 @@ class PostingProjectEmployer extends ConsumerWidget {
                                   bool ok = await notifier.create(context);
 
                                   if (ok && context.mounted) {
-                                    context.pop(); 
+                                    context.pop();
                                     LzToast.show("Project has been created.");
                                   } else {
                                     state.abort();

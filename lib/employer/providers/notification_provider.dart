@@ -52,7 +52,7 @@ class NotificationOffersProvider with ChangeNotifier, UseApi1 {
     } catch (e, s) {
       logg('Error: $e, StackTrace: $s');
       LzToast.show('An error occurred during postNotification.');
-        return {"status": false, "data": {}};
+      return {"status": false, "data": {}};
     } finally {
       LzToast.dismiss();
     }
@@ -67,9 +67,6 @@ class NotificationProgressProvider with ChangeNotifier, UseApi1 {
     try {
       if (data.isNotEmpty) {
         ResHandler res = await notificationApi.postNotificationProgress(data);
-        print(res.message);
-        print(res.data);
-        print(res.body);
         return res;
       } else {
         LzToast.show("Data is empty!");
@@ -93,9 +90,6 @@ class NotificationStatusProvider with ChangeNotifier, UseApi1 {
     try {
       if (data.isNotEmpty) {
         ResHandler res = await notificationApi.postNotificationStatus(data);
-        print(res.message);
-        print(res.data);
-        print(res.body);
         return res;
       } else {
         LzToast.show("Data is empty!");

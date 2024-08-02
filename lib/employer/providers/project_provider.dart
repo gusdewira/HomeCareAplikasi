@@ -26,7 +26,6 @@ class ProjectProvider
         LzToast.show(res.message);
       }
     } catch (e, s) {
-      print("Error: $e");
       Errors.check(e, s);
     }
   }
@@ -83,8 +82,6 @@ class PostProjectNotifier with ChangeNotifier, UseApi1 {
     'title',
     'description',
     'name_category',
-    'longitude',
-    'latitude',
     'start_date',
     'end_date',
     'start_salary',
@@ -98,6 +95,17 @@ class PostProjectNotifier with ChangeNotifier, UseApi1 {
     notifyListeners();
   }
 
+  int? parseSalary(String? value) {
+    if (value == null || value.isEmpty) {
+      return null;
+    }
+    try {
+      return int.parse(value.replaceAll(RegExp(r'[^\d]'), ''));
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future create(BuildContext context) async {
     try {
       final validate = LzForm.validate(
@@ -107,6 +115,13 @@ class PostProjectNotifier with ChangeNotifier, UseApi1 {
 
       if (validate.ok && fileAttachment != null) {
         final map = forms.toMap();
+
+        if (map['start_salary'] != null) {
+          map['start_salary'] = parseSalary(map['start_salary']);
+        }
+        if (map['end_salary'] != null) {
+          map['end_salary'] = parseSalary(map['end_salary']);
+        }
 
         LzToast.overlay('Loading Post Project...');
         if (map['name_category'] is String) {
@@ -134,6 +149,7 @@ class PostProjectNotifier with ChangeNotifier, UseApi1 {
           return true;
         }
       }
+      return false;
     } catch (e, s) {
       Errors.check(e, s);
     }

@@ -50,7 +50,6 @@ class ProgressPostProvider with ChangeNotifier, UseApi {
 
   void setFile(File? value) {
     fileAttachment = value;
-    print(value);
     notifyListeners();
   }
 
@@ -75,19 +74,11 @@ class ProgressPostProvider with ChangeNotifier, UseApi {
           payload['attachment'] =
               await projectProgressApi.toFile(fileAttachment!.path);
         } else {
-          print('File does not exist.');
           LzToast.show('Attachment file is missing.');
           return false;
         }
 
-        print(payload);
-
         ResHandler res = await projectProgressApi.postProgress(payload);
-
-        print(res.status);
-        print(res.data);
-        print(res.body);
-        print("Selesai Post Progress");
 
         forms.reset();
         setFile(null);

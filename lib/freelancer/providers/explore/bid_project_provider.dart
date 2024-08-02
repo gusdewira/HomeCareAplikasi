@@ -27,9 +27,6 @@ class BidProvider with ChangeNotifier, UseApi {
         payload['project_id'] = id;
         ResHandler res = await bidProjectApi.postBidProject(payload);
 
-        print(res.message);
-        print(res.data);
-        print(res.status);
         if (res.status) {
           forms.reset();
 

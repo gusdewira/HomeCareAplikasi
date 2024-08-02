@@ -119,14 +119,14 @@ class Tabbar1ProjectEmployer extends ConsumerWidget {
                                   Row(
                                     mainAxisAlignment: Maa.end,
                                     children: [
-                                      Icon(
+                                      const Icon(
                                         Ti.mapPin,
                                         size: 15,
                                       ),
                                       Textr(
                                           alignment: Alignment.centerRight,
                                           margin: Ei.only(r: 10),
-                                          '${location ?? "Dendapasar"}',
+                                          '${location ?? "Denpasar"}',
                                           style: Gfont.color(
                                                   LzColors.hex('001380'))
                                               .fsize(12)),
