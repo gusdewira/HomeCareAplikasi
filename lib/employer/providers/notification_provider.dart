@@ -44,13 +44,15 @@ class NotificationOffersProvider with ChangeNotifier, UseApi1 {
     try {
       if (data.isNotEmpty) {
         ResHandler res = await notificationApi.postNotificationOffers(data);
-        return true;
+        return res;
       } else {
         LzToast.show("Data is empty!");
+        return {"status": false, "data": {}};
       }
     } catch (e, s) {
       logg('Error: $e, StackTrace: $s');
       LzToast.show('An error occurred during postNotification.');
+        return {"status": false, "data": {}};
     } finally {
       LzToast.dismiss();
     }
@@ -65,13 +67,18 @@ class NotificationProgressProvider with ChangeNotifier, UseApi1 {
     try {
       if (data.isNotEmpty) {
         ResHandler res = await notificationApi.postNotificationProgress(data);
-        return true;
+        print(res.message);
+        print(res.data);
+        print(res.body);
+        return res;
       } else {
         LzToast.show("Data is empty!");
+        return {"status": false, "data": {}};
       }
     } catch (e, s) {
       logg('Error: $e, StackTrace: $s');
       LzToast.show('An error occurred during postNotification.');
+      return {"status": false, "data": {}};
     } finally {
       LzToast.dismiss();
     }
@@ -86,13 +93,18 @@ class NotificationStatusProvider with ChangeNotifier, UseApi1 {
     try {
       if (data.isNotEmpty) {
         ResHandler res = await notificationApi.postNotificationStatus(data);
-        return true;
+        print(res.message);
+        print(res.data);
+        print(res.body);
+        return res;
       } else {
         LzToast.show("Data is empty!");
+        return {"status": false, "data": {}};
       }
     } catch (e, s) {
       logg('Error: $e, StackTrace: $s');
       LzToast.show('An error occurred during postNotification.');
+      return {"status": false, "data": {}};
     } finally {
       LzToast.dismiss();
     }

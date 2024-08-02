@@ -50,6 +50,7 @@ class ProgressPostProvider with ChangeNotifier, UseApi {
 
   void setFile(File? value) {
     fileAttachment = value;
+    print(value);
     notifyListeners();
   }
 
@@ -79,17 +80,25 @@ class ProgressPostProvider with ChangeNotifier, UseApi {
           return false;
         }
 
+        print(payload);
+
         ResHandler res = await projectProgressApi.postProgress(payload);
+
+        print(res.status);
+        print(res.data);
+        print(res.body);
+        print("Selesai Post Progress");
 
         forms.reset();
         setFile(null);
-        return res.status;
+        return res;
       }
 
-      return false;
+      return {"status": false, "data": {}};
     } catch (e, s) {
       logg('Error: $e, StackTrace: $s');
       LzToast.show('error');
+      return {"status": false, "data": {}};
     } finally {
       LzToast.dismiss();
     }

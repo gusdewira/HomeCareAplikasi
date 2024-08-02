@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:homecare_app/freelancer/screens/explore/content_widget/detail_project_explore.dart';
 import 'package:homecare_app/freelancer/screens/project/tabbar_view/tabbar2/history_progress_project.dart';
+import 'package:homecare_app/freelancer/screens/project/tabbar_view/tabbar2/send_progres.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lazyui/lazyui.dart';
 import 'package:intl/intl.dart'; // Pastikan Anda menambahkan ini untuk DateFormat
@@ -41,7 +42,7 @@ class Tabbar2 extends ConsumerWidget {
                         itemCount: projectProgreses.length,
                         itemBuilder: (context, index) {
                           final projectProgress = projectProgreses[index];
-                          int id = projectProgress.id!;
+                          int idProject = projectProgress.id!;
                           String title = projectProgress.title!;
                           double startSalary = projectProgress.startSalary!;
                           double endSalary = projectProgress.endSalary!;
@@ -50,6 +51,7 @@ class Tabbar2 extends ConsumerWidget {
                           String client =
                               '${projectProgress.user!['first_name']} ${projectProgress.user!['last_name']}';
                           DateTime hireDate = projectProgress.createdAt!;
+                          int idOffers = projectProgress.offer![0]["id"];
 
                           return Column(
                             children: [
@@ -86,7 +88,7 @@ class Tabbar2 extends ConsumerWidget {
                                       style: Gfont.color(color1).fsize(15).bold,
                                     ).margin(b: 5),
                                     Text(
-                                      'Client : $client $id',
+                                      'Client : $client $idProject',
                                       style: Gfont.color(color1).fsize(12),
                                     ),
                                     Row(
@@ -120,8 +122,9 @@ class Tabbar2 extends ConsumerWidget {
                                       children: [
                                         InkTouch(
                                           onTap: () {
-                                            context.push(
-                                                Paths.sendProgressProject);
+                                            context.lzPush(SendProgressProject(
+                                              id: idProject, offer: idOffers
+                                            ));
                                           },
                                           child: Container(
                                             margin: Ei.only(t: 20),
@@ -143,7 +146,7 @@ class Tabbar2 extends ConsumerWidget {
                                         InkTouch(
                                           onTap: () {
                                             context.lzPush(
-                                                HistoryProgress(id: id));
+                                                HistoryProgress(id: idProject));
                                           },
                                           child: Container(
                                             margin: Ei.only(t: 20, l: 10),

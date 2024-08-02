@@ -1,10 +1,13 @@
 import 'dart:io';
 
+import 'package:fetchly/fetchly.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:homecare_app/employer/providers/notification_provider.dart';
 import 'package:homecare_app/freelancer/providers/explore/detail_project_provider.dart';
 import 'package:homecare_app/freelancer/providers/project/history_progress_provider.dart';
+import 'package:homecare_app/freelancer/screens/project/tabbar_view/tabbar2/tabbar_content2.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lazyui/lazyui.dart';
 
@@ -12,13 +15,15 @@ import '../../../../data/models/setting/project_freelancer_model.dart';
 import '../../../../widgets/color_widget.dart';
 
 class SendProgressProject extends ConsumerWidget {
-  final int? id;
-  const SendProgressProject({super.key, this.id});
+  final int id;
+  final int offer;
+  const SendProgressProject({super.key, required this.id, required this.offer});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final detailProject = ref.watch(detailProjectFreelancer);
+    final detailProject = ref.watch(detailProjectFreelancer(id));
     final notifier = ref.watch(progressPostProvider.notifier);
+    final notification = ref.read(notificationProgressProvider.notifier);
     final forms = notifier.forms;
 
     return detailProject.when(data: (ProjectFreelancerModel detail) {
@@ -84,7 +89,7 @@ class SendProgressProject extends ConsumerWidget {
                   crossAxisAlignment: Caa.start,
                   children: [
                     Textr(
-                      detail.title!,
+                      "${detail.title}",
                       margin: Ei.only(b: 10),
                       width: context.width / 2 + 20,
                       maxLines: 1,
@@ -211,11 +216,21 @@ class SendProgressProject extends ConsumerWidget {
                         textColor: Colors.white,
                         onTap: (state) async {
                           state.submit();
-                          bool ok = await notifier.progressPost(context, '${detail.id!}');
+                          ResHandler ok = await notifier.progressPost(
+                              context, '${detail.id!}');
 
-                          if (ok && context.mounted) {
-                            context.pop();
+                          if (ok.status && context.mounted) {
                             LzToast.show("Progress has been created.");
+
+                            await notification.postNotification({
+                              "sent_to": detail.user!['id'],
+                              "project_id": detail.id!,
+                              "notif_text": "made",
+                              "is_read": 1,
+                              "progresses_id": ok.data['id'],
+                              "offer_id": offer
+                            });
+
                           } else {
                             state.abort();
                             LzToast.show("Please fill all required fields.");

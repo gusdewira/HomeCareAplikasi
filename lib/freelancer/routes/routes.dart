@@ -178,12 +178,6 @@ final GoRouter router = GoRouter(
       },
     ),
     GoRoute(
-      path: Paths.sendProgressProject,
-      builder: (BuildContext context, GoRouterState state) {
-        return const SendProgressProject();
-      },
-    ),
-    GoRoute(
       path: Paths.bidExplore,
       builder: (BuildContext context, GoRouterState state) {
         return const BidExplore();
