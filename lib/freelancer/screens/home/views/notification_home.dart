@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:homecare_app/employer/data/models/notification_model.dart';
 import 'package:homecare_app/employer/providers/notification_provider.dart';
 import 'package:homecare_app/freelancer/screens/home/views/click_notification.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lazyui/lazyui.dart';
 
-import '../../../routes/paths.dart';
 import '../../../widgets/color_widget.dart';
-import '../widgets/search_notification.dart';
 
 class NotificationHome extends ConsumerStatefulWidget {
   const NotificationHome({super.key});
@@ -117,40 +114,9 @@ class _NotificationHomeState extends ConsumerState<NotificationHome> {
               ),
             ),
           ),
+
           Positioned(
-            top: 130,
-            right: 0,
-            left: 0,
-            child: Container(
-              margin: Ei.only(t: 10, r: 25, l: 25),
-              height: 40,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: LzColors.hex('E6E6E8'),
-              ),
-              child: Row(
-                children: [
-                  Iconr(
-                    Ti.search,
-                    color: LzColors.hex('747474'),
-                    alignment: Alignment.centerLeft,
-                    margin: Ei.only(l: 20),
-                  ),
-                  Expanded(
-                    child: TextField(
-                      controller: _controller,
-                      decoration: const InputDecoration(
-                        hintText: 'Search Notification',
-                        border: InputBorder.none,
-                      ),
-                    ).margin(l: 10),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Positioned(
-            top: 210,
+            top: 125,
             left: 25,
             right: 25,
             child: SizedBox(

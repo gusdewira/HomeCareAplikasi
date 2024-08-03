@@ -17,12 +17,11 @@ class DataExploreFreelancer extends StatelessWidget {
 
     final name = '${projectEmployee.firstName ?? "No First Name"} ${projectEmployee.lastName ?? "No Last Name"}';
     final profession = projectEmployee.profession ?? "Unknown";
-    final address = projectEmployee.address ?? "No Address";
     final summary = projectEmployee.summary ?? "No Summary";
 
     return Container(
       padding: Ei.only(l: 20, r: 20, t: 10),
-      margin: Ei.only(l: 25, r: 25, b: 15, t: 10),
+      margin: Ei.only(l: 25, r: 25, b: 10, t: 10),
       width: context.width / 1,
       height: 220,
       decoration: BoxDecoration(
@@ -70,33 +69,6 @@ class DataExploreFreelancer extends StatelessWidget {
                             overflow: Tof.ellipsis,
                             width: 150,
                             style: Gfont.color(LzColors.hex('B9B9B9')),
-                          ),
-                        ],
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          // Textr(
-                          //   'Some text', // You can replace this with actual data if needed
-                          //   overflow: Tof.ellipsis,
-                          //   width: 100,
-                          //   style: Gfont.color(LzColors.hex('001380')),
-                          // ),
-                          Row(
-                            children: [
-                              Icon(
-                                Ti.mapPin,
-                                color: LzColors.hex('001380'),
-                                size: 15,
-                              ),
-                              Textr(
-                                width: 60,
-                                maxLines: 1,
-                                address,
-                                overflow: Tof.ellipsis,
-                                style: Gfont.color(LzColors.hex('001380')).fsize(13),
-                              ),
-                            ],
                           ),
                         ],
                       ),

@@ -315,17 +315,6 @@ class _ExploreViewState extends ConsumerState<ExploreView> {
                                                 }
                                               },
                                             ),
-                                            LzForm.input(
-                                              label: 'Location',
-                                              onChange: (value) {
-                                                setState(() {
-                                                  location = value;
-                                                });
-                                              },
-                                              labelStyle: LzFormLabelStyle(
-                                                  color: color1),
-                                              hint: 'Input Location',
-                                            ).margin(b: 10),
                                             InkTouch(
                                               onTap: () {
                                                 Navigator.of(context).pop();
@@ -433,12 +422,12 @@ class ProjectFreelancerCard extends StatelessWidget {
     final endSalary = formatNumber(projectFreelancer.endSalary ?? 0.0);
     final startDate = projectFreelancer.startDate ?? DateTime.now();
     final endDate = projectFreelancer.endDate ?? DateTime.now();
-    final address = projectFreelancer.user?['address'] ?? 'No Address';
+    // final address = projectFreelancer.user?['address'] ?? 'No Address';
 
     return Container(
       padding: Ei.only(l: 20, r: 20, t: 10),
       margin: Ei.only(l: 25, r: 25, b: 20),
-      height: 250,
+      height: 190,
       width: context.width / 1,
       decoration: BoxDecoration(
         color: LzColors.hex('FFFFFF'),
@@ -487,10 +476,10 @@ class ProjectFreelancerCard extends StatelessWidget {
               ],
             ),
           ),
-          Text(
-            'posted 1 hours ago',
-            style: Gfont.color(LzColors.hex('747474')).fsize(12),
-          ).margin(t: 5, b: 5),
+          // Text(
+          //   'posted 1 hours ago',
+          //   style: Gfont.color(LzColors.hex('747474')).fsize(12),
+          // ).margin(t: 5, b: 5),
           SizedBox(
             width: context.width,
             child: Column(
@@ -516,22 +505,7 @@ class ProjectFreelancerCard extends StatelessWidget {
                     Textr(
                       '${DateFormat('dd/MM/yyyy').format(startDate)} - ${DateFormat('dd/MM/yyyy').format(endDate)}',
                       style: Gfont.color(black).fsize(12),
-                      width: context.width / 3 + 10,
-                      maxLines: 1,
-                      overflow: Tof.ellipsis,
-                    ),
-                  ],
-                ).margin(t: 5),
-                Row(
-                  children: [
-                    Icon(
-                      Ti.mapPin,
-                      color: color1,
-                    ).margin(r: 5),
-                    Textr(
-                      address,
-                      style: Gfont.color(black).fsize(12),
-                      width: context.width / 3,
+                      width: context.width / 3 + 30,
                       maxLines: 1,
                       overflow: Tof.ellipsis,
                     ),
@@ -539,12 +513,12 @@ class ProjectFreelancerCard extends StatelessWidget {
                 ).margin(t: 5),
               ],
             ),
-          ),
+          ).margin(t: 10),
           Textr(
             description,
             style: Gfont.color(black).fsize(12),
             margin: Ei.only(t: 10),
-            maxLines: 3,
+            maxLines: 2,
             overflow: Tof.ellipsis,
           ),
           Flexible(

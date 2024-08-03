@@ -1,12 +1,10 @@
 import 'package:fetchly/fetchly.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:homecare_app/employer/data/api/api.dart';
 import 'package:homecare_app/employer/data/models/project_model.dart';
 import 'package:homecare_app/employer/providers/notification_provider.dart';
 import 'package:homecare_app/employer/providers/project_active_provider.dart';
 import 'package:homecare_app/employer/screens/project_employer/widget/see_history_progress.dart';
-import 'package:homecare_app/freelancer/routes/paths.dart';
 import 'package:homecare_app/freelancer/widgets/color_widget.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lazyui/lazyui.dart';
@@ -18,6 +16,7 @@ class Tabbar2ProjectEmployer extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final notification = ref.read(notificationStatusProvider.notifier);
     Future<void> _refreshData() async {
+      // ignore: unused_result
       ref.refresh(projectActiveProvider);
     }
 
@@ -158,7 +157,7 @@ class Tabbar2ProjectEmployer extends ConsumerWidget {
                 final project = projects[index];
                 return Container(
                   padding: Ei.only(l: 20, r: 20, t: 10),
-                  margin: Ei.only(l: 25, r: 25, b: 20, t: 20),
+                  margin: Ei.only(l: 25, r: 25, b: 10, t: 10),
                   height: 300,
                   width: context.width / 1,
                   decoration: BoxDecoration(

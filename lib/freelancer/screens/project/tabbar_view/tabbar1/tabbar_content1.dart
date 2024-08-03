@@ -43,7 +43,7 @@ class Tabbar1 extends ConsumerWidget {
                           double endSalary = projectBid.endSalary!;
                           DateTime startDate = projectBid.startDate!;
                           DateTime endDate = projectBid.endDate!;
-                          String address = projectBid.user!['address'];
+                          // String address = projectBid.user!['address'];
                           String status = projectBid.offer![0]['status'];
 
                           return Column(
@@ -53,7 +53,7 @@ class Tabbar1 extends ConsumerWidget {
                                   Container(
                                     padding: Ei.only(l: 20, r: 20, t: 10),
                                     margin: Ei.only(l: 25, r: 25, b: 20),
-                                    height: 235,
+                                    height: 190,
                                     width: context.width / 1,
                                     decoration: BoxDecoration(
                                       color: LzColors.hex('FFFFFF'),
@@ -132,23 +132,7 @@ class Tabbar1 extends ConsumerWidget {
                                                     style: Gfont.color(black)
                                                         .fsize(12),
                                                     width:
-                                                        context.width / 3 + 10,
-                                                    maxLines: 1,
-                                                    overflow: Tof.ellipsis,
-                                                  ),
-                                                ],
-                                              ).margin(t: 5),
-                                              Row(
-                                                children: [
-                                                  Icon(
-                                                    Ti.mapPin,
-                                                    color: color1,
-                                                  ).margin(r: 5),
-                                                  Textr(
-                                                    address,
-                                                    style: Gfont.color(black)
-                                                        .fsize(12),
-                                                    width: context.width / 3,
+                                                        context.width / 3 + 40,
                                                     maxLines: 1,
                                                     overflow: Tof.ellipsis,
                                                   ),
@@ -157,58 +141,70 @@ class Tabbar1 extends ConsumerWidget {
                                             ],
                                           ),
                                         ),
-                                        Textr(
-                                          description,
-                                          style: Gfont.color(
-                                                  LzColors.hex('747474'))
-                                              .fsize(12),
+                                        Container(
+                                          height: 30,
                                           margin: Ei.only(t: 10),
-                                          maxLines: 3,
-                                          overflow: Tof.ellipsis,
+                                          child: Text(
+                                            description,
+                                            style: Gfont.color(
+                                                    LzColors.hex('747474'))
+                                                .fsize(12),
+                                            maxLines: 2,
+                                            overflow: Tof.ellipsis,
+                                          ),
                                         ),
-                                       status == "ACCEPT" ?  Container(
-                                          margin: Ei.only(t: 15),
-                                          width: 70,
-                                          height: 30,
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                            color: Colors.greenAccent,
-                                          ),
-                                          child: Textr(
-                                            'Accept',
-                                            style: Gfont.white.bold.fsize(15),
-                                            alignment: Alignment.center,
-                                          )
-                                        )  : status == "REJECT" ? Container(
-                                          margin: Ei.only(t: 15),
-                                          width: 70,
-                                          height: 30,
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                            color: Colors.redAccent,
-                                          ),
-                                          child: Textr(
-                                            'Reject',
-                                            style: Gfont.white.bold.fsize(15),
-                                            alignment: Alignment.center,
-                                          )
-                                        ) : Container(
-                                          margin: Ei.only(t: 15),
-                                          width: 70,
-                                          height: 30,
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                            color: Colors.orangeAccent,
-                                          ),
-                                          child: Textr(
-                                            'Waiting',
-                                            style: Gfont.white.bold.fsize(15),
-                                            alignment: Alignment.center,
-                                          )
-                                        ),
+                                        status == "ACCEPT"
+                                            ? Container(
+                                                margin: Ei.only(t: 15),
+                                                width: 70,
+                                                height: 30,
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(20),
+                                                  color: Colors.greenAccent,
+                                                ),
+                                                child: Textr(
+                                                  'Accept',
+                                                  style: Gfont.white.bold
+                                                      .fsize(15),
+                                                  alignment: Alignment.center,
+                                                ))
+                                            : status == "REJECT"
+                                                ? Container(
+                                                    margin: Ei.only(t: 15),
+                                                    width: 70,
+                                                    height: 30,
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              20),
+                                                      color: Colors.redAccent,
+                                                    ),
+                                                    child: Textr(
+                                                      'Reject',
+                                                      style: Gfont.white.bold
+                                                          .fsize(15),
+                                                      alignment:
+                                                          Alignment.center,
+                                                    ))
+                                                : Container(
+                                                    margin: Ei.only(t: 15),
+                                                    width: 70,
+                                                    height: 30,
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              20),
+                                                      color:
+                                                          Colors.orangeAccent,
+                                                    ),
+                                                    child: Textr(
+                                                      'Waiting',
+                                                      style: Gfont.white.bold
+                                                          .fsize(15),
+                                                      alignment:
+                                                          Alignment.center,
+                                                    )),
                                       ],
                                     ),
                                   ),

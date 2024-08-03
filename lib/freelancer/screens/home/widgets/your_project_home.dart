@@ -65,6 +65,7 @@ class YourProjectHome extends StatelessWidget {
           ),
           Expanded(
             child: ListView.builder(
+              padding: Ei.zero,
                 itemCount: projects.length,
                 itemBuilder: (contect, index) {
                   final project = projects[index];
@@ -101,18 +102,14 @@ class YourProjectHome extends StatelessWidget {
                           ],
                         ),
                       ),
-                      Container(
-                        alignment: Alignment.topLeft,
-                        margin: const EdgeInsets.only(left: 15, bottom: 15),
-                        child: Text(
+                     Text(
                           'Salary $startSalary - $endSalary',
                           style: const TextStyle(
                             fontSize: 13,
                           ),
-                        ),
-                      ),
+                        ).margin(l: 15),
                     ],
-                  );
+                  ).margin(t: 10);
                 }),
           ),
         ],

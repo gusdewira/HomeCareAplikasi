@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+
 import 'package:homecare_app/freelancer/screens/explore/content_widget/detail_project_explore.dart';
 import 'package:homecare_app/freelancer/screens/project/tabbar_view/tabbar2/history_progress_project.dart';
 import 'package:homecare_app/freelancer/screens/project/tabbar_view/tabbar2/send_progres.dart';
@@ -9,8 +9,6 @@ import 'package:intl/intl.dart'; // Pastikan Anda menambahkan ini untuk DateForm
 
 import '../../../../data/models/setting/project_freelancer_model.dart';
 import '../../../../providers/project/project_active_provider.dart';
-import '../../../../providers/project/project_waiting_provider.dart';
-import '../../../../routes/paths.dart';
 import '../../../../widgets/color_widget.dart';
 
 class Tabbar2 extends ConsumerWidget {
@@ -78,7 +76,7 @@ class Tabbar2 extends ConsumerWidget {
                                     Align(
                                       alignment: Alignment.topRight,
                                       child: Text(
-                                        'Hired date: ${DateFormat('dd-MM-yyyy').format(hireDate)}',
+                                        'Hired Date : ${DateFormat('dd-MM-yyyy').format(hireDate)}',
                                         style:
                                             Gfont.color(color1).fsize(12).bold,
                                       ),
@@ -112,7 +110,7 @@ class Tabbar2 extends ConsumerWidget {
                                         Textr(
                                           '${DateFormat('dd/MM/yyyy').format(startDate)} - ${DateFormat('dd/MM/yyyy').format(endDate)}',
                                           style: Gfont.color(black).fsize(12),
-                                          width: context.width / 3 + 10,
+                                          width: context.width / 3 + 30,
                                           maxLines: 1,
                                           overflow: Tof.ellipsis,
                                         ),

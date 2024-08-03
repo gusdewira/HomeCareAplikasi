@@ -14,6 +14,7 @@ class DetailProjectExplore extends StatelessWidget {
           locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
       return formatCurrency.format(number);
     }
+
     final categoryNames = data.nameCategories!;
 
     return Scaffold(
@@ -90,8 +91,9 @@ class DetailProjectExplore extends StatelessWidget {
                         ),
                         Textr(
                           'Project Description',
-                          style:
-                              Gfont.color(LzColors.hex('231E55')).fsize(15).bold,
+                          style: Gfont.color(LzColors.hex('231E55'))
+                              .fsize(15)
+                              .bold,
                           margin: Ei.only(t: 20),
                         ),
                         Textr(
@@ -101,43 +103,37 @@ class DetailProjectExplore extends StatelessWidget {
                           width: 350,
                         ),
                         Textr(
-                          'Location',
-                          style:
-                              Gfont.color(LzColors.hex('231E55')).fsize(15).bold,
-                          margin: Ei.only(t: 20),
-                        ),
-                        Textr(
-                          data.user?['address'] ?? "No Adress",
-                          style: Gfont.color(LzColors.hex('595959')).fsize(13),
-                          margin: Ei.only(t: 5),
-                          width: 350,
-                        ),
-                        Textr(
                           'Skills',
-                          style:
-                              Gfont.color(LzColors.hex('231E55')).fsize(15).bold,
+                          style: Gfont.color(LzColors.hex('231E55'))
+                              .fsize(15)
+                              .bold,
                           margin: Ei.only(t: 20),
                         ),
                         Row(
                           children: [
-                            ...categoryNames.map((name) => Container(
-      margin: const EdgeInsets.only(right: 5),
-      padding: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        color: LzColors.hex('94BDFF'),
-        borderRadius: BorderRadius.circular(5),
-      ),
-      child: Text(
-        name,
-        style: Gfont.color(LzColors.hex('000000')).fsize(13),
-      ),
-    )).toList(),
+                            ...categoryNames
+                                .map((name) => Container(
+                                      margin: const EdgeInsets.only(right: 5),
+                                      padding: const EdgeInsets.all(8),
+                                      decoration: BoxDecoration(
+                                        color: LzColors.hex('94BDFF'),
+                                        borderRadius: BorderRadius.circular(5),
+                                      ),
+                                      child: Text(
+                                        name,
+                                        style:
+                                            Gfont.color(LzColors.hex('000000'))
+                                                .fsize(13),
+                                      ),
+                                    ))
+                                .toList(),
                           ],
                         ).margin(t: 10),
                         Textr(
                           'Salary',
-                          style:
-                              Gfont.color(LzColors.hex('231E55')).fsize(15).bold,
+                          style: Gfont.color(LzColors.hex('231E55'))
+                              .fsize(15)
+                              .bold,
                           margin: Ei.only(t: 20),
                         ),
                         Textr(
@@ -148,8 +144,9 @@ class DetailProjectExplore extends StatelessWidget {
                         ),
                         Textr(
                           'Attachment',
-                          style:
-                              Gfont.color(LzColors.hex('231E55')).fsize(15).bold,
+                          style: Gfont.color(LzColors.hex('231E55'))
+                              .fsize(15)
+                              .bold,
                           margin: Ei.only(t: 20),
                         ),
                         Container(
@@ -187,8 +184,9 @@ class DetailProjectExplore extends StatelessWidget {
                         ),
                         Textr(
                           'Estimated Duration',
-                          style:
-                              Gfont.color(LzColors.hex('231E55')).fsize(15).bold,
+                          style: Gfont.color(LzColors.hex('231E55'))
+                              .fsize(15)
+                              .bold,
                           margin: Ei.only(t: 20, b: 5),
                         ),
                         Textr(

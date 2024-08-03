@@ -14,6 +14,7 @@ class Tabbar1ProjectEmployer extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     Future<void> _refreshData() async {
+      // ignore: unused_result
       ref.refresh(projectProvider);
     }
 
@@ -44,13 +45,12 @@ class Tabbar1ProjectEmployer extends ConsumerWidget {
                 final endSalary = formatNumber(project.endSalary!);
                 final startDate = project.startDate!.format('yy/MM/dd');
                 final endDate = project.endDate!.format('yy/MM/dd');
-                final location = project.user!['location'];
                 final description = project.description!;
                 String status = project.offer!.isNotEmpty ? project.offer![0]['status'] : "WAITING";
 
                 return Container(
                   padding: Ei.only(l: 20, r: 20, t: 10),
-                  margin: Ei.only(l: 25, r: 25, b: 20, t: 20),
+                  margin: Ei.only(l: 25, r: 25, b: 10, t: 10),
                   height: 235,
                   width: context.width / 1,
                   decoration: BoxDecoration(
@@ -113,33 +113,7 @@ class Tabbar1ProjectEmployer extends ConsumerWidget {
                                 ],
                               ),
                             ),
-                            Expanded(
-                              child: Column(
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: Maa.end,
-                                    children: [
-                                      const Icon(
-                                        Ti.mapPin,
-                                        size: 15,
-                                      ),
-                                      Textr(
-                                          alignment: Alignment.centerRight,
-                                          margin: Ei.only(r: 10),
-                                          '${location ?? "Denpasar"}',
-                                          style: Gfont.color(
-                                                  LzColors.hex('001380'))
-                                              .fsize(12)),
-                                    ],
-                                  ),
-                                  const Textr(
-                                      alignment: Alignment.center,
-                                      maxLines: 1,
-                                      overflow: Tof.ellipsis,
-                                      ''),
-                                ],
-                              ),
-                            ),
+                            
                           ],
                         ).margin(t: 10),
                       ),

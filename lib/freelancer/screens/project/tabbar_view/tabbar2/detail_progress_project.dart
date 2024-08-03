@@ -86,11 +86,6 @@ class DetailProgressProject extends StatelessWidget {
                       width: 350,
                     ),
                     Textr(
-                      'Location',
-                      style: Gfont.color(LzColors.hex('231E55')).fsize(15).bold,
-                      margin: Ei.only(t: 20),
-                    ),
-                    Textr(
                       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eu est sed dui vulputate porttitor sit amet ut neque. ',
                       style: Gfont.color(LzColors.hex('595959')).fsize(13),
                       margin: Ei.only(t: 5),

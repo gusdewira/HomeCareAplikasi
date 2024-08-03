@@ -30,8 +30,12 @@ class ListMenuSetting extends ConsumerWidget {
                       context.push(Paths.myprofile);
                     },
                     child: RowItem('My Profile', Ti.user, color1)),
-                RowItem('Notification', Ti.bell, color1),
-                // RowItem('Changes Password', Ti.key, color1),
+                InkTouch(
+                  onTap: () {
+                    context.push(Paths.notificationHome);
+                  },
+                  child: RowItem('Notification', Ti.bell, color1)),
+                RowItem('Changes Password', Ti.key, color1),
                 RowItem(
                   'Logout',
                   Ti.logout,

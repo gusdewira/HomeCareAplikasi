@@ -122,18 +122,6 @@ class SeeRequestEmployer extends StatelessWidget {
                     ),
                   ],
                 ).margin(t: 10),
-                Row(
-                  mainAxisAlignment: Maa.start,
-                  children: [
-                    const Icon(Ti.mapPin).margin(r: 5),
-                    Textr(
-                      alignment: Alignment.centerRight,
-                      margin: Ei.only(r: 10),
-                      project.user!['location'] ?? 'Denpasar',
-                      style: Gfont.color(LzColors.hex('001380')),
-                    ),
-                  ],
-                ).margin(t: 10),
                 Textr(
                   margin: Ei.only(t: 10),
                   maxLines: 3,

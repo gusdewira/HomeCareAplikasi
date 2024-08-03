@@ -111,7 +111,7 @@ class ExploreEmployerView extends ConsumerState<ExploreView> {
                                       0.0;
                                   final profession =
                                       freelancer.profession ?? '';
-                                  final address = freelancer.address ?? '';
+                                  // final address = freelancer.address ?? '';
                                   final summary = freelancer.summary ?? '';
                                   final name =
                                       "${freelancer.firstName ?? ''} ${freelancer.lastName ?? ''}";
@@ -184,7 +184,7 @@ class ExploreEmployerView extends ConsumerState<ExploreView> {
                             context: context,
                             builder: (BuildContext context) {
                               return Container(
-                                margin: Ei.only(t: 80, l: 35, r: 35, b: 110),
+                                margin: Ei.only(t: 80, l: 45, r: 35, b: 170),
                                 padding: Ei.all(20),
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(30),
@@ -206,7 +206,7 @@ class ExploreEmployerView extends ConsumerState<ExploreView> {
                                           children: [
                                             Expanded(
                                               child: Textr(
-                                                'Filter search project',
+                                                'Filter search Freelancer',
                                                 alignment: Alignment.center,
                                                 margin: Ei.only(l: 35),
                                                 style: Gfont.color(
@@ -224,104 +224,104 @@ class ExploreEmployerView extends ConsumerState<ExploreView> {
                                             ),
                                           ],
                                         ),
-                                        Column(
-                                          children: [
-                                            DropdownButtonFormField<
-                                                Map<String, dynamic>>(
-                                              decoration: InputDecoration(
-                                                labelText: 'Salary Range',
-                                                labelStyle:
-                                                    TextStyle(color: color1),
-                                                hintText: 'Select Salary Range',
-                                              ),
-                                              items: salaryRanges.map((range) {
-                                                return DropdownMenuItem<
-                                                    Map<String, dynamic>>(
-                                                  value: range,
-                                                  child:
-                                                      Text('${range['label']}'),
-                                                );
-                                              }).toList(),
-                                              onChanged: (value) {
-                                                setState(() {
-                                                  fromSalary =
-                                                      value?['from'] ?? 0;
-                                                  toSalary = value?['to'] ?? 0;
-                                                });
-                                              },
-                                            ),
-                                            LzForm.checkbox(
-                                              labelStyle: LzFormLabelStyle(
-                                                  color: color1),
-                                              activeColor: color1,
-                                              label: 'Category',
-                                              options: [
-                                                const Option(
-                                                    option:
-                                                        'Mobile Development',
-                                                    value:
-                                                        'Mobile Development'),
-                                                const Option(
-                                                    option: 'Content Writing',
-                                                    value: 'Content Writing'),
-                                                const Option(
-                                                    option: 'Digital Marketing',
-                                                    value: 'Digital Marketing'),
-                                                const Option(
-                                                    option: 'Video Editing',
-                                                    value: 'Video Editing'),
-                                                const Option(
-                                                    option: 'UI/UX Design',
-                                                    value: 'UI/UX Design'),
-                                                const Option(
-                                                    option: 'Game Development',
-                                                    value: 'Game Development'),
-                                                const Option(
-                                                    option: 'Data Entry',
-                                                    value: 'Data Entry'),
-                                                const Option(
-                                                    option:
-                                                        'Virtual Assistance',
-                                                    value:
-                                                        'Virtual Assistance'),
-                                              ],
-                                              onChange: (selectedOptions) {
-                                                final value =
-                                                    selectedOptions.value;
-                                                final dataExist =
-                                                    selectedCategories
-                                                        .contains(value);
-                                                if (!dataExist) {
-                                                  selectedCategories.add(value);
-                                                } else {
-                                                  selectedCategories
-                                                      .remove(value);
-                                                }
-                                              },
-                                            ),
-                                            InkTouch(
-                                              onTap: () {
-                                                Navigator.of(context).pop();
-                                                _refreshProfiles();
-                                              },
-                                              child: Container(
-                                                height: 50,
-                                                width: context.width,
-                                                decoration: BoxDecoration(
-                                                  color: color1,
-                                                  borderRadius:
-                                                      BorderRadius.circular(15),
-                                                ),
-                                                child: Center(
-                                                  child: Text(
-                                                    'Search',
-                                                    style: Gfont.white,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
+                                        // Column(
+                                        //   children: [
+                                        //     DropdownButtonFormField<
+                                        //         Map<String, dynamic>>(
+                                        //       decoration: InputDecoration(
+                                        //         labelText: 'Salary Range',
+                                        //         labelStyle:
+                                        //             TextStyle(color: color1),
+                                        //         hintText: 'Select Salary Range',
+                                        //       ),
+                                        //       items: salaryRanges.map((range) {
+                                        //         return DropdownMenuItem<
+                                        //             Map<String, dynamic>>(
+                                        //           value: range,
+                                        //           child:
+                                        //               Text('${range['label']}'),
+                                        //         );
+                                        //       }).toList(),
+                                        //       onChanged: (value) {
+                                        //         setState(() {
+                                        //           fromSalary =
+                                        //               value?['from'] ?? 0;
+                                        //           toSalary = value?['to'] ?? 0;
+                                        //         });
+                                        //       },
+                                        //     ),
+                                        //     LzForm.checkbox(
+                                        //       labelStyle: LzFormLabelStyle(
+                                        //           color: color1),
+                                        //       activeColor: color1,
+                                        //       label: 'Category',
+                                        //       options: [
+                                        //         const Option(
+                                        //             option:
+                                        //                 'Mobile Development',
+                                        //             value:
+                                        //                 'Mobile Development'),
+                                        //         const Option(
+                                        //             option: 'Content Writing',
+                                        //             value: 'Content Writing'),
+                                        //         const Option(
+                                        //             option: 'Digital Marketing',
+                                        //             value: 'Digital Marketing'),
+                                        //         const Option(
+                                        //             option: 'Video Editing',
+                                        //             value: 'Video Editing'),
+                                        //         const Option(
+                                        //             option: 'UI/UX Design',
+                                        //             value: 'UI/UX Design'),
+                                        //         const Option(
+                                        //             option: 'Game Development',
+                                        //             value: 'Game Development'),
+                                        //         const Option(
+                                        //             option: 'Data Entry',
+                                        //             value: 'Data Entry'),
+                                        //         const Option(
+                                        //             option:
+                                        //                 'Virtual Assistance',
+                                        //             value:
+                                        //                 'Virtual Assistance'),
+                                        //       ],
+                                        //       onChange: (selectedOptions) {
+                                        //         final value =
+                                        //             selectedOptions.value;
+                                        //         final dataExist =
+                                        //             selectedCategories
+                                        //                 .contains(value);
+                                        //         if (!dataExist) {
+                                        //           selectedCategories.add(value);
+                                        //         } else {
+                                        //           selectedCategories
+                                        //               .remove(value);
+                                        //         }
+                                        //       },
+                                        //     ).margin(t: 15),
+                                        //     InkTouch(
+                                        //       onTap: () {
+                                        //         Navigator.of(context).pop();
+                                        //         _refreshProfiles();
+                                        //       },
+                                        //       child: Container(
+                                        //         height: 50,
+                                        //         width: context.width,
+                                        //         decoration: BoxDecoration(
+                                        //           color: color1,
+                                        //           borderRadius:
+                                        //               BorderRadius.circular(15),
+                                        //         ),
+                                        //         child: Center(
+                                        //           child: Text(
+                                        //             'Search',
+                                        //             style: Gfont.white,
+                                        //           ),
+                                        //         ),
+                                        //       ),
+                                        //     ),
+                                        //   ],
+                                        // ),
                                       ],
                                     ),
                                   ],
