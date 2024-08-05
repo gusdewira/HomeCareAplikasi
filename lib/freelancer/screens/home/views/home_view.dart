@@ -51,6 +51,7 @@ class HomeView extends ConsumerWidget {
           String email = profile.email ?? '';
           String firstName = profile.firstName ?? '';
           String lastName = profile.lastName ?? '';
+          // ignore: unused_local_variable
           String earn =
               profile.earning != null ? profile.earning!.split('.')[0] : '';
           int? profileId = profile.id;

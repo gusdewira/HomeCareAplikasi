@@ -29,7 +29,7 @@ class CategoryFreelancer extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Textr(
-                      'Filter search project',
+                      'Filter search Freelancer',
                       alignment: Alignment.center,
                       margin: Ei.only(l: 35),
                       style: Gfont.color(LzColors.hex('000000')).fsize(15).bold,
@@ -87,11 +87,6 @@ class CategoryFreelancer extends StatelessWidget {
                               ][i],
                             )),
                   ),
-                  LzForm.input(
-                    label: 'Location',
-                    labelStyle: LzFormLabelStyle(color: color1),
-                    hint: 'Input Location',
-                  ).margin(b: 10),
                   InkTouch(
                     onTap: () {},
                     child: Container(

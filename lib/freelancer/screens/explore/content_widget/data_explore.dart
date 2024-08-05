@@ -120,23 +120,6 @@ class DataExplore extends ConsumerWidget {
                                             ),
                                           ],
                                         ).margin(t: 5),
-                                        Row(
-                                          children: [
-                                            Icon(
-                                              Ti.mapPin,
-                                              color: color1,
-                                            ).margin(r: 5),
-                                            Textr(
-                                              'Galkasoft',
-                                              style: Gfont.color(
-                                                      black)
-                                                  .fsize(12),
-                                              width: context.width / 3,
-                                              maxLines: 1,
-                                              overflow: Tof.ellipsis,
-                                            ),
-                                          ],
-                                        ).margin(t: 5)
                                       ],
                                     )),
                                 Textr(

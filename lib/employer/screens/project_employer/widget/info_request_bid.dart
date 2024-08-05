@@ -18,6 +18,7 @@ class InfoRequestBid extends StatelessWidget {
     DateTime offerDate = DateTime.parse(bid['offer_date']);
     return Scaffold(
       appBar: AppBar(
+        forceMaterialTransparency: true,
         leading: IconButton(
           onPressed: () {
             Navigator.of(context).pop();
@@ -132,12 +133,15 @@ class InfoRequestBid extends StatelessWidget {
                   overflow: Tof.ellipsis,
                   style: Gfont.color(LzColors.hex('001380')),
                 ),
-                Text(
-                  '${bid["estimated_duration"]} months',
-                  style: Gfont.color(LzColors.hex('595959')),
+                Container(
+                  height: 280,
+                  child: Text(
+                    '${bid["estimated_duration"]} months',
+                    style: Gfont.color(LzColors.hex('595959')),
+                  ),
                 )
               ],
-            ).margin(t: 10, b: 20),
+            ).margin(t: 10, b: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

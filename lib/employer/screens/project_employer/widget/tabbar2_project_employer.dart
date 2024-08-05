@@ -15,7 +15,12 @@ class Tabbar2ProjectEmployer extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final notification = ref.read(notificationStatusProvider.notifier);
+<<<<<<< HEAD
     Future<void> refreshData() async {
+=======
+    Future<void> _refreshData() async {
+      // ignore: unused_result
+>>>>>>> 2a613d620f50bac4f2989c281235e79c9b785504
       ref.refresh(projectActiveProvider);
     }
 
@@ -156,7 +161,7 @@ class Tabbar2ProjectEmployer extends ConsumerWidget {
                 final project = projects[index];
                 return Container(
                   padding: Ei.only(l: 20, r: 20, t: 10),
-                  margin: Ei.only(l: 25, r: 25, b: 20, t: 20),
+                  margin: Ei.only(l: 25, r: 25, b: 10, t: 10),
                   height: 300,
                   width: context.width / 1,
                   decoration: BoxDecoration(

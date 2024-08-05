@@ -148,6 +148,7 @@ class BidExplore extends ConsumerWidget {
                 await notifier.postbid(context, data!.id!);
 
             if (res['status']) {
+              // ignore: unused_local_variable
               var response = await notification.postNotification({
                 "sent_to": data!.user!["id"],
                 "project_id": data!.id,

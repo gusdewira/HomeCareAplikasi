@@ -114,40 +114,9 @@ class _NotificationHomeState extends ConsumerState<NotificationHome> {
               ),
             ),
           ),
+
           Positioned(
-            top: 130,
-            right: 0,
-            left: 0,
-            child: Container(
-              margin: Ei.only(t: 10, r: 25, l: 25),
-              height: 40,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: LzColors.hex('E6E6E8'),
-              ),
-              child: Row(
-                children: [
-                  Iconr(
-                    Ti.search,
-                    color: LzColors.hex('747474'),
-                    alignment: Alignment.centerLeft,
-                    margin: Ei.only(l: 20),
-                  ),
-                  Expanded(
-                    child: TextField(
-                      controller: _controller,
-                      decoration: const InputDecoration(
-                        hintText: 'Search Notification',
-                        border: InputBorder.none,
-                      ),
-                    ).margin(l: 10),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Positioned(
-            top: 210,
+            top: 125,
             left: 25,
             right: 25,
             child: SizedBox(

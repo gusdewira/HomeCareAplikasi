@@ -6,6 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lazyui/lazyui.dart';
 import 'package:fetchly/fetchly.dart';
 
+// ignore: must_be_immutable
 class DataSeeRequest extends ConsumerWidget {
   final Map bid;
   int userId;
@@ -23,7 +24,7 @@ class DataSeeRequest extends ConsumerWidget {
     DateTime offerDate = DateTime.parse(bid['offer_date']);
     return Container(
       padding: Ei.only(l: 20, r: 20, t: 10),
-      margin: Ei.only(b: 20, t: 20),
+      margin: Ei.only(b: 10, t: 10),
       width: context.width / 1,
       height: 280,
       decoration: BoxDecoration(
@@ -106,30 +107,11 @@ class DataSeeRequest extends ConsumerWidget {
               ),
               Container(
                 margin: Ei.only(l: 5),
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Icon(
-                          Ti.mapPin,
-                          color: LzColors.hex('001380'),
-                          size: 15,
-                        ),
-                        Container(
-                          child: Text(bid['user']['address'] ?? "No Address",
-                              overflow: Tof.ellipsis,
-                              style: Gfont.color(LzColors.hex('001380'))
-                                  .fsize(14)),
-                        ),
-                      ],
-                    ),
-                    const Textr(
-                        alignment: Alignment.center,
-                        maxLines: 1,
-                        overflow: Tof.ellipsis,
-                        ''),
-                  ],
-                ),
+                child: const Textr(
+                    alignment: Alignment.center,
+                    maxLines: 1,
+                    overflow: Tof.ellipsis,
+                    ''),
               ),
             ],
           ).margin(t: 10),
@@ -180,7 +162,8 @@ class DataSeeRequest extends ConsumerWidget {
                     ),
                     child: Textr(
                       alignment: Alignment.center,
-                      'Approve Bid ${bid["user"]["id"]}',
+                      // 'Approve Bid ${bid["user"]["id"]}',
+                      'Approve Bid',
                       style: Gfont.color(LzColors.hex('ffffff')).fsize(12),
                     ),
                   ),

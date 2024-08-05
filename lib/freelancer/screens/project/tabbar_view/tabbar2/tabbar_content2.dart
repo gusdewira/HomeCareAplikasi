@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
+=======
+
+>>>>>>> 2a613d620f50bac4f2989c281235e79c9b785504
 import 'package:homecare_app/freelancer/screens/explore/content_widget/detail_project_explore.dart';
 import 'package:homecare_app/freelancer/screens/project/tabbar_view/tabbar2/history_progress_project.dart';
 import 'package:homecare_app/freelancer/screens/project/tabbar_view/tabbar2/send_progres.dart';
@@ -75,7 +79,7 @@ class Tabbar2 extends ConsumerWidget {
                                     Align(
                                       alignment: Alignment.topRight,
                                       child: Text(
-                                        'Hired date: ${DateFormat('dd-MM-yyyy').format(hireDate)}',
+                                        'Hired Date : ${DateFormat('dd-MM-yyyy').format(hireDate)}',
                                         style:
                                             Gfont.color(color1).fsize(12).bold,
                                       ),
@@ -109,7 +113,7 @@ class Tabbar2 extends ConsumerWidget {
                                         Textr(
                                           '${DateFormat('dd/MM/yyyy').format(startDate)} - ${DateFormat('dd/MM/yyyy').format(endDate)}',
                                           style: Gfont.color(black).fsize(12),
-                                          width: context.width / 3 + 10,
+                                          width: context.width / 3 + 30,
                                           maxLines: 1,
                                           overflow: Tof.ellipsis,
                                         ),

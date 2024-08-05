@@ -278,7 +278,7 @@ class Tabbar3ProjectEmployer extends ConsumerWidget {
                                       size: 20,
                                     ),
                                   ],
-                                ),
+                                ).margin(t: 20, r: 5),
                                 InkTouch(
                                     onTap: () {},
                                     child: SizedBox(

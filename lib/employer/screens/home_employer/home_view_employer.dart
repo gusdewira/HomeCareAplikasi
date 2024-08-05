@@ -101,7 +101,7 @@ class HomeEmployerView extends ConsumerWidget {
                       ),
                     ),
                     Positioned(
-                        top: 50,
+                        top: 70,
                         right: 25,
                         child: IconButton(
                             onPressed: () {
@@ -113,7 +113,7 @@ class HomeEmployerView extends ConsumerWidget {
                               color: Colors.white,
                             ))),
                     Container(
-                      margin: Ei.only(t: 160),
+                      margin: Ei.only(t: 140),
                       width: context.width,
                       height: context.height,
                       decoration: BoxDecoration(
@@ -211,7 +211,7 @@ class HomeEmployerView extends ConsumerWidget {
                           },
                         )
                       ],
-                    ).margin(l: 25, r: 25, t: 130),
+                    ).margin(l: 25, r: 25, t: 160),
                     // Positioned(
                     //     top: 120,
                     //     left: 25,

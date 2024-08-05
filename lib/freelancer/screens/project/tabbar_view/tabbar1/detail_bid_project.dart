@@ -92,17 +92,6 @@ class DetailBidProject extends ConsumerWidget {
                       width: 350,
                     ),
                     Textr(
-                      'Location',
-                      style: Gfont.color(LzColors.hex('231E55')).fsize(15).bold,
-                      margin: Ei.only(t: 20),
-                    ),
-                    Textr(
-                      'Tabanan',
-                      style: Gfont.color(LzColors.hex('595959')).fsize(13),
-                      margin: Ei.only(t: 5),
-                      width: 350,
-                    ),
-                    Textr(
                       'Skills',
                       style: Gfont.color(LzColors.hex('231E55')).fsize(15).bold,
                       margin: Ei.only(t: 20),

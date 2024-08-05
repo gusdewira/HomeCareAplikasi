@@ -43,15 +43,15 @@ class Tabbar3 extends ConsumerWidget {
                           DateTime startDate = projectComplated.startDate!;
                           DateTime endDate = projectComplated.endDate!;
                           String description = projectComplated.description!;
-                          String address = projectComplated.user!['address'];
-                          int id = projectComplated.id!;
+                          // String address = projectComplated.user!['address'];
+                          // int id = projectComplated.id!;
 
                           return Column(
                             children: [
                               Container(
                                 padding: Ei.only(l: 20, r: 20, t: 10),
                                 margin: Ei.only(l: 25, r: 25, b: 20),
-                                height: 200,
+                                height: 150,
                                 width: context.width / 1,
                                 decoration: BoxDecoration(
                                   color: LzColors.hex('FFFFFF'),
@@ -131,21 +131,6 @@ class Tabbar3 extends ConsumerWidget {
                                               ),
                                             ],
                                           ).margin(t: 5),
-                                          Row(
-                                            children: [
-                                              Icon(
-                                                Ti.mapPin,
-                                                color: color1,
-                                              ).margin(r: 5),
-                                              Textr(
-                                                address,
-                                                style: Gfont.color(black).fsize(12),
-                                                width: context.width / 3,
-                                                maxLines: 1,
-                                                overflow: Tof.ellipsis,
-                                              ),
-                                            ],
-                                          ).margin(t: 5),
                                         ],
                                       ),
                                     ),
@@ -153,7 +138,7 @@ class Tabbar3 extends ConsumerWidget {
                                       description,
                                       style: Gfont.color(LzColors.hex('747474')).fsize(12),
                                       margin: Ei.only(t: 10),
-                                      maxLines: 3,
+                                      maxLines: 2,
                                       overflow: Tof.ellipsis,
                                     ),
                                   ],

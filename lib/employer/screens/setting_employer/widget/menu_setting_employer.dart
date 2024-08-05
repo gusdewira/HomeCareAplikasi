@@ -11,8 +11,13 @@ import '../../../../freelancer/widgets/color_widget.dart';
 
 // ignore: must_be_immutable
 class MenuSettingEmployer extends ConsumerWidget {
+<<<<<<< HEAD
 ProfileEmployerModel profile;
   MenuSettingEmployer({super.key, required this.profile});
+=======
+  ProfileEmployerModel profile;
+  MenuSettingEmployer({Key? key, required this.profile}) : super(key: key);
+>>>>>>> 2a613d620f50bac4f2989c281235e79c9b785504
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -22,26 +27,36 @@ ProfileEmployerModel profile;
       child: Column(
         children: [
           InkTouch(
-            onTap: () {
-              context.lzPush(EditProfileEmployer(data: profile,));
-            },
-            child: RowItem('Edit Profile', Ti.edit, color1)),
+              onTap: () {
+                context.lzPush(EditProfileEmployer(
+                  data: profile,
+                ));
+              },
+              child: RowItem('Edit Profile', Ti.edit, color1)),
           // RowItem('Payment Account', Ti.creditCard, color1),
-          // RowItem('Changes Password', Ti.key, color1),
           // RowItem('Privacy & Policy', Ti.key, color1),
           // ignore: prefer_const_constructors
-                              RowItem('Notification', Ti.bell, color1),
-
-          RowItem('Logout', Ti.logout, Colors.red, onTap: () async {
+          InkTouch(
+              onTap: () {
+                context.push(Paths.notificationHome);
+              },
+              child: RowItem('Notification', Ti.bell, color1)),
+          RowItem('Changes Password', Ti.key, color1),
+          RowItem(
+            'Logout',
+            Ti.logout,
+            Colors.red,
+            onTap: () async {
               bool ok = await notifier.logout();
 
-              if(ok){
-                LzToast.show("Anda telah logout!");
+              if (ok) {
+                LzToast.show("Logout Successful!");
                 context.pushReplacement(Paths.login);
-              }else{
-                LzToast.show("Anda gagal logout!");
+              } else {
+                LzToast.show("Logout Successful!");
               }
-            },)
+            },
+          )
         ],
       ),
     );
