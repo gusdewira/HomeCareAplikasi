@@ -12,7 +12,7 @@ class AddMoreQualification extends ConsumerStatefulWidget {
   final QualificationModel? data;
   final bool? edit;
 
-  const AddMoreQualification({Key? key, this.data, this.edit}) : super(key: key);
+  const AddMoreQualification({super.key, this.data, this.edit});
 
   @override
   _AddMoreQualificationState createState() => _AddMoreQualificationState();
@@ -174,10 +174,8 @@ class _AddMoreQualificationState extends ConsumerState<AddMoreQualification> {
                     ),
                   );
 
-                  if (date != null) {
-                    model.text = date.format();
-                  }
-                },
+                  model.text = date.format();
+                                },
               ),
             ],
           )

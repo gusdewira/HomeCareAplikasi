@@ -1,8 +1,8 @@
-import 'package:fetchly/fetchly.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lazyui/lazyui.dart';
 import '../../data/api/api.dart';
+import 'package:fetchly/fetchly.dart';
 
 class BidProvider with ChangeNotifier, UseApi {
   final forms =

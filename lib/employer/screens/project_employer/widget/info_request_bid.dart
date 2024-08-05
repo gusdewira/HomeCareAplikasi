@@ -1,7 +1,7 @@
-import 'package:fetchly/fetchly.dart';
 import 'package:flutter/material.dart';
 import 'package:homecare_app/employer/data/api/api.dart';
 import 'package:lazyui/lazyui.dart';
+import 'package:fetchly/fetchly.dart';
 
 class InfoRequestBid extends StatelessWidget {
   final Map bid;

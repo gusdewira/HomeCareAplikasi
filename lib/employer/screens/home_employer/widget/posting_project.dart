@@ -10,11 +10,11 @@ import 'package:lazyui/lazyui.dart';
 import '../../../../freelancer/widgets/color_widget.dart';
 
 class PostingProjectEmployer extends ConsumerWidget {
-  const PostingProjectEmployer({Key? key}) : super(key: key);
+  const PostingProjectEmployer({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    String? _getValidCategoryValue(String? currentValue) {
+    String? getValidCategoryValue(String? currentValue) {
       const validCategories = [
         'Mobile App Development',
         'Content Writing',
@@ -128,7 +128,7 @@ class PostingProjectEmployer extends ConsumerWidget {
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(
                                       12), // Rounded corners
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                     color: Colors
                                         .grey, // Warna border saat tidak fokus
                                   ),
@@ -140,12 +140,12 @@ class PostingProjectEmployer extends ConsumerWidget {
                                     color: color1, // Warna border saat fokus
                                   ),
                                 ),
-                                contentPadding: EdgeInsets.symmetric(
+                                contentPadding: const EdgeInsets.symmetric(
                                     vertical: 12,
                                     horizontal: 12), // Adjust padding
                                 isDense: true,
                               ),
-                              value: _getValidCategoryValue(notifier
+                              value: getValidCategoryValue(notifier
                                   .forms['name_category']?.controller.text),
                               onChanged: (String? newValue) {
                                 if (newValue != null) {
@@ -170,7 +170,7 @@ class PostingProjectEmployer extends ConsumerWidget {
                                 );
                               }).toList(),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 8,
                             ),
                             SizedBox(
@@ -274,10 +274,8 @@ class PostingProjectEmployer extends ConsumerWidget {
                                     DateTime.now().day - 30,
                                   ),
                                 );
-                                if (date != null) {
-                                  model.text = date.format();
-                                }
-                              },
+                                model.text = date.format();
+                                                            },
                             ),
                             LzForm.input(
                               label: 'End Date',
@@ -295,10 +293,8 @@ class PostingProjectEmployer extends ConsumerWidget {
                                     DateTime.now().day - 30,
                                   ),
                                 );
-                                if (date != null) {
-                                  model.text = date.format();
-                                }
-                              },
+                                model.text = date.format();
+                                                            },
                             ),
                             DropdownButtonFormField<Map<String, String>>(
                               decoration: InputDecoration(
@@ -310,7 +306,7 @@ class PostingProjectEmployer extends ConsumerWidget {
                                 ),
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(12),
-                                  borderSide: BorderSide(
+                                  borderSide: const BorderSide(
                                     color: Colors.grey,
                                   ),
                                 ),
@@ -320,7 +316,7 @@ class PostingProjectEmployer extends ConsumerWidget {
                                     color: color1,
                                   ),
                                 ),
-                                contentPadding: EdgeInsets.symmetric(
+                                contentPadding: const EdgeInsets.symmetric(
                                     vertical: 10, horizontal: 12),
                               ),
                               value: salaryRanges[0], // Pilihan default
@@ -345,7 +341,7 @@ class PostingProjectEmployer extends ConsumerWidget {
                                 );
                               }).toList(),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 32,
                             ),
                             SizedBox(

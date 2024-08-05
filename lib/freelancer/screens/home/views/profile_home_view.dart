@@ -125,10 +125,17 @@ class ProfileHome extends StatelessWidget {
                             Row(
                               mainAxisSize: Mas.min,
                               children: [
-                                const LzImage(
-                                  'profile.jpg',
-                                  size: 50,
+                                profileFreelancer.photoProfile != null &&
+                                  profileFreelancer.photoProfile is String
+                              ? LzImage(
+                                  profileFreelancer.photoProfile!,
                                   radius: 50,
+                                  size: 50,
+                                )
+                              : const Icon(
+                                  Icons.account_circle,
+                                  size: 50,
+                                  color: Colors.white,
                                 ),
                                 Expanded(
                                   child: Column(

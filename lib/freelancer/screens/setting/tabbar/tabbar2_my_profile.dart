@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lazyui/lazyui.dart';
 
 import '../../../data/models/setting/qualification_model.dart';
 import '../../../providers/setting/qualification_provider.dart';
-import '../../../routes/paths.dart';
 import '../../../widgets/color_widget.dart';
 import '../widgets/addmore_qualification.dart';
 
@@ -38,7 +36,7 @@ class Tabbar2MyProfile extends ConsumerWidget {
               ),
               InkTouch(
                 onTap: () {
-                  context.lzPush(AddMoreQualification());
+                  context.lzPush(const AddMoreQualification());
                 },
                 child: Container(
                   height: 40,

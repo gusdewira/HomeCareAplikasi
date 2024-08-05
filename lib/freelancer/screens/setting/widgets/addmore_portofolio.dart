@@ -8,7 +8,7 @@ import '../../../widgets/color_widget.dart';
 
 class AddMorePortofolio extends ConsumerWidget {
   final ProfileFreelancerModel? data;
-  const AddMorePortofolio({Key? key, this.data}) : super(key: key);
+  const AddMorePortofolio({super.key, this.data});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -82,7 +82,7 @@ class AddMorePortofolio extends ConsumerWidget {
               Expanded(
                 child: data?.portofolioAttachments == null ||
                         data!.portofolioAttachments!.isEmpty
-                    ? Center(
+                    ? const Center(
                         child: Text('Portfolio is empty'),
                       )
                     : ListView.builder(

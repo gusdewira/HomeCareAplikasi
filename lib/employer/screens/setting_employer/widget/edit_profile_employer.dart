@@ -7,7 +7,7 @@ import '../../../../freelancer/widgets/color_widget.dart';
 
 class EditProfileEmployer extends ConsumerStatefulWidget {
   final ProfileEmployerModel? data;
-  EditProfileEmployer({Key? key, this.data}) : super(key: key);
+  const EditProfileEmployer({super.key, this.data});
 
   @override
   _EditProfileEmployerState createState() => _EditProfileEmployerState();

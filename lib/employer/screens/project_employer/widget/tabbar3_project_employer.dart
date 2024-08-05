@@ -1,4 +1,3 @@
-import 'package:fetchly/fetchly.dart';
 import 'package:flutter/material.dart';
 import 'package:homecare_app/employer/data/api/api.dart';
 import 'package:homecare_app/employer/data/models/profile_model.dart';
@@ -7,6 +6,7 @@ import 'package:homecare_app/employer/providers/profile_provider.dart';
 import 'package:homecare_app/employer/providers/project_completed_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lazyui/lazyui.dart';
+import 'package:fetchly/fetchly.dart';
 
 class Tabbar3ProjectEmployer extends ConsumerWidget {
   const Tabbar3ProjectEmployer({super.key});

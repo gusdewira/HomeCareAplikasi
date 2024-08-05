@@ -7,7 +7,6 @@ import 'package:homecare_app/employer/screens/home_employer/widget/belancewithdr
 import 'package:homecare_app/employer/screens/home_employer/widget/posting_project.dart';
 import 'package:homecare_app/employer/screens/home_employer/widget/recenttransaction_employee.dart';
 import 'package:homecare_app/employer/screens/home_employer/widget/topup_employer.dart';
-import 'package:homecare_app/employer/screens/project_employer/widget/see_history_progress.dart';
 import 'package:homecare_app/freelancer/data/local/storage.dart';
 
 import '../../home_page.dart';
@@ -27,7 +26,6 @@ import '../screens/login/views/splash_screen.dart';
 import '../screens/project/tabbar_view/tabbar1/detail_bid_project.dart';
 import '../screens/project/tabbar_view/tabbar2/detail_progress_project.dart';
 import '../screens/project/tabbar_view/tabbar2/history_progress_project.dart';
-import '../screens/project/tabbar_view/tabbar2/send_progres.dart';
 import '../screens/project/tabbar_view/tabbar3/detail_past_project.dart';
 import '../screens/setting/widgets/addmore_experience.dart';
 import '../screens/setting/widgets/addmore_portofolio.dart';
@@ -97,7 +95,7 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: Paths.addmorequalification,
       builder: (BuildContext context, GoRouterState state) {
-        return AddMoreQualification();
+        return const AddMoreQualification();
       },
     ),
     GoRoute(

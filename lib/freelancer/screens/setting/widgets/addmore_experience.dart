@@ -11,7 +11,7 @@ class AddMoreExperience extends ConsumerWidget {
   final ExperienceModel? data;
   bool? edit = false;
 
-  AddMoreExperience({Key? key, this.data, this.edit}) : super(key: key);
+  AddMoreExperience({super.key, this.data, this.edit});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -92,10 +92,8 @@ class AddMoreExperience extends ConsumerWidget {
                             ),
                           );
 
-                          if (date != null) {
-                            model.text = date.format();
-                          }
-                        },
+                          model.text = date.format();
+                                                },
                       ),
                     ),
                   ),
@@ -119,10 +117,8 @@ class AddMoreExperience extends ConsumerWidget {
                             ),
                           );
 
-                          if (date != null) {
-                            model.text = date.format();
-                          }
-                        },
+                          model.text = date.format();
+                                                },
                       ),
                     ),
                   ),

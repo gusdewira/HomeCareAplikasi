@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:homecare_app/freelancer/screens/explore/content_widget/detail_project_explore.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lazyui/lazyui.dart';
-import 'package:intl/intl.dart'; // Pastikan Anda menambahkan ini untuk DateFormat
+// Pastikan Anda menambahkan ini untuk DateFormat
 
 import '../../../../data/models/setting/project_freelancer_model.dart';
 import '../../../../providers/project/project_waiting_provider.dart';
@@ -15,7 +15,7 @@ class Tabbar1 extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final projectOffers = ref.watch(projectBid);
 
-    Future<void> _refreshProjects() async {
+    Future<void> refreshProjects() async {
       await ref.refresh(projectBid.notifier).getProjectBid();
     }
 
@@ -32,7 +32,7 @@ class Tabbar1 extends ConsumerWidget {
             data: (List<ProjectFreelancerModel> projectBids) {
               return projectBids.isNotEmpty
                   ? RefreshIndicator(
-                      onRefresh: _refreshProjects,
+                      onRefresh: refreshProjects,
                       child: ListView.builder(
                         itemCount: projectBids.length,
                         itemBuilder: (context, index) {

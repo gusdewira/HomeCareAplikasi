@@ -1,11 +1,11 @@
 import 'dart:io';
 
-import 'package:fetchly/fetchly.dart';
 import 'package:flutter/material.dart';
 import 'package:homecare_app/employer/data/api/api.dart';
 import 'package:homecare_app/employer/data/models/project_model.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lazyui/lazyui.dart';
+import 'package:fetchly/fetchly.dart';
 
 class ProjectProvider
     extends StateNotifier<AsyncValue<List<ProjectEmployerModel>>> with UseApi1 {

@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:fetchly/fetchly.dart';
 import 'package:flutter/material.dart';
+import 'package:fetchly/fetchly.dart';
 import 'package:homecare_app/freelancer/providers/setting/edit_profile_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';

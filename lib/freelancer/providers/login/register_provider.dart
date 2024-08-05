@@ -34,17 +34,15 @@ class Register with ChangeNotifier, UseApi {
 
         String? token = res.data['token'];
 
-        if (token != null) {
-          if (!context.mounted) return;
+        if (!context.mounted) return;
 
-          // set token to dio
-          dio.setToken(token);
+        // set token to dio
+        dio.setToken(token);
 
-          // save token to shared preferences
-          prefs.setString('token', token);
+        // save token to shared preferences
+        prefs.setString('token', token!);
 
-        }
-        context.go(Paths.login);
+              context.go(Paths.login);
         return LzToast.show("Register success");
       }
     } catch (e, s) {

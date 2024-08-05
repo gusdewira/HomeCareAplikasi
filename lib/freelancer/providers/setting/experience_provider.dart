@@ -1,5 +1,5 @@
-import 'package:fetchly/fetchly.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:fetchly/fetchly.dart';
 import 'package:lazyui/lazyui.dart';
 import '../../data/api/api.dart';
 import '../../data/models/setting/experience_model.dart';

@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:homecare_app/employer/data/models/notification_model.dart';
 import 'package:homecare_app/employer/providers/notification_provider.dart';
 import 'package:homecare_app/freelancer/screens/home/views/click_notification.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lazyui/lazyui.dart';
 
-import '../../../routes/paths.dart';
 import '../../../widgets/color_widget.dart';
-import '../widgets/search_notification.dart';
 
 class NotificationHome extends ConsumerStatefulWidget {
   const NotificationHome({super.key});

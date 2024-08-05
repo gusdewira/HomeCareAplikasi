@@ -10,7 +10,7 @@ import '../../../widgets/color_widget.dart';
 import '../widgets/addmore_experience.dart';
 
 class Tabbar1MyProfile extends ConsumerWidget {
-  const Tabbar1MyProfile({Key? key}) : super(key: key);
+  const Tabbar1MyProfile({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

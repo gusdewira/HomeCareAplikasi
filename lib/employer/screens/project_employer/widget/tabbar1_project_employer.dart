@@ -13,7 +13,7 @@ class Tabbar1ProjectEmployer extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    Future<void> _refreshData() async {
+    Future<void> refreshData() async {
       ref.refresh(projectProvider);
     }
 
@@ -34,7 +34,7 @@ class Tabbar1ProjectEmployer extends ConsumerWidget {
             );
           }
           return RefreshIndicator(
-            onRefresh: _refreshData,
+            onRefresh: refreshData,
             child: ListView.builder(
               itemCount: projects.length,
               itemBuilder: (context, index) {
@@ -76,7 +76,7 @@ class Tabbar1ProjectEmployer extends ConsumerWidget {
                           style: Gfont.color(LzColors.hex('001380')).fsize(18),
                         ),
                       ),
-                      Container(
+                      SizedBox(
                         width: context.width,
                         height: 70,
                         child: Row(

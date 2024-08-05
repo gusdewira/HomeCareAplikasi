@@ -1,15 +1,13 @@
-import 'package:fetchly/fetchly.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:homecare_app/employer/data/api/api.dart';
 import 'package:homecare_app/employer/data/models/project_model.dart';
 import 'package:homecare_app/employer/providers/notification_provider.dart';
 import 'package:homecare_app/employer/providers/project_active_provider.dart';
 import 'package:homecare_app/employer/screens/project_employer/widget/see_history_progress.dart';
-import 'package:homecare_app/freelancer/routes/paths.dart';
 import 'package:homecare_app/freelancer/widgets/color_widget.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lazyui/lazyui.dart';
+import 'package:fetchly/fetchly.dart';
 
 class Tabbar2ProjectEmployer extends ConsumerWidget {
   const Tabbar2ProjectEmployer({super.key});
@@ -17,7 +15,7 @@ class Tabbar2ProjectEmployer extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final notification = ref.read(notificationStatusProvider.notifier);
-    Future<void> _refreshData() async {
+    Future<void> refreshData() async {
       ref.refresh(projectActiveProvider);
     }
 
@@ -151,7 +149,7 @@ class Tabbar2ProjectEmployer extends ConsumerWidget {
           );
         }
         return RefreshIndicator(
-          onRefresh: _refreshData,
+          onRefresh: refreshData,
           child: ListView.builder(
               itemCount: projects.length,
               itemBuilder: (context, index) {
@@ -260,7 +258,7 @@ class Tabbar2ProjectEmployer extends ConsumerWidget {
                               .toList(),
                         ),
                       ),
-                      Container(
+                      SizedBox(
                         width: context.width,
                         height: 80,
                         child: Text(

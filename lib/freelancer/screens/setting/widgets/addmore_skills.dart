@@ -11,7 +11,7 @@ class AddMoreSkill extends ConsumerWidget {
   final SkillModel? data;
   bool? edit = false;
 
-  AddMoreSkill({Key? key, this.data, this.edit}) : super(key: key);
+  AddMoreSkill({super.key, this.data, this.edit});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

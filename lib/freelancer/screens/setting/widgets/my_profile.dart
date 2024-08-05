@@ -3,7 +3,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lazyui/lazyui.dart';
 
 import '../../../data/models/setting/profile_freelancer_model.dart';
-import '../../../providers/setting/edit_profile_provider.dart';
 import '../../../providers/setting/profile_provider.dart';
 import '../../../widgets/color_widget.dart';
 import '../tabbar/tabbar1_my_profile.dart';
@@ -21,7 +20,7 @@ class MyProfile extends ConsumerStatefulWidget {
 
 class _MyProfileState extends ConsumerState<MyProfile> {
   Future<void> _refreshProfile() async {
-    await ref.refresh(profileFreelancerProvider);
+    ref.refresh(profileFreelancerProvider);
   }
 
   @override
@@ -144,7 +143,7 @@ class _MyProfileState extends ConsumerState<MyProfile> {
                               Row(
                                 mainAxisSize: Mas.min,
                                 children: [
-                                  profile != null && profile is String
+                                  profile != null
                                       ? LzImage(
                                           profile,
                                           radius: 50,

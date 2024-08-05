@@ -10,7 +10,7 @@ import '../../../widgets/color_widget.dart';
 class BidExplore extends ConsumerWidget {
   final ProjectFreelancerModel? data;
 
-  const BidExplore({Key? key, this.data}) : super(key: key);
+  const BidExplore({super.key, this.data});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

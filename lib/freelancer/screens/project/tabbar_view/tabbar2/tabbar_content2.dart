@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:homecare_app/freelancer/screens/explore/content_widget/detail_project_explore.dart';
 import 'package:homecare_app/freelancer/screens/project/tabbar_view/tabbar2/history_progress_project.dart';
 import 'package:homecare_app/freelancer/screens/project/tabbar_view/tabbar2/send_progres.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lazyui/lazyui.dart';
-import 'package:intl/intl.dart'; // Pastikan Anda menambahkan ini untuk DateFormat
+// Pastikan Anda menambahkan ini untuk DateFormat
 
 import '../../../../data/models/setting/project_freelancer_model.dart';
 import '../../../../providers/project/project_active_provider.dart';
-import '../../../../providers/project/project_waiting_provider.dart';
-import '../../../../routes/paths.dart';
 import '../../../../widgets/color_widget.dart';
 
 class Tabbar2 extends ConsumerWidget {
@@ -20,7 +17,7 @@ class Tabbar2 extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final projectAccepts = ref.watch(projectProgress);
 
-    Future<void> _refreshProjects() async {
+    Future<void> refreshProjects() async {
       await ref.refresh(projectProgress.notifier).getProjectProgress();
     }
 
@@ -37,7 +34,7 @@ class Tabbar2 extends ConsumerWidget {
             data: (List<ProjectFreelancerModel> projectProgreses) {
               return projectProgreses.isNotEmpty
                   ? RefreshIndicator(
-                      onRefresh: _refreshProjects,
+                      onRefresh: refreshProjects,
                       child: ListView.builder(
                         itemCount: projectProgreses.length,
                         itemBuilder: (context, index) {

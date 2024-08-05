@@ -1,16 +1,13 @@
 import 'dart:io';
 
-import 'package:fetchly/fetchly.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:homecare_app/employer/providers/notification_provider.dart';
 import 'package:homecare_app/freelancer/providers/explore/detail_project_provider.dart';
 import 'package:homecare_app/freelancer/providers/project/history_progress_provider.dart';
-import 'package:homecare_app/freelancer/screens/project/tabbar_view/tabbar2/tabbar_content2.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lazyui/lazyui.dart';
-
+import 'package:fetchly/fetchly.dart';
 import '../../../../data/models/setting/project_freelancer_model.dart';
 import '../../../../widgets/color_widget.dart';
 

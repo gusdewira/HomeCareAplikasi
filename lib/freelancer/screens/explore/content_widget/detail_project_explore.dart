@@ -131,7 +131,7 @@ class DetailProjectExplore extends StatelessWidget {
         name,
         style: Gfont.color(LzColors.hex('000000')).fsize(13),
       ),
-    )).toList(),
+    )),
                           ],
                         ).margin(t: 10),
                         Textr(

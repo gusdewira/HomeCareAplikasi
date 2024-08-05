@@ -111,6 +111,7 @@ class EditProfilChangeNotifier with ChangeNotifier, UseApi1 {
       );
 
       if (validate.ok) {
+        print(validate.value);
         final map = forms.toMap();
         LzToast.overlay('Editing profile...');
 
@@ -118,6 +119,8 @@ class EditProfilChangeNotifier with ChangeNotifier, UseApi1 {
 
         map['_method'] = 'put';
         ResHandler res = await profileEmployeeApi.updateEditProfile(map);
+
+        print(res.body);
 
         LzToast.dismiss();
 

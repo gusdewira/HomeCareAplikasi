@@ -17,18 +17,19 @@ import '../widgets/your_project_home.dart';
 class HomeView extends ConsumerWidget {
   const HomeView({super.key});
 
+  Future<void> _refreshData(WidgetRef ref) async {
+    ref.refresh(profileFreelancerProvider);
+    ref.refresh(projectFreelancer);
+    ref.refresh(projectProgress);
+    ref.refresh(projectComplated);
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+
     final profileData = ref.watch(profileFreelancerProvider);
     final projectActive = ref.read(projectProgress);
     final projectCompleted = ref.watch(projectComplated);
-
-    Future<void> _refreshData() async {
-      ref.refresh(profileFreelancerProvider);
-      ref.refresh(projectFreelancer);
-      ref.refresh(projectProgress);
-      ref.refresh(projectComplated);
-    }
 
     return Container(
       decoration: BoxDecoration(
@@ -61,7 +62,7 @@ class HomeView extends ConsumerWidget {
           final projectData = ref.watch(projectFreelancer);
 
           return RefreshIndicator(
-            onRefresh: _refreshData,
+            onRefresh: () => _refreshData(ref),
             child: SingleChildScrollView(
               child: Stack(
                 children: [
@@ -135,17 +136,9 @@ class HomeView extends ConsumerWidget {
                       ),
                     ),
                   ),
-                  // const SaldoHome(),
                   Column(
                     mainAxisAlignment: Maa.start,
                     children: [
-                      // Row(
-                      //   mainAxisSize: Mas.min,
-                      //   children: [
-                      //     BalanceWithDrawl(earning: earn),
-                      //     const RecentTransaction(),
-                      //   ],
-                      // ),
                       projectData.when(
                         data: (List<ProjectFreelancerModel> projects) {
                           late List<ProjectFreelancerModel> project =

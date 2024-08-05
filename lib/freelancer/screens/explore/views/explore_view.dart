@@ -416,8 +416,7 @@ class _ExploreViewState extends ConsumerState<ExploreView> {
 class ProjectFreelancerCard extends StatelessWidget {
   final ProjectFreelancerModel projectFreelancer;
 
-  const ProjectFreelancerCard({Key? key, required this.projectFreelancer})
-      : super(key: key);
+  const ProjectFreelancerCard({super.key, required this.projectFreelancer});
 
   @override
   Widget build(BuildContext context) {

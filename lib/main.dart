@@ -10,33 +10,34 @@ import 'freelancer/core/helpers/request_helder.dart';
 import 'freelancer/data/local/storage.dart';
 import 'freelancer/routes/routes.dart';
 
-
 void main() async {
-  // init flutter, to make sure all the widgets are ready
   WidgetsFlutterBinding.ensureInitialized();
   await initializeDateFormatting('id_ID', null);
 
-  // init lazyui
-  LazyUi.config(alwaysPortrait: true);
+  await initializeApp();
 
-  // init shared preferences
-  prefs = await SharedPreferences.getInstance();
-  String? token = prefs.getString('token');
-
-  // init dio, we customize it with the name "fetchly"
-  Fetchly.init(
-      baseUrl: 'https://homecare.galkasoft.id/api/',
-      onRequest: RequestHandler.onRequest);
-
-  dio.setToken(token);
-
-  // NOTE: kamu juga bisa membuat file sendiri untuk menjalankan kode pada bagian ini
-  // sehingga file main.dart ini terlihat lebih bersih
-
-  // init provider and run app
   runApp(const ProviderScope(child: MyApp()));
 }
 
+Future<void> initializeApp() async {
+  // Init LazyUi
+  LazyUi.config(alwaysPortrait: true);
+
+  // Init SharedPreferences
+  prefs = await SharedPreferences.getInstance();
+  String? token = prefs.getString('token');
+
+  // Init Fetchly
+  Fetchly.init(
+    baseUrl: 'https://homecare.galkasoft.id/api/',
+    onRequest: RequestHandler.onRequest,
+  );
+
+  // Set token if available
+  if (token != null) {
+    dio.setToken(token);
+  }
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -52,5 +53,23 @@ class MyApp extends StatelessWidget {
         return LazyUi.builder(context, child);
       },
     );
+  }
+}
+
+class AuthService {
+  Future<void> login(String token) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('token', token);
+  }
+
+  Future<bool> isLoggedIn() async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+    return token != null;
+  }
+
+  Future<void> logout() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('token');
   }
 }
