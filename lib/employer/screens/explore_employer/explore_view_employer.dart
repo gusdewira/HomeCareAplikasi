@@ -17,10 +17,8 @@ class ExploreView extends ConsumerStatefulWidget {
 class ExploreEmployerView extends ConsumerState<ExploreView> {
   ExploreEmployerView();
   final TextEditingController _searchQuery = TextEditingController(text: '');
-  int fromSalary = 0;
-  int toSalary = 0;
-  String location = '';
-  List<String> selectedCategories = [];
+  double? rating;
+  double? reviews;
 
   @override
   void initState() {
@@ -45,10 +43,8 @@ class ExploreEmployerView extends ConsumerState<ExploreView> {
 
   Future<void> _refreshProfiles1() async {
     await ref.watch(freelancerProvider.notifier).getFreelancer();
-    fromSalary = 0;
-    toSalary = 0;
-    location = '';
-    selectedCategories = [];
+    rating = 0;
+    reviews = 0;
   }
 
   final List<Map<String, dynamic>> salaryRanges = [
@@ -63,6 +59,23 @@ class ExploreEmployerView extends ConsumerState<ExploreView> {
   @override
   Widget build(BuildContext context) {
     var profiles = ref.watch(freelancerProvider);
+    int convertRatingToStars(String ratingText) {
+      switch (ratingText.toUpperCase()) {
+        case 'BAD':
+          return 1;
+        case 'AVERAGE':
+          return 2;
+        case 'GOOD':
+          return 3;
+        case 'VERY_GOOD':
+          return 4;
+        case 'EXCELLENT':
+          return 5;
+        default:
+          return 0;
+      }
+    }
+
     return RefreshIndicator(
       onRefresh: _refreshProfiles1,
       child: Container(
@@ -98,48 +111,29 @@ class ExploreEmployerView extends ConsumerState<ExploreView> {
                       Expanded(
                           child: profiles.when(
                         data: (List<ProfileFreelancerModel> profile) {
-                          final bool hasFilters = fromSalary > 0 ||
-                              toSalary > 0 ||
-                              selectedCategories.isNotEmpty ||
-                              location != "" ||
-                              _searchQuery.text != "";
+                          final bool hasFilters =
+                              rating != null || reviews != null;
 
                           final filteredProfiles = hasFilters
                               ? profile.where((freelancer) {
-                                  final earning = double.tryParse(
-                                          freelancer.earning ?? '0') ??
-                                      0.0;
-                                  final profession =
-                                      freelancer.profession ?? '';
-                                  // final address = freelancer.address ?? '';
-                                  final summary = freelancer.summary ?? '';
-                                  final name =
-                                      "${freelancer.firstName ?? ''} ${freelancer.lastName ?? ''}";
-
-                                  final fromSalaryValue = fromSalary > 0
-                                      ? fromSalary.toDouble()
-                                      : null;
-                                  final toSalaryValue =
-                                      toSalary > 0 ? toSalary.toDouble() : null;
-
-                                  final matchesSalary =
-                                      (fromSalaryValue == null ||
-                                              earning >= fromSalaryValue) &&
-                                          (toSalaryValue == null ||
-                                              earning <= toSalaryValue);
-                                  final matchesCategory = selectedCategories
-                                          .isEmpty ||
-                                      selectedCategories.contains(profession);
-                                  final matchesSearch = _searchQuery
-                                          .text.isEmpty ||
-                                      name.toLowerCase().contains(
-                                          _searchQuery.text.toLowerCase()) ||
-                                      summary.toLowerCase().contains(
-                                          _searchQuery.text.toLowerCase());
-
-                                  return matchesSalary &&
-                                      matchesCategory &&
-                                      matchesSearch;
+                                print("hello1");
+                                // print(convertRatingToStars(freelancer
+                                //           .reviews![0]['quantity_star']));
+                                  final rate = freelancer.reviews!.length > 0
+                                      ? convertRatingToStars(freelancer
+                                          .reviews![0]['quantity_star'])
+                                      : 0;
+                                  final matchesRating = rate == rating;
+                                  final matchesReviews =
+                                      freelancer.reviews!.length == reviews;
+                                      print(rate);
+                                      print(rating);
+                                      print(matchesReviews);
+                                      print(freelancer.reviews!.length);
+                                      print(reviews);
+                                      print(matchesReviews);
+print("Benar ${matchesRating && matchesReviews}");
+                                  return matchesRating && matchesReviews;
                                 }).toList()
                               : profile;
 
@@ -226,79 +220,115 @@ class ExploreEmployerView extends ConsumerState<ExploreView> {
                                         ),
                                         Column(
                                           children: [
-                                            DropdownButtonFormField<
-                                                Map<String, dynamic>>(
-                                              decoration: InputDecoration(
-                                                labelText: 'Salary Range',
-                                                labelStyle:
-                                                    TextStyle(color: color1),
-                                                hintText: 'Select Salary Range',
-                                              ),
-                                              items: salaryRanges.map((range) {
-                                                return DropdownMenuItem<
-                                                    Map<String, dynamic>>(
-                                                  value: range,
-                                                  child:
-                                                      Text('${range['label']}'),
-                                                );
-                                              }).toList(),
-                                              onChanged: (value) {
-                                                setState(() {
-                                                  fromSalary =
-                                                      value?['from'] ?? 0;
-                                                  toSalary = value?['to'] ?? 0;
-                                                });
-                                              },
+                                            // DropdownButtonFormField<
+                                            //     Map<String, dynamic>>(
+                                            //   decoration: InputDecoration(
+                                            //     labelText: 'Salary Range',
+                                            //     labelStyle:
+                                            //         TextStyle(color: color1),
+                                            //     hintText: 'Select Salary Range',
+                                            //   ),
+                                            //   items: salaryRanges.map((range) {
+                                            //     return DropdownMenuItem<
+                                            //         Map<String, dynamic>>(
+                                            //       value: range,
+                                            //       child:
+                                            //           Text('${range['label']}'),
+                                            //     );
+                                            //   }).toList(),
+                                            //   onChanged: (value) {
+                                            //     setState(() {
+                                            //       fromSalary =
+                                            //           value?['from'] ?? 0;
+                                            //       toSalary = value?['to'] ?? 0;
+                                            //     });
+                                            //   },
+                                            // ),
+                                            // LzForm.checkbox(
+                                            //   labelStyle: LzFormLabelStyle(
+                                            //       color: color1),
+                                            //   activeColor: color1,
+                                            //   label: 'Category',
+                                            //   options: [
+                                            //     const Option(
+                                            //         option:
+                                            //             'Mobile Development',
+                                            //         value:
+                                            //             'Mobile Development'),
+                                            //     const Option(
+                                            //         option: 'Content Writing',
+                                            //         value: 'Content Writing'),
+                                            //     const Option(
+                                            //         option: 'Digital Marketing',
+                                            //         value: 'Digital Marketing'),
+                                            //     const Option(
+                                            //         option: 'Video Editing',
+                                            //         value: 'Video Editing'),
+                                            //     const Option(
+                                            //         option: 'UI/UX Design',
+                                            //         value: 'UI/UX Design'),
+                                            //     const Option(
+                                            //         option: 'Game Development',
+                                            //         value: 'Game Development'),
+                                            //     const Option(
+                                            //         option: 'Data Entry',
+                                            //         value: 'Data Entry'),
+                                            //     const Option(
+                                            //         option:
+                                            //             'Virtual Assistance',
+                                            //         value:
+                                            //             'Virtual Assistance'),
+                                            //   ],
+                                            //   onChange: (selectedOptions) {
+                                            //     final value =
+                                            //         selectedOptions.value;
+                                            //     final dataExist =
+                                            //         selectedCategories
+                                            //             .contains(value);
+                                            //     if (!dataExist) {
+                                            //       selectedCategories.add(value);
+                                            //     } else {
+                                            //       selectedCategories
+                                            //           .remove(value);
+                                            //     }
+                                            //   },
+                                            // ).margin(t: 15),
+                                            const Text(
+                                              "Rating",
+                                              style:
+                                                  TextStyle(color: Colors.blue),
                                             ),
-                                            LzForm.checkbox(
-                                              labelStyle: LzFormLabelStyle(
-                                                  color: color1),
-                                              activeColor: color1,
-                                              label: 'Category',
-                                              options: [
-                                                const Option(
-                                                    option:
-                                                        'Mobile Development',
-                                                    value:
-                                                        'Mobile Development'),
-                                                const Option(
-                                                    option: 'Content Writing',
-                                                    value: 'Content Writing'),
-                                                const Option(
-                                                    option: 'Digital Marketing',
-                                                    value: 'Digital Marketing'),
-                                                const Option(
-                                                    option: 'Video Editing',
-                                                    value: 'Video Editing'),
-                                                const Option(
-                                                    option: 'UI/UX Design',
-                                                    value: 'UI/UX Design'),
-                                                const Option(
-                                                    option: 'Game Development',
-                                                    value: 'Game Development'),
-                                                const Option(
-                                                    option: 'Data Entry',
-                                                    value: 'Data Entry'),
-                                                const Option(
-                                                    option:
-                                                        'Virtual Assistance',
-                                                    value:
-                                                        'Virtual Assistance'),
-                                              ],
-                                              onChange: (selectedOptions) {
-                                                final value =
-                                                    selectedOptions.value;
-                                                final dataExist =
-                                                    selectedCategories
-                                                        .contains(value);
-                                                if (!dataExist) {
-                                                  selectedCategories.add(value);
-                                                } else {
-                                                  selectedCategories
-                                                      .remove(value);
-                                                }
-                                              },
-                                            ).margin(t: 15),
+                                            Slider.adaptive(
+                                                value: rating ?? 0,
+                                                min: 0.0,
+                                                max: 5.0,
+                                                divisions: 5,
+                                                label:
+                                                    '${rating?.round() ?? 0}',
+                                                onChanged: (double newValue) =>
+                                                    setState(() {
+                                                      print(
+                                                          'Slider value: $newValue');
+                                                      rating = newValue;
+                                                    })),
+                                            const Text(
+                                              "Number of Reviews",
+                                              style:
+                                                  TextStyle(color: Colors.blue),
+                                            ),
+                                            Slider.adaptive(
+                                                value: reviews ?? 0,
+                                                min: 0.0,
+                                                max: 10.0,
+                                                divisions: 10,
+                                                label:
+                                                    '${reviews?.round() ?? 0}',
+                                                onChanged: (double newValue) =>
+                                                    setState(() {
+                                                      print(
+                                                          'Slider value: $newValue');
+                                                      reviews = newValue;
+                                                    })),
                                             InkTouch(
                                               onTap: () {
                                                 Navigator.of(context).pop();

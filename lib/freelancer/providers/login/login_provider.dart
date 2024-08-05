@@ -102,9 +102,10 @@ class Auth with ChangeNotifier, UseApi, UseApi1 {
 
         ResHandler respons;
         respons = await profileFreelancerApi.getProfileFreelancer();
-        if(respons.data.length == 0){
-        respons = await profileEmployeeApi.getProfileEmployee();
+        if (respons.data.length == 0) {
+          respons = await profileEmployeeApi.getProfileEmployee();
         }
+
         return {'status': res.body['status'], 'role': respons.data['role'][0]};
       }
       return {'status': false, 'role': null};

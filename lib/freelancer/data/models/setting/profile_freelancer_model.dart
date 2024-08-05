@@ -12,6 +12,7 @@ class ProfileFreelancerModel {
   List<PortofolioAttachment>? portofolioAttachments;
   String? profession;
   List<String>? role;
+  List? reviews;
 
   ProfileFreelancerModel({
     this.id,
@@ -27,6 +28,7 @@ class ProfileFreelancerModel {
     this.portofolioAttachments,
     this.profession,
     this.role,
+    this.reviews,
   });
 
   factory ProfileFreelancerModel.fromJson(Map<String, dynamic> json) {
@@ -44,11 +46,12 @@ class ProfileFreelancerModel {
       portofolioAttachments: (json["portofolio_attachments"] as List<dynamic>?)
           ?.map((item) =>
               PortofolioAttachment.fromJson(item as Map<String, dynamic>))
-          .toList(), // Modified here
+          .toList(),
       profession: json["profession"] as String?,
       role: (json["role"] as List<dynamic>?)
           ?.map((e) => e as String)
-          .toList(), // Modified here
+          .toList(),
+          reviews: (json["reviews"] as List<dynamic>?)?.toList(),
     );
   }
 
@@ -68,6 +71,7 @@ class ProfileFreelancerModel {
             .toList(),
         "profession": profession,
         "role": role,
+        "reviews": reviews,
       };
 }
 
