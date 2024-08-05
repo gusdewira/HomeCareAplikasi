@@ -21,7 +21,7 @@ class _ExploreViewState extends ConsumerState<ExploreView> {
   int fromSalary = 0;
   int toSalary = 0;
   String location = '';
-  List<String> selectedCategories = [];
+  String selectedCategory = '';
 
   @override
   void initState() {
@@ -48,9 +48,23 @@ class _ExploreViewState extends ConsumerState<ExploreView> {
     await ref.watch(projectFreelancer.notifier).getProjectFreelancer();
     fromSalary = 0;
     toSalary = 0;
+    selectedCategory = '';
     location = '';
-    selectedCategories = [];
   }
+
+  final List<Map<String, String>> salaryRanges = [
+    {'start': '- Please Select Range', 'end': ''},
+    {'start': '200.000', 'end': '350.000'},
+    {'start': '350.000', 'end': '500.000'},
+    {'start': '500.000', 'end': '1.000.000'},
+    {'start': '1.000.000', 'end': '2.500.000'},
+    {'start': '2.500.000', 'end': '4.000.000'},
+    {'start': '4.000.000', 'end': '5.500.000'},
+  ];
+
+  final List<Map<String, String>> categoryOptions = [
+    {'label': 'Digital Marketing', 'value': 'Digital Marketing'}
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +107,7 @@ class _ExploreViewState extends ConsumerState<ExploreView> {
                             (List<ProjectFreelancerModel> projectFreelancers) {
                           final bool hasFilters = fromSalary > 0 ||
                               toSalary > 0 ||
-                              selectedCategories.isNotEmpty ||
+                              selectedCategory.isNotEmpty ||
                               location.isNotEmpty ||
                               _searchQuery.text.isNotEmpty;
 
@@ -120,9 +134,8 @@ class _ExploreViewState extends ConsumerState<ExploreView> {
                                               startSalary >= fromSalaryValue) &&
                                           (toSalaryValue == null ||
                                               endSalary <= toSalaryValue);
-                                  final matchesCategory = selectedCategories
-                                          .isEmpty ||
-                                      selectedCategories.contains(profession);
+                                  final matchesCategory = profession.isEmpty ||
+                                      profession.contains(selectedCategory);
                                   final matchesLocation = location.isEmpty ||
                                       address.contains(location);
                                   final matchesSearch = _searchQuery
@@ -183,164 +196,134 @@ class _ExploreViewState extends ConsumerState<ExploreView> {
                           showDialog(
                             context: context,
                             builder: (BuildContext context) {
-                              return Container(
-                                margin: Ei.only(t: 80, l: 35, r: 35, b: 110),
-                                padding: Ei.all(20),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(30),
-                                    color: Colors.white),
-                                child: LzFormList(
-                                  cleanOnFilled: true,
-                                  style: LzFormStyle(
-                                    activeColor: LzColors.dark,
-                                    inputBorderColor: Colors.black26,
-                                    type: FormType.topInner,
+                              return Dialog(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                child: Container(
+                                  padding: const EdgeInsets.all(20),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Expanded(
+                                            child: Text(
+                                              'Filter search project',
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                fontSize: 15,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                          ),
+                                          IconButton(
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            icon: const Icon(Icons.close),
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(height: 10),
+                                      DropdownButtonFormField<
+                                          Map<String, String>>(
+                                        decoration: InputDecoration(
+                                          labelText: 'Salary Range',
+                                          labelStyle: TextStyle(color: color1),
+                                          hintText: 'Select Salary Range',
+                                          border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(12),
+                                          ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(12),
+                                            borderSide: const BorderSide(
+                                              color: Colors.grey,
+                                            ),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(12),
+                                            borderSide: BorderSide(
+                                              color: color1,
+                                            ),
+                                          ),
+                                          contentPadding:
+                                              const EdgeInsets.symmetric(
+                                                  vertical: 10, horizontal: 12),
+                                        ),
+                                        value: salaryRanges[0],
+                                        onChanged:
+                                            (Map<String, String>? newValue) {
+                                          if (newValue!['end'] != null ||
+                                              newValue['end'] == '') {
+                                            fromSalary = int.tryParse(
+                                                    newValue['start']!
+                                                        .replaceAll('.', '')
+                                                        .replaceAll(',', '')) ??
+                                                0;
+                                            toSalary = int.tryParse(
+                                                    newValue['end']!
+                                                        .replaceAll('.', '')
+                                                        .replaceAll(',', '')) ??
+                                                0;
+                                            ;
+                                          }
+                                        },
+                                        items: salaryRanges.map<
+                                                DropdownMenuItem<
+                                                    Map<String, String>>>(
+                                            (Map<String, String> value) {
+                                          return DropdownMenuItem<
+                                              Map<String, String>>(
+                                            value: value,
+                                            child: Text(
+                                                '${value['start']} - ${value['end']}'),
+                                          );
+                                        }).toList(),
+                                      ),
+                                      const SizedBox(height: 10),
+                                      DropdownButtonFormField<String>(
+                                        value: selectedCategory.isEmpty
+                                            ? null
+                                            : selectedCategory,
+                                        decoration: const InputDecoration(
+                                          labelText: 'Category',
+                                        ),
+                                        items: categoryOptions
+                                            .map((dynamic value) {
+                                          return DropdownMenuItem<String>(
+                                            value: value['value'],
+                                            child: Text(value['label']),
+                                          );
+                                        }).toList(),
+                                        onChanged: (String? newValue) {
+                                          setState(() {
+                                            selectedCategory = newValue ?? '';
+                                          });
+                                        },
+                                      ),
+                                      const SizedBox(height: 10),
+                                      SizedBox(
+                                        width: double.infinity,
+                                        child: LzButton(
+                                          radius: 20,
+                                          color: color1,
+                                          text: 'Save',
+                                          textColor: Colors.white,
+                                          onTap: (state) {
+                                            Navigator.of(context).pop();
+                                            _refreshProject();
+                                          },
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                  padding: Ei.zero,
-                                  children: [
-                                    Column(
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment: Maa.spaceBetween,
-                                          children: [
-                                            Expanded(
-                                              child: Textr(
-                                                'Filter search project',
-                                                alignment: Alignment.center,
-                                                margin: Ei.only(l: 35),
-                                                style: Gfont.color(
-                                                        LzColors.hex('000000'))
-                                                    .fsize(15)
-                                                    .bold,
-                                              ),
-                                            ),
-                                            IconButton(
-                                                onPressed: () {
-                                                  Navigator.of(context).pop();
-                                                },
-                                                icon: const Icon(Ti.x))
-                                          ],
-                                        ),
-                                        Column(
-                                          mainAxisSize: Mas.min,
-                                          crossAxisAlignment: Caa.start,
-                                          children: [
-                                            Row(
-                                              children: [
-                                                Expanded(
-                                                    child: Padding(
-                                                  padding: Ei.only(r: 10),
-                                                  child: LzForm.input(
-                                                    label: 'From',
-                                                    onChange: (value) {
-                                                      setState(() {
-                                                        fromSalary =
-                                                            int.tryParse(
-                                                                    value) ??
-                                                                0;
-                                                      });
-                                                    },
-                                                    labelStyle:
-                                                        LzFormLabelStyle(
-                                                            color: color1),
-                                                    hint: 'Salary Range',
-                                                  ).margin(t: 10),
-                                                )),
-                                                Expanded(
-                                                    child: Padding(
-                                                  padding: Ei.only(l: 10),
-                                                  child: LzForm.input(
-                                                    label: 'To',
-                                                    onChange: (value) {
-                                                      setState(() {
-                                                        toSalary = int.tryParse(
-                                                                value) ??
-                                                            0;
-                                                      });
-                                                    },
-                                                    labelStyle:
-                                                        LzFormLabelStyle(
-                                                            color: color1),
-                                                    hint: 'Salary Range',
-                                                  ).margin(t: 10),
-                                                )),
-                                              ],
-                                            ),
-                                            LzForm.checkbox(
-                                              labelStyle: LzFormLabelStyle(
-                                                  color: color1),
-                                              activeColor: color1,
-                                              label: 'Category',
-                                              options: [
-                                                const Option(
-                                                    option:
-                                                        'Mobile Development',
-                                                    value:
-                                                        'Mobile Development'),
-                                                const Option(
-                                                    option: 'Content Writing',
-                                                    value: 'Content Writing'),
-                                                const Option(
-                                                    option: 'Digital Marketing',
-                                                    value: 'Digital Marketing'),
-                                                const Option(
-                                                    option: 'Video Editing',
-                                                    value: 'Video Editing'),
-                                                const Option(
-                                                    option: 'UI/UX Design',
-                                                    value: 'UI/UX Design'),
-                                                const Option(
-                                                    option: 'Game Development',
-                                                    value: 'Game Development'),
-                                                const Option(
-                                                    option: 'Data Entry',
-                                                    value: 'Data Entry'),
-                                                const Option(
-                                                    option:
-                                                        'Virtual Assistance',
-                                                    value:
-                                                        'Virtual Assistance'),
-                                              ],
-                                              onChange: (selectedOptions) {
-                                                final value =
-                                                    selectedOptions.value;
-                                                final dataExist =
-                                                    selectedCategories
-                                                        .contains(value);
-                                                if (!dataExist) {
-                                                  selectedCategories.add(value);
-                                                } else {
-                                                  selectedCategories
-                                                      .remove(value);
-                                                }
-                                              },
-                                            ),
-                                            InkTouch(
-                                              onTap: () {
-                                                Navigator.of(context).pop();
-                                                _refreshProject();
-                                              },
-                                              child: Container(
-                                                height: 50,
-                                                width: context.width,
-                                                decoration: BoxDecoration(
-                                                    color: color1,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            15)),
-                                                child: Center(
-                                                  child: Text(
-                                                    'Search',
-                                                    style: Gfont.white,
-                                                  ),
-                                                ),
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ],
                                 ),
                               );
                             },
