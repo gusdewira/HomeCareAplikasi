@@ -121,8 +121,8 @@ class Tabbar2 extends ConsumerWidget {
                                         InkTouch(
                                           onTap: () {
                                             context.lzPush(SendProgressProject(
-                                              id: idProject, offer: idOffers
-                                            ));
+                                                id: idProject,
+                                                offer: idOffers));
                                           },
                                           child: Container(
                                             margin: Ei.only(t: 20),

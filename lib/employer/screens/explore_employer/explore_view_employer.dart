@@ -116,23 +116,15 @@ class ExploreEmployerView extends ConsumerState<ExploreView> {
 
                           final filteredProfiles = hasFilters
                               ? profile.where((freelancer) {
-                                print("hello1");
                                 // print(convertRatingToStars(freelancer
                                 //           .reviews![0]['quantity_star']));
-                                  final rate = freelancer.reviews!.length > 0
+                                  final rate = freelancer.reviews!.isNotEmpty
                                       ? convertRatingToStars(freelancer
                                           .reviews![0]['quantity_star'])
                                       : 0;
                                   final matchesRating = rate == rating;
                                   final matchesReviews =
                                       freelancer.reviews!.length == reviews;
-                                      print(rate);
-                                      print(rating);
-                                      print(matchesReviews);
-                                      print(freelancer.reviews!.length);
-                                      print(reviews);
-                                      print(matchesReviews);
-print("Benar ${matchesRating && matchesReviews}");
                                   return matchesRating && matchesReviews;
                                 }).toList()
                               : profile;

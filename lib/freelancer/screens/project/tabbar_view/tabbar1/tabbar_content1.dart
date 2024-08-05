@@ -43,9 +43,7 @@ class Tabbar1 extends ConsumerWidget {
                           double endSalary = projectBid.endSalary!;
                           DateTime startDate = projectBid.startDate!;
                           DateTime endDate = projectBid.endDate!;
-                          // String address = projectBid.user!['address'];
                           String status = projectBid.offer![0]['status'];
-
                           return Column(
                             children: [
                               Column(
@@ -187,24 +185,46 @@ class Tabbar1 extends ConsumerWidget {
                                                       alignment:
                                                           Alignment.center,
                                                     ))
-                                                : Container(
-                                                    margin: Ei.only(t: 15),
-                                                    width: 70,
-                                                    height: 30,
-                                                    decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              20),
-                                                      color:
-                                                          Colors.orangeAccent,
-                                                    ),
-                                                    child: Textr(
-                                                      'Waiting',
-                                                      style: Gfont.white.bold
-                                                          .fsize(15),
-                                                      alignment:
-                                                          Alignment.center,
-                                                    )),
+                                                : status == "END"
+                                                    ? Container(
+                                                        margin: Ei.only(t: 15),
+                                                        width: 70,
+                                                        height: 30,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(20),
+                                                          color: Colors.blue,
+                                                        ),
+                                                        child: Textr(
+                                                          'Finished',
+                                                          style: Gfont
+                                                              .white.bold
+                                                              .fsize(15),
+                                                          alignment:
+                                                              Alignment.center,
+                                                        ))
+                                                    : Container(
+                                                        margin: Ei.only(t: 15),
+                                                        width: 70,
+                                                        height: 30,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(20),
+                                                          color: Colors
+                                                              .orangeAccent,
+                                                        ),
+                                                        child: Textr(
+                                                          'Waiting',
+                                                          style: Gfont
+                                                              .white.bold
+                                                              .fsize(15),
+                                                          alignment:
+                                                              Alignment.center,
+                                                        )),
                                       ],
                                     ),
                                   ),

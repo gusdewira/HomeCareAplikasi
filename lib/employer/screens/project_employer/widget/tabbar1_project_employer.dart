@@ -123,7 +123,7 @@ class Tabbar1ProjectEmployer extends ConsumerWidget {
                         child: Text(
                             maxLines: 3, overflow: Tof.ellipsis, description),
                       ),
-                     status == "WAITING" ?  InkTouch(
+                     InkTouch(
                         onTap: () {
                           context.lzPush(SeeRequestEmployer(
                             project: project,
@@ -144,30 +144,6 @@ class Tabbar1ProjectEmployer extends ConsumerWidget {
                                 child: Textr(
                                   alignment: Alignment.center,
                                   'See Request',
-                                  style: Gfont.color(LzColors.hex('ffffff'))
-                                      .fsize(12),
-                                ),
-                              ),
-                            ],
-                          ).margin(t: 20),
-                        ),
-                      ) : InkTouch(
-                        onTap: () {},
-                        child: SizedBox(
-                          width: context.width,
-                          child: Row(
-                            mainAxisAlignment: Maa.end,
-                            children: [
-                              Container(
-                                height: 30,
-                                width: 90,
-                                decoration: BoxDecoration(
-                                  color: status == "ACCEPT" ? LzColors.green : LzColors.red,
-                                  borderRadius: BorderRadius.circular(30),
-                                ),
-                                child: Textr(
-                                  alignment: Alignment.center,
-                                  status,
                                   style: Gfont.color(LzColors.hex('ffffff'))
                                       .fsize(12),
                                 ),

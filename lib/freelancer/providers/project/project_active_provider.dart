@@ -17,16 +17,17 @@ class ProjectProgressProvider
 
       ResHandler res = await projectProgressApi.getProjectProgress();
 
-        print(res.status);
-        print(res.data);
       if (res.status) {
-        // if (!mounted) return;
+        if (!mounted) return;
         dynamic data = res.data;
         if (data is List) {
-        state = AsyncValue.data(data.map((e) => ProjectFreelancerModel.fromJson(e)).toList());
-      } else {
-        LzToast.show("Unexpected data type received");
-      }
+          print(data is List);
+          state = AsyncValue.data(
+              data.map((e) => ProjectFreelancerModel.fromJson(e)).toList());
+              print("ok");
+        } else {
+          LzToast.show("Unexpected data type received");
+        }
       } else {
         LzToast.show(res.message);
       }

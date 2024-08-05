@@ -15,6 +15,8 @@ class SeeRequestEmployer extends StatelessWidget {
       return formatCurrency.format(number);
     }
 
+    int countOffers = project.offer!.where((offer) => offer['status'] == 'WAITING').length;
+
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -132,7 +134,7 @@ class SeeRequestEmployer extends StatelessWidget {
                   margin: Ei.only(t: 30),
                   maxLines: 3,
                   overflow: Tof.ellipsis,
-                  'Request Bid (${project.offer!.length})',
+                  'Request Bid ($countOffers)',
                   style: Gfont.bold,
                 ),
                 Container(
@@ -141,13 +143,15 @@ class SeeRequestEmployer extends StatelessWidget {
                   width: context.width,
                   color: Colors.black,
                 ),
-                Expanded(
+               countOffers <= 0 ? const Text("Request bid is empty!").margin(t: 10) : Expanded(
                     child: ListView.builder(
                         itemCount: project.offer!.length,
                         itemBuilder: (context, index) {
-                          return DataSeeRequest(
-                            bid: project.offer![index], userId: project.user!['id']
-                          );
+                          if(project.offer![index]['status'] == "WAITING") {
+                            return DataSeeRequest(
+                              bid: project.offer![index],
+                              userId: project.user!['id']);
+                          }
                         })),
               ],
             ),

@@ -18,6 +18,7 @@ class HomeView extends ConsumerWidget {
   const HomeView({super.key});
 
   Future<void> _refreshData(WidgetRef ref) async {
+    print('Refreshing data...');
     ref.refresh(profileFreelancerProvider);
     ref.refresh(projectFreelancer);
     ref.refresh(projectProgress);
@@ -26,9 +27,8 @@ class HomeView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     final profileData = ref.watch(profileFreelancerProvider);
-    final projectActive = ref.read(projectProgress);
+    final projectActive = ref.watch(projectProgress);
     final projectCompleted = ref.watch(projectComplated);
 
     return Container(
@@ -44,16 +44,13 @@ class HomeView extends ConsumerWidget {
         data: (ProfileFreelancerModel profile) {
           if (profile.id == null) {
             return const LzNoData(
-              message:
-                  'There is no data yet, please add data in the add experience menu',
+              message: 'There is no data yet, please add data in the add experience menu',
             );
           }
           String email = profile.email ?? '';
           String firstName = profile.firstName ?? '';
           String lastName = profile.lastName ?? '';
-          // ignore: unused_local_variable
-          String earn =
-              profile.earning != null ? profile.earning!.split('.')[0] : '';
+          String earn = profile.earning != null ? profile.earning!.split('.')[0] : '';
           int? profileId = profile.id;
 
           if (profileId == null) {
@@ -142,6 +139,7 @@ class HomeView extends ConsumerWidget {
                     children: [
                       projectData.when(
                         data: (List<ProjectFreelancerModel> projects) {
+                          print('Projects data loaded successfully');
                           late List<ProjectFreelancerModel> project =
                               projects.take(2).toList();
                           return Column(
@@ -151,8 +149,7 @@ class HomeView extends ConsumerWidget {
                               projectActive.when(
                                 data: (List<ProjectFreelancerModel> active) {
                                   return projectCompleted.when(
-                                    data: (List<ProjectFreelancerModel>
-                                        completed) {
+                                    data: (List<ProjectFreelancerModel> completed) {
                                       return AllProjectHome(
                                         projects: projects.length,
                                         active: active.length,
@@ -161,11 +158,13 @@ class HomeView extends ConsumerWidget {
                                       );
                                     },
                                     error: (error, stackTrace) {
+                                      print('Error loading completed projects: $error');
                                       return LzNoData(
                                         message: 'Oops! $error',
                                       );
                                     },
                                     loading: () {
+                                      print('Loading completed projects...');
                                       return LzLoader.bar(
                                         message: 'Loading1...',
                                       );
@@ -173,11 +172,13 @@ class HomeView extends ConsumerWidget {
                                   );
                                 },
                                 error: (error, stackTrace) {
+                                  print('Error loading active projects: $error');
                                   return LzNoData(
                                     message: 'Oops! $error',
                                   );
                                 },
                                 loading: () {
+                                  print('Loading active projects...');
                                   return LzLoader.bar(
                                     message: 'Loading2...',
                                   );
@@ -187,11 +188,13 @@ class HomeView extends ConsumerWidget {
                           );
                         },
                         error: (error, stackTrace) {
+                          print('Error loading projects data: $error');
                           return LzNoData(
                             message: 'Oops! $error',
                           );
                         },
                         loading: () {
+                          print('Loading projects data...');
                           return LzLoader.bar(
                             message: 'Loading3...',
                           );
@@ -205,9 +208,11 @@ class HomeView extends ConsumerWidget {
           );
         },
         error: (error, stackTrace) {
+          print('Error loading profile data: $error');
           return LzNoData(message: 'Oops! $error');
         },
         loading: () {
+          print('Loading profile data...');
           return LzLoader.bar(message: 'Loading4...');
         },
       ),
