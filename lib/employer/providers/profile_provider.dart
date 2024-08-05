@@ -33,19 +33,17 @@ class ProfileEmployeeProvider
     }
   }
 
-  Future<ProfileEmployerModel> getDataProfile() async {
+  Future getDataProfile() async {
     try {
       state = const AsyncValue.loading();
       ResHandler res = await profileEmployeeApi.getProfileEmployee();
 
       if (res.status) {
         state = AsyncValue.data(ProfileEmployerModel.fromJson(res.data ?? {}));
-        return ProfileEmployerModel.fromJson(res.data ?? {});
       } else {
         LzToast.show(res.message);
         state = AsyncValue.error(
             res.message ?? 'Unknown error occurred', StackTrace.current);
-        throw Exception('Failed to fetch profile');
       }
     } catch (e, s) {
       Errors.check(e, s);

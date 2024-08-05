@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
-=======
 
->>>>>>> 2a613d620f50bac4f2989c281235e79c9b785504
 import 'package:homecare_app/freelancer/screens/explore/content_widget/detail_project_explore.dart';
 import 'package:homecare_app/freelancer/screens/project/tabbar_view/tabbar2/history_progress_project.dart';
 import 'package:homecare_app/freelancer/screens/project/tabbar_view/tabbar2/send_progres.dart';

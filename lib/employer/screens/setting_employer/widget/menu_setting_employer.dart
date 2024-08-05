@@ -11,13 +11,8 @@ import '../../../../freelancer/widgets/color_widget.dart';
 
 // ignore: must_be_immutable
 class MenuSettingEmployer extends ConsumerWidget {
-<<<<<<< HEAD
-ProfileEmployerModel profile;
-  MenuSettingEmployer({super.key, required this.profile});
-=======
   ProfileEmployerModel profile;
   MenuSettingEmployer({Key? key, required this.profile}) : super(key: key);
->>>>>>> 2a613d620f50bac4f2989c281235e79c9b785504
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

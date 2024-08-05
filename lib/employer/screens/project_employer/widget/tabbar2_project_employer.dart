@@ -15,12 +15,7 @@ class Tabbar2ProjectEmployer extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final notification = ref.read(notificationStatusProvider.notifier);
-<<<<<<< HEAD
     Future<void> refreshData() async {
-=======
-    Future<void> _refreshData() async {
-      // ignore: unused_result
->>>>>>> 2a613d620f50bac4f2989c281235e79c9b785504
       ref.refresh(projectActiveProvider);
     }
 

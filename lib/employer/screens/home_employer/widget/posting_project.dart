@@ -32,6 +32,7 @@ class PostingProjectEmployer extends ConsumerWidget {
     }
 
     final List<Map<String, String>> salaryRanges = [
+      {'start': '- Please Select Range', 'end': ''},
       {'start': '200.000', 'end': '350.000'},
       {'start': '350.000', 'end': '500.000'},
       {'start': '500.000', 'end': '1.000.000'},
@@ -122,27 +123,22 @@ class PostingProjectEmployer extends ConsumerWidget {
                                 labelStyle: TextStyle(color: color1),
                                 hintText: 'Select Project Category',
                                 border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(
-                                      12), // Rounded corners
+                                  borderRadius: BorderRadius.circular(12),
                                 ),
                                 enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(
-                                      12), // Rounded corners
+                                  borderRadius: BorderRadius.circular(12),
                                   borderSide: const BorderSide(
-                                    color: Colors
-                                        .grey, // Warna border saat tidak fokus
+                                    color: Colors.grey,
                                   ),
                                 ),
                                 focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(
-                                      12), // Rounded corners
+                                  borderRadius: BorderRadius.circular(12),
                                   borderSide: BorderSide(
-                                    color: color1, // Warna border saat fokus
+                                    color: color1,
                                   ),
                                 ),
                                 contentPadding: const EdgeInsets.symmetric(
-                                    vertical: 12,
-                                    horizontal: 12), // Adjust padding
+                                    vertical: 12, horizontal: 12),
                                 isDense: true,
                               ),
                               value: getValidCategoryValue(notifier
@@ -275,7 +271,7 @@ class PostingProjectEmployer extends ConsumerWidget {
                                   ),
                                 );
                                 model.text = date.format();
-                                                            },
+                              },
                             ),
                             LzForm.input(
                               label: 'End Date',
@@ -294,7 +290,7 @@ class PostingProjectEmployer extends ConsumerWidget {
                                   ),
                                 );
                                 model.text = date.format();
-                                                            },
+                              },
                             ),
                             DropdownButtonFormField<Map<String, String>>(
                               decoration: InputDecoration(
@@ -319,16 +315,14 @@ class PostingProjectEmployer extends ConsumerWidget {
                                 contentPadding: const EdgeInsets.symmetric(
                                     vertical: 10, horizontal: 12),
                               ),
-                              value: salaryRanges[0], // Pilihan default
+                              value: salaryRanges[0],
                               onChanged: (Map<String, String>? newValue) {
-                                if (newValue != null) {
-                                  // Simpan Start Salary dan End Salary secara terpisah
+                                if (newValue!['end'] != null || newValue['end'] == '') {
                                   notifier.forms['start_salary']?.controller
                                       .text = newValue['start']!;
                                   notifier.forms['end_salary']?.controller
                                       .text = newValue['end']!;
-                                  notifier
-                                      .notifyListeners(); // Jika diperlukan, notifikasi perubahan
+                                  notifier.notifyListeners();
                                 }
                               },
                               items: salaryRanges

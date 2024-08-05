@@ -15,23 +15,22 @@ class ProjectEmployerModel {
   List? offer;
   List? review;
 
-  ProjectEmployerModel({
-    this.id,
-    this.title,
-    this.description,
-    this.attachment,
-    this.longitude,
-    this.latitude,
-    this.startDate,
-    this.endDate,
-    this.nameCategories,
-    this.startSalary,
-    this.endSalary,
-    this.createdAt,
-    this.user,
-    this.offer,
-    this.review
-  });
+  ProjectEmployerModel(
+      {this.id,
+      this.title,
+      this.description,
+      this.attachment,
+      this.longitude,
+      this.latitude,
+      this.startDate,
+      this.endDate,
+      this.nameCategories,
+      this.startSalary,
+      this.endSalary,
+      this.createdAt,
+      this.user,
+      this.offer,
+      this.review});
 
   factory ProjectEmployerModel.fromJson(Map<String, dynamic> json) =>
       ProjectEmployerModel(

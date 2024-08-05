@@ -150,7 +150,9 @@ class _LoginViewState extends ConsumerState<LoginView> {
                         return;
                       }
 
-                      if (ok['role'] == "Freelancer") {
+                      print(ok);
+
+                      if (ok['role'] == "freelancer") {
                         context.go(Paths.home);
                         LzToast.show("Login success as Freelancer");
                       } else {

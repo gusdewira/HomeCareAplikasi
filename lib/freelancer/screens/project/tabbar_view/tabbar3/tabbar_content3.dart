@@ -25,6 +25,23 @@ class Tabbar3 extends ConsumerWidget {
       return formatCurrency.format(number);
     }
 
+    int convertRatingToStars(String ratingText) {
+      switch (ratingText.toUpperCase()) {
+        case 'BAD':
+          return 1;
+        case 'AVERAGE':
+          return 2;
+        case 'GOOD':
+          return 3;
+        case 'VERY_GOOD':
+          return 4;
+        case 'EXCELLENT':
+          return 5;
+        default:
+          return 0;
+      }
+    }
+
     return Column(
       children: [
         Expanded(
@@ -38,113 +55,114 @@ class Tabbar3 extends ConsumerWidget {
                         itemBuilder: (context, index) {
                           final projectComplated = projectComplateds[index];
                           String title = projectComplated.title!;
-                          String startSalary = formatNumber(projectComplated.startSalary ?? 0.0);
-                          String endSalary = formatNumber(projectComplated.endSalary ?? 0.0);
+                          String firstName =
+                              projectComplated.offer![0]['user']['first_name'];
+                          String lastName =
+                              projectComplated.offer![0]['user']['last_name'];
+                          String startSalary =
+                              formatNumber(projectComplated.startSalary ?? 0.0);
+                          String endSalary =
+                              formatNumber(projectComplated.endSalary ?? 0.0);
                           DateTime startDate = projectComplated.startDate!;
                           DateTime endDate = projectComplated.endDate!;
-                          String description = projectComplated.description!;
+                          int rating = projectComplated.review!.isEmpty
+                              ? 0
+                              : convertRatingToStars(
+                                  projectComplated.review![0]['quantity_star']);
                           // String address = projectComplated.user!['address'];
                           // int id = projectComplated.id!;
 
-                          return Column(
-                            children: [
-                              Container(
-                                padding: Ei.only(l: 20, r: 20, t: 10),
-                                margin: Ei.only(l: 25, r: 25, b: 20),
-                                height: 150,
-                                width: context.width / 1,
-                                decoration: BoxDecoration(
-                                  color: LzColors.hex('FFFFFF'),
-                                  borderRadius: BorderRadius.circular(20),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(0.3),
-                                      spreadRadius: 2,
-                                      blurRadius: 10,
-                                    )
-                                  ],
-                                ),
-                                child: Column(
-                                  mainAxisSize: Mas.min,
-                                  crossAxisAlignment: Caa.start,
-                                  children: [
-                                    SizedBox(
-                                      width: context.width,
-                                      height: 20,
-                                      child: Row(
-                                        mainAxisSize: Mas.min,
-                                        mainAxisAlignment: Maa.spaceBetween,
-                                        children: [
-                                          Expanded(
-                                            child: Textr(
-                                              title,
-                                              style: Gfont.color(color1)
-                                                  .bold
-                                                  .fsize(16),
-                                              margin: Ei.only(r: 30),
-                                              width: context.width,
+                          return InkTouch(
+                            onTap: (){
+                              context.lzPush(DetailProjectExplore(data: projectComplated));
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.only(
+                                  left: 20, right: 20, top: 10),
+                              margin: const EdgeInsets.only(
+                                  left: 25, right: 25, bottom: 20, top: 20),
+                              height: 180,
+                              width: MediaQuery.of(context).size.width / 1,
+                              decoration: BoxDecoration(
+                                color: LzColors.hex('FFFFFF'),
+                                borderRadius: BorderRadius.circular(20),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.3),
+                                    spreadRadius: 2,
+                                    blurRadius: 10,
+                                  ),
+                                ],
+                              ),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    title,
+                                    style: Gfont.color(LzColors.hex('001380')),
+                                  ),
+                                  Text(
+                                    'Freelancer: $firstName $lastName',
+                                    style: Gfont.color(LzColors.hex('001380')),
+                                  ),
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            const Text('Salary'),
+                                            Text(
                                               maxLines: 1,
                                               overflow: Tof.ellipsis,
+                                              '${startSalary!} - ${endSalary!}',
+                                              style: Gfont.color(
+                                                  LzColors.hex('001380')),
                                             ),
-                                          ),
-                                          InkTouch(
-                                            onTap: () {
-                                              context.lzPush(DetailProjectExplore(data: projectComplated));
-                                            },
-                                            child: Icon(
-                                              Ti.infoCircle,
-                                              size: 25,
-                                              color: LzColors.hex('0047E3'),
+                                          ],
+                                        ).margin(r: 5),
+                                      ),
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            const Text(
+                                              'Estimated duration',
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
                                             ),
-                                          ),
-                                        ],
+                                            Text(
+                                              "$startDate - $endDate",
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: Gfont.color(
+                                                  LzColors.hex('001380')),
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                    SizedBox(
-                                      width: context.width,
-                                      child: Column(
-                                        children: [
-                                          Row(
-                                            children: [
-                                              const Icon(
-                                                Ti.coin,
-                                                color: Colors.green,
-                                              ).margin(r: 5),
-                                              Textr(
-                                                '$startSalary - $endSalary',
-                                                style: Gfont.color(black).fsize(12),
-                                              ),
-                                            ],
-                                          ).margin(t: 10),
-                                          Row(
-                                            children: [
-                                              const Icon(
-                                                Ti.clock,
-                                                color: Colors.red,
-                                              ).margin(r: 5),
-                                              Textr(
-                                                '${DateFormat('dd/MM/yyyy').format(startDate)} - ${DateFormat('dd/MM/yyyy').format(endDate)}',
-                                                style: Gfont.color(black).fsize(12),
-                                                width: context.width / 3,
-                                                maxLines: 1,
-                                                overflow: Tof.ellipsis,
-                                              ),
-                                            ],
-                                          ).margin(t: 5),
-                                        ],
+                                    ],
+                                  ).margin(t: 10),
+                                  Row(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Text(rating.toString()),
+                                      Icon(
+                                        Icons.star,
+                                        color: rating >= 1
+                                            ? LzColors.hex('FFD700')
+                                            : Colors.grey,
+                                        size: 20,
                                       ),
-                                    ),
-                                    Textr(
-                                      description,
-                                      style: Gfont.color(LzColors.hex('747474')).fsize(12),
-                                      margin: Ei.only(t: 10),
-                                      maxLines: 2,
-                                      overflow: Tof.ellipsis,
-                                    ),
-                                  ],
-                                ),
+                                    ],
+                                  ).margin(t: 10)
+                                ],
                               ),
-                            ],
+                            ),
                           );
                         },
                       ),

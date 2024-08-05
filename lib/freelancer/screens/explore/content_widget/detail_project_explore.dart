@@ -111,20 +111,6 @@ class DetailProjectExplore extends StatelessWidget {
                         ),
                         Row(
                           children: [
-<<<<<<< HEAD
-                            ...categoryNames.map((name) => Container(
-      margin: const EdgeInsets.only(right: 5),
-      padding: const EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        color: LzColors.hex('94BDFF'),
-        borderRadius: BorderRadius.circular(5),
-      ),
-      child: Text(
-        name,
-        style: Gfont.color(LzColors.hex('000000')).fsize(13),
-      ),
-    )),
-=======
                             ...categoryNames
                                 .map((name) => Container(
                                       margin: const EdgeInsets.only(right: 5),
@@ -141,7 +127,6 @@ class DetailProjectExplore extends StatelessWidget {
                                       ),
                                     ))
                                 .toList(),
->>>>>>> 2a613d620f50bac4f2989c281235e79c9b785504
                           ],
                         ).margin(t: 10),
                         Textr(

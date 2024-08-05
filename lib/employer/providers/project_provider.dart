@@ -92,6 +92,7 @@ class PostProjectNotifier with ChangeNotifier, UseApi1 {
 
   void setFile(File value) {
     fileAttachment = value;
+    print(value);
     notifyListeners();
   }
 
@@ -136,6 +137,7 @@ class PostProjectNotifier with ChangeNotifier, UseApi1 {
         }
 
         ResHandler res = await projectsApi.postProject(map);
+        print(res.body);
 
         LzToast.dismiss();
         if (!res.status) {
@@ -143,6 +145,7 @@ class PostProjectNotifier with ChangeNotifier, UseApi1 {
           return false;
         } else {
           forms.reset();
+          fileAttachment = null;
           LzToast.show('Successfully created new project...');
 
           Navigator.pop(context);
