@@ -85,6 +85,20 @@ class MessageModel {
     this.readBy,
   });
 
+  MessageModel copyWith({
+    int? id,
+    int? senderId,
+    String? messageText,
+    Conversation? conversation,
+  }) {
+    return MessageModel(
+      id: id ?? this.id,
+      senderId: senderId ?? this.senderId,
+      messageText: messageText ?? this.messageText,
+      conversation: conversation ?? this.conversation,
+    );
+  }
+
   factory MessageModel.fromJson(Map<String, dynamic> json) {
     return MessageModel(
       id: json['id'],

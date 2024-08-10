@@ -6,7 +6,7 @@ class MessageApi extends Fetchly {
       await get('index_fillters?message_text=$text');
   Future<ResHandler> postMessage(Map<String, dynamic> data) async =>
       await post('messages', data);
-  Future<ResHandler> editMessage(Map<String, dynamic> data, int id) async =>
+  Future<ResHandler> updateMessage(Map<String, dynamic> data, int id) async =>
       await put('messages/$id', data);
   Future<ResHandler> deleteMessage(int id) async =>
       await delete('messages/$id');
