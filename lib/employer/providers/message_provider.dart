@@ -21,7 +21,7 @@ class MessageProvider extends StateNotifier<AsyncValue<List<MessageModel>>>
 
       ResHandler res = await messageApi.getMessage();
       print("Response Status: ${res.status}");
-      print("Response Data: ${res.body['messages']}");
+      print("Response Data: ${res.data}");
       print("Response Message: ${res.message}");
 
       if (res.status) {
@@ -55,7 +55,6 @@ class PostMessage with ChangeNotifier, UseApi1 {
   Future<bool> create(Map<String, dynamic> data) async {
     try {
       if (data.isNotEmpty) {
-
         ResHandler res = await messageApi.postMessage(data);
 
         LzToast.dismiss();
@@ -64,11 +63,52 @@ class PostMessage with ChangeNotifier, UseApi1 {
           return false;
         } else {
           forms.reset();
-          LzToast.show('Successfully created new message...');
+          LzToast.show('Successfully send new message...');
           return true;
         }
       }
       return false;
+    } catch (e, s) {
+      Errors.check(e, s);
+      return false;
+    }
+  }
+
+  Future<bool> update(Map<String, dynamic> data, int id) async {
+    try {
+      if (data.isNotEmpty) {
+        ResHandler res = await messageApi.updateMessage(data, id);
+
+        LzToast.dismiss();
+        if (!res.status) {
+          LzToast.show(res.message);
+          return false;
+        } else {
+          forms.reset();
+          LzToast.show('Successfully update message...');
+          return true;
+        }
+      }
+      return false;
+    } catch (e, s) {
+      Errors.check(e, s);
+      return false;
+    }
+  }
+
+  Future<bool> delete(int id) async {
+    try {
+      ResHandler res = await messageApi.deleteMessage(id);
+
+      LzToast.dismiss();
+      if (!res.status) {
+        LzToast.show(res.message);
+        return false;
+      } else {
+        forms.reset();
+        LzToast.show('Successfully delete message...');
+        return true;
+      }
     } catch (e, s) {
       Errors.check(e, s);
       return false;

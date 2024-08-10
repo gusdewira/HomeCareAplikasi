@@ -73,8 +73,9 @@ class Tabbar3 extends ConsumerWidget {
                           // int id = projectComplated.id!;
 
                           return InkTouch(
-                            onTap: (){
-                              context.lzPush(DetailProjectExplore(data: projectComplated));
+                            onTap: () {
+                              context.lzPush(
+                                  DetailProjectExplore(data: projectComplated));
                             },
                             child: Container(
                               padding: const EdgeInsets.only(
@@ -170,8 +171,8 @@ class Tabbar3 extends ConsumerWidget {
                   : RefreshIndicator(
                       onRefresh: refreshProjects,
                       child: const LzNoData(
-                      message: 'No projects have been completed yet',
-                    ));
+                        message: 'No projects have been completed yet',
+                      ));
             },
             error: (error, _) {
               ref.read(projectComplated.notifier).getProjectComplated();

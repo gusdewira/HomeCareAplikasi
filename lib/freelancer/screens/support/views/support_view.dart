@@ -7,15 +7,19 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lazyui/lazyui.dart';
 
 import '../../../providers/setting/profile_provider.dart';
-import '../../../widgets/color_widget.dart';
-import '../widgets/list_message_supp.dart';
-import '../widgets/search_widget_support.dart';
 
-class SupportView extends ConsumerWidget {
+class SupportView extends ConsumerStatefulWidget {
   const SupportView({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  _SupportViewState createState() => _SupportViewState();
+}
+
+class _SupportViewState extends ConsumerState<SupportView> {
+  String searchQuery = '';
+
+  @override
+  Widget build(BuildContext context) {
     final profile = ref.watch(profileFreelancerProvider);
     final listMessage = ref.watch(messageProvider);
 
@@ -76,9 +80,14 @@ class SupportView extends ConsumerWidget {
                                 margin: Ei.only(l: 20),
                               ),
                               Expanded(
-                                child: const TextField(
-                                  decoration: InputDecoration(
-                                    hintText: 'Search Project',
+                                child: TextField(
+                                  onChanged: (value) {
+                                    setState(() {
+                                      searchQuery = value.trim().toLowerCase();
+                                    });
+                                  },
+                                  decoration: const InputDecoration(
+                                    hintText: 'Search User',
                                     border: InputBorder.none,
                                   ),
                                 ).margin(l: 10),
@@ -89,128 +98,150 @@ class SupportView extends ConsumerWidget {
                         profile.when(
                           data: (ProfileFreelancerModel profile) {
                             return listMessage.when(
-                                data: (List<MessageModel> messages) {
-                              var sortedMessages =
-                                  List<MessageModel>.from(messages)
-                                    ..sort((a, b) => b.id!.compareTo(a.id!));
+                              data: (List<MessageModel> messages) {
+                                var sortedMessages =
+                                    List<MessageModel>.from(messages)
+                                      ..sort((a, b) => b.id!.compareTo(a.id!));
 
-                              Map<int, List<MessageModel>> groupedMessages = {};
+                                var filteredMessages =
+                                    sortedMessages.where((message) {
+                                  var fullName =
+                                      '${message.conversation.user2.firstName} ${message.conversation.user2.lastName}'
+                                          .toLowerCase();
+                                  return fullName.contains(searchQuery);
+                                }).toList();
 
-                              for (var message in sortedMessages) {
-                                var conversationId = message.conversation.id;
+                                Map<int, List<MessageModel>> groupedMessages =
+                                    {};
 
-                                if (!groupedMessages
-                                    .containsKey(conversationId)) {
-                                  groupedMessages[conversationId] = [];
+                                for (var message in filteredMessages) {
+                                  var conversationId = message.conversation.id;
+
+                                  if (!groupedMessages
+                                      .containsKey(conversationId)) {
+                                    groupedMessages[conversationId] = [];
+                                  }
+
+                                  groupedMessages[conversationId]!.add(message);
                                 }
 
-                                groupedMessages[conversationId]!.add(message);
-                              }
-
-                              print("Grouped Messages: $groupedMessages");
-
-                              return groupedMessages.isNotEmpty
-                                  ? Column(
-                                      children: groupedMessages.entries
-                                          .map((entry) => Column(
-                                                children: [
-                                                  if (entry.value.isNotEmpty)
-                                                    InkTouch(
-                                                      onTap: () {
-                                                        context.lzPush(ChatPage(
-                                                          initialMessages:
-                                                              entry.value, senderId: profile.id!,
-                                                        ));
-                                                      },
-                                                      child: SizedBox(
-                                                        height: 80,
-                                                        width: double.infinity,
-                                                        child: Row(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            Center(
-                                                              child: LzImage(
-                                                                entry
+                                return filteredMessages.isNotEmpty
+                                    ? Column(
+                                        children: groupedMessages.entries
+                                            .map((entry) => Column(
+                                                  children: [
+                                                    if (entry.value.isNotEmpty)
+                                                      InkTouch(
+                                                        onTap: () {
+                                                          context
+                                                              .lzPush(ChatPage(
+                                                            initialMessages:
+                                                                entry.value,
+                                                            senderId:
+                                                                profile.id!,
+                                                            conversationId:
+                                                                entry.key,
+                                                          ));
+                                                        },
+                                                        child: SizedBox(
+                                                          height: 80,
+                                                          width:
+                                                              double.infinity,
+                                                          child: Row(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Center(
+                                                                child: entry
                                                                             .value
                                                                             .first
                                                                             .conversation
                                                                             .user2
                                                                             .profilePhoto !=
                                                                         null
-                                                                    ? 'https://homecare.galkasoft.id/storage/${entry.value.first.conversation.user2.profilePhoto}'
-                                                                    : 'default.jpg',
-                                                                size: 50,
-                                                                radius: 50,
-                                                              ),
-                                                            ),
-                                                            Expanded(
-                                                              child: Column(
-                                                                crossAxisAlignment:
-                                                                    CrossAxisAlignment
-                                                                        .start,
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .center,
-                                                                children: [
-                                                                  Row(
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .spaceBetween,
-                                                                    children: [
-                                                                      Textr(
-                                                                        '${entry.value.first.conversation.user2.firstName} ${entry.value.first.conversation.user2.lastName}',
-                                                                        style: Gfont.color(LzColors.hex('000000'))
-                                                                            .bold
-                                                                            .fsize(12),
-                                                                        margin:
-                                                                            Ei.only(l: 10),
+                                                                    ? LzImage(
+                                                                        'https://homecare.galkasoft.id/storage/${entry.value.first.conversation.user2.profilePhoto}',
+                                                                        size:
+                                                                            50,
+                                                                        radius:
+                                                                            50,
+                                                                      )
+                                                                    : Icon(
+                                                                        Icons
+                                                                            .person, // Ikon profil default
+                                                                        size:
+                                                                            50,
+                                                                        color: LzColors.hex(
+                                                                            '747474'),
                                                                       ),
-                                                                    ],
-                                                                  ),
-                                                                  Container(
-                                                                    margin:
-                                                                        Ei.only(
-                                                                            l: 10),
-                                                                    width: double
-                                                                        .infinity,
-                                                                    child: Text(
-                                                                      entry
-                                                                          .value
-                                                                          .first
-                                                                          .messageText,
-                                                                      style: Gfont.color(LzColors.hex(
-                                                                              '7C7C7C'))
-                                                                          .fsize(
-                                                                              12),
-                                                                      maxLines:
-                                                                          2,
-                                                                      overflow:
-                                                                          TextOverflow
-                                                                              .ellipsis,
-                                                                    ),
-                                                                  ),
-                                                                ],
                                                               ),
-                                                            ),
-                                                          ],
+                                                              Expanded(
+                                                                child: Column(
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .start,
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .center,
+                                                                  children: [
+                                                                    Row(
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .spaceBetween,
+                                                                      children: [
+                                                                        Textr(
+                                                                          '${entry.value.first.conversation.user2.firstName} ${entry.value.first.conversation.user2.lastName}',
+                                                                          style: Gfont.color(LzColors.hex('000000'))
+                                                                              .bold
+                                                                              .fsize(12),
+                                                                          margin:
+                                                                              Ei.only(l: 10),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                    Container(
+                                                                      margin: Ei
+                                                                          .only(
+                                                                              l: 10),
+                                                                      width: double
+                                                                          .infinity,
+                                                                      child:
+                                                                          Text(
+                                                                        entry
+                                                                            .value
+                                                                            .first
+                                                                            .messageText,
+                                                                        style: Gfont.color(LzColors.hex('7C7C7C'))
+                                                                            .fsize(12),
+                                                                        maxLines:
+                                                                            2,
+                                                                        overflow:
+                                                                            TextOverflow.ellipsis,
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
                                                         ),
                                                       ),
-                                                    ),
-                                                ],
-                                              ))
-                                          .toList(),
-                                    ).margin(t: 20, l: 25, r: 25)
-                                  : const LzNoData(
-                                      message:
-                                          'You don\'t have any messages yet');
-                            }, error: (error, _) {
-                              return LzNoData(message: 'Oops! $error');
-                            }, loading: () {
-                              return LzLoader.bar(
-                                  message: 'Loading Message...');
-                            });
+                                                  ],
+                                                ))
+                                            .toList(),
+                                      ).margin(t: 20, l: 25, r: 25)
+                                    : const Textr('Message is empty',
+                                        style: TextStyle(fontSize: 16));
+                              },
+                              error: (error, _) {
+                                return LzNoData(message: 'Oops! $error');
+                              },
+                              loading: () {
+                                return LzLoader.bar(
+                                    message: 'Loading Message...');
+                              },
+                            );
                           },
                           error: (error, _) {
                             return LzNoData(message: 'Oops! $error');

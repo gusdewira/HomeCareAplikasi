@@ -1,162 +1,262 @@
 import 'package:flutter/material.dart';
+import 'package:homecare_app/employer/data/models/message_model.dart';
+import 'package:homecare_app/employer/data/models/profile_model.dart';
+import 'package:homecare_app/employer/providers/message_provider.dart';
+import 'package:homecare_app/employer/providers/profile_provider.dart';
 import 'package:homecare_app/employer/screens/message_employer/message_page.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:lazyui/lazyui.dart';
 
-class ListMessagePage extends StatelessWidget {
-  final List<Map<String, String>> messages = [
-    {
-      "sender": "John Doe",
-      "message": "Hey! How's it going?",
-      "time": "10:30 AM",
-      "profilePic": "https://images.unsplash.com/photo-1453396450673-3fe83d2db2c4?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-    {
-      "sender": "Jane Smith",
-      "message": "Don't forget the meeting at 2 PM.",
-      "time": "09:45 AM",
-      "profilePic": "https://images.unsplash.com/photo-1453396450673-3fe83d2db2c4?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-    {
-      "sender": "Michael",
-      "message": "Let's catch up tomorrow.",
-      "time": "Yesterday",
-      "profilePic":
-          "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    },
-  ];
+class ListMessagePage extends ConsumerStatefulWidget {
+  const ListMessagePage({super.key});
 
-  List<Map<String, String>> filteredMessages = [];
+  @override
+  _ListMessagePageState createState() => _ListMessagePageState();
+}
 
-  ListMessagePage() {
-    filteredMessages = messages;
-  }
-
-  void filterMessages(String query) {
-    filteredMessages = messages.where((message) {
-      final sender = message['sender']?.toLowerCase() ?? '';
-      final searchLower = query.toLowerCase();
-
-      return sender.contains(searchLower);
-    }).toList();
-  }
+class _ListMessagePageState extends ConsumerState<ListMessagePage> {
+  String searchQuery = '';
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Messages',
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-        ),
-        backgroundColor: Colors.blueAccent,
-      ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: TextField(
-              onChanged: (query) {
-                filterMessages(query);
-              },
-              decoration: InputDecoration(
-                hintText: 'Search by sender...',
-                prefixIcon: const Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20.0),
-                  borderSide: const BorderSide(color: Colors.blueAccent),
-                ),
-              ),
+    final profile = ref.watch(profileEmployeeProvider);
+    final listMessage = ref.watch(messageProvider);
+
+    return RefreshIndicator(
+      onRefresh: () async {
+        ref.read(profileEmployeeProvider.notifier);
+        await ref.read(messageProvider.notifier).getMessage();
+      },
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        extendBodyBehindAppBar: true,
+        body: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+              colors: [
+                LzColors.hex('11B0E6'),
+                LzColors.hex('3265FF'),
+              ],
+              stops: const [0.0, 0.6],
             ),
           ),
-          filteredMessages.isEmpty
-              ? Center(
-                  child: Text('No messages found'),
-                )
-              : Expanded(
-                  child: ListView.builder(
-                    itemCount: filteredMessages.length,
-                    itemBuilder: (context, index) {
-                      final message = filteredMessages[index];
-                      return GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ChatPage(
-                                sender: message['sender'] ?? 'Unknown',
-                                profilePic: message['profilePic'] ?? '',
-                              ),
-                            ),
-                          );
-                        },
-                        child: Container(
-                          margin: const EdgeInsets.symmetric(
-                              vertical: 5, horizontal: 10),
-                          padding: const EdgeInsets.all(15),
+          child: Stack(
+            children: [
+              Textr(
+                'Messages',
+                margin: Ei.only(t: 50, l: 25),
+                style: Gfont.bold.white.fsize(25),
+              ),
+              Container(
+                margin: Ei.only(t: 120),
+                width: context.width,
+                height: context.height,
+                decoration: BoxDecoration(
+                    color: LzColors.hex('F8F8FF'),
+                    borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(25),
+                        topRight: Radius.circular(25))),
+                child: ListView(
+                  children: [
+                    Column(
+                      children: [
+                        Container(
+                          height: 40,
+                          width: context.width,
+                          margin: const EdgeInsets.only(left: 25, right: 25),
                           decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(15),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.3),
-                                spreadRadius: 2,
-                                blurRadius: 5,
-                                offset: const Offset(0, 3),
-                              ),
-                            ],
+                            borderRadius: BorderRadius.circular(20),
+                            color: LzColors.hex('E6E6E8'),
                           ),
                           child: Row(
                             children: [
-                              CircleAvatar(
-                                radius: 30,
-                                backgroundColor: Colors.blueAccent,
-                                child: message['profilePic'] == null
-                                    ? const Icon(
-                                        Icons.person,
-                                        size: 30,
-                                        color: Colors.white,
-                                      )
-                                    : null,
-                                backgroundImage: message['profilePic'] != null
-                                    ? NetworkImage(message['profilePic']!)
-                                    : null,
+                              Iconr(
+                                Ti.search,
+                                color: LzColors.hex('747474'),
+                                alignment: Alignment.centerLeft,
+                                margin: Ei.only(l: 20),
                               ),
-                              const SizedBox(width: 10),
                               Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      message['sender']!,
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 18,
-                                      ),
-                                    ),
-                                    Text(
-                                      message['message']!,
-                                      style: TextStyle(
-                                        color: Colors.grey[600],
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                      maxLines: 1,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Text(
-                                message['time']!,
-                                style: TextStyle(
-                                  color: Colors.grey[600],
-                                ),
-                              ),
+                                child: TextField(
+                                  onChanged: (value) {
+                                    setState(() {
+                                      searchQuery = value.trim().toLowerCase();
+                                    });
+                                  },
+                                  decoration: const InputDecoration(
+                                    hintText: 'Search User',
+                                    border: InputBorder.none,
+                                  ),
+                                ).margin(l: 10),
+                              )
                             ],
                           ),
                         ),
-                      );
-                    },
-                  ),
+                        profile.when(
+                          data: (ProfileEmployerModel profile) {
+                            return listMessage.when(
+                              data: (List<MessageModel> messages) {
+                                var sortedMessages =
+                                    List<MessageModel>.from(messages)
+                                      ..sort((a, b) => b.id!.compareTo(a.id!));
+
+                                var filteredMessages =
+                                    sortedMessages.where((message) {
+                                  var fullName =
+                                      '${message.conversation.user2.firstName} ${message.conversation.user2.lastName}'
+                                          .toLowerCase();
+                                  return fullName.contains(searchQuery);
+                                }).toList();
+
+                                Map<int, List<MessageModel>> groupedMessages =
+                                    {};
+
+                                for (var message in filteredMessages) {
+                                  var conversationId = message.conversation.id;
+
+                                  if (!groupedMessages
+                                      .containsKey(conversationId)) {
+                                    groupedMessages[conversationId] = [];
+                                  }
+
+                                  groupedMessages[conversationId]!.add(message);
+                                }
+
+                                return filteredMessages.isNotEmpty
+                                    ? Column(
+                                        children: groupedMessages.entries
+                                            .map((entry) => Column(
+                                                  children: [
+                                                    if (entry.value.isNotEmpty)
+                                                      InkTouch(
+                                                        onTap: () {
+                                                          context.lzPush(
+                                                              MessagePage(
+                                                            initialMessages:
+                                                                entry.value,
+                                                            senderId:
+                                                                profile.id!,
+                                                            conversationId:
+                                                                entry.key,
+                                                          ));
+                                                        },
+                                                        child: SizedBox(
+                                                          height: 80,
+                                                          width:
+                                                              double.infinity,
+                                                          child: Row(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Center(
+                                                                child: entry
+                                                                            .value
+                                                                            .first
+                                                                            .conversation
+                                                                            .user2
+                                                                            .profilePhoto !=
+                                                                        null
+                                                                    ? LzImage(
+                                                                        'https://homecare.galkasoft.id/storage/${entry.value.first.conversation.user2.profilePhoto}',
+                                                                        size:
+                                                                            50,
+                                                                        radius:
+                                                                            50,
+                                                                      )
+                                                                    : Icon(
+                                                                        Icons
+                                                                            .person,
+                                                                        size:
+                                                                            50,
+                                                                        color: LzColors.hex(
+                                                                            '747474'),
+                                                                      ),
+                                                              ),
+                                                              Expanded(
+                                                                child: Column(
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .start,
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .center,
+                                                                  children: [
+                                                                    Row(
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .spaceBetween,
+                                                                      children: [
+                                                                        Textr(
+                                                                          '${entry.value.first.conversation.user2.firstName} ${entry.value.first.conversation.user2.lastName}',
+                                                                          style: Gfont.color(LzColors.hex('000000'))
+                                                                              .bold
+                                                                              .fsize(12),
+                                                                          margin:
+                                                                              Ei.only(l: 10),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                    Container(
+                                                                      margin: Ei
+                                                                          .only(
+                                                                              l: 10),
+                                                                      width: double
+                                                                          .infinity,
+                                                                      child:
+                                                                          Text(
+                                                                        entry
+                                                                            .value
+                                                                            .first
+                                                                            .messageText,
+                                                                        style: Gfont.color(LzColors.hex('7C7C7C'))
+                                                                            .fsize(12),
+                                                                        maxLines:
+                                                                            2,
+                                                                        overflow:
+                                                                            TextOverflow.ellipsis,
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                  ],
+                                                ))
+                                            .toList(),
+                                      ).margin(t: 20, l: 25, r: 25)
+                                    : const Textr('Message is empty',
+                                        style: TextStyle(fontSize: 16));
+                              },
+                              error: (error, _) {
+                                return LzNoData(message: 'Oops! $error');
+                              },
+                              loading: () {
+                                return LzLoader.bar(
+                                    message: 'Loading Message...');
+                              },
+                            );
+                          },
+                          error: (error, _) {
+                            return LzNoData(message: 'Oops! $error');
+                          },
+                          loading: () {
+                            return LzLoader.bar(message: 'Loading Profile...');
+                          },
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
-        ],
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
