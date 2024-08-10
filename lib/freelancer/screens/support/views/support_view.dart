@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:homecare_app/employer/data/models/message_model.dart';
+import 'package:homecare_app/employer/providers/message_provider.dart';
+import 'package:homecare_app/freelancer/data/models/setting/profile_freelancer_model.dart';
+import 'package:homecare_app/freelancer/screens/support/views/message_view.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lazyui/lazyui.dart';
 
@@ -11,22 +15,25 @@ class SupportView extends ConsumerWidget {
   const SupportView({super.key});
 
   @override
-  Widget build(BuildContext context,WidgetRef ref) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final profile = ref.watch(profileFreelancerProvider);
+    final listMessage = ref.watch(messageProvider);
+
     return RefreshIndicator(
-      onRefresh: ()async{
+      onRefresh: () async {
         ref.read(profileFreelancerProvider.notifier);
+        await ref.read(messageProvider.notifier).getMessage();
       },
       child: Scaffold(
-        // Pindahkan properti decoration ke dalam Scaffold
-        backgroundColor: Colors.transparent, // Atur latar belakang menjadi transparan
-        extendBodyBehindAppBar: true, // Izinkan latar belakang di belakang AppBar
+        backgroundColor: Colors.transparent,
+        extendBodyBehindAppBar: true,
         body: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.centerLeft,
               end: Alignment.centerRight,
               colors: [
-                LzColors.hex('11B0E6'), 
+                LzColors.hex('11B0E6'),
                 LzColors.hex('3265FF'),
               ],
               stops: const [0.0, 0.6],
@@ -52,8 +59,166 @@ class SupportView extends ConsumerWidget {
                   children: [
                     Column(
                       children: [
-                      const SearchSupport().margin(l: 25, r: 25), 
-                      const ListMessages()
+                        Container(
+                          height: 40,
+                          width: context.width,
+                          margin: const EdgeInsets.only(left: 25, right: 25),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: LzColors.hex('E6E6E8'),
+                          ),
+                          child: Row(
+                            children: [
+                              Iconr(
+                                Ti.search,
+                                color: LzColors.hex('747474'),
+                                alignment: Alignment.centerLeft,
+                                margin: Ei.only(l: 20),
+                              ),
+                              Expanded(
+                                child: const TextField(
+                                  decoration: InputDecoration(
+                                    hintText: 'Search Project',
+                                    border: InputBorder.none,
+                                  ),
+                                ).margin(l: 10),
+                              )
+                            ],
+                          ),
+                        ),
+                        profile.when(
+                          data: (ProfileFreelancerModel profile) {
+                            return listMessage.when(
+                                data: (List<MessageModel> messages) {
+                              var sortedMessages =
+                                  List<MessageModel>.from(messages)
+                                    ..sort((a, b) => b.id!.compareTo(a.id!));
+
+                              Map<int, List<MessageModel>> groupedMessages = {};
+
+                              for (var message in sortedMessages) {
+                                var conversationId = message.conversation.id;
+
+                                if (!groupedMessages
+                                    .containsKey(conversationId)) {
+                                  groupedMessages[conversationId] = [];
+                                }
+
+                                groupedMessages[conversationId]!.add(message);
+                              }
+
+                              print("Grouped Messages: $groupedMessages");
+
+                              return groupedMessages.isNotEmpty
+                                  ? Column(
+                                      children: groupedMessages.entries
+                                          .map((entry) => Column(
+                                                children: [
+                                                  if (entry.value.isNotEmpty)
+                                                    InkTouch(
+                                                      onTap: () {
+                                                        context.lzPush(ChatPage(
+                                                          initialMessages:
+                                                              entry.value, senderId: profile.id!,
+                                                        ));
+                                                      },
+                                                      child: SizedBox(
+                                                        height: 80,
+                                                        width: double.infinity,
+                                                        child: Row(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Center(
+                                                              child: LzImage(
+                                                                entry
+                                                                            .value
+                                                                            .first
+                                                                            .conversation
+                                                                            .user2
+                                                                            .profilePhoto !=
+                                                                        null
+                                                                    ? 'https://homecare.galkasoft.id/storage/${entry.value.first.conversation.user2.profilePhoto}'
+                                                                    : 'default.jpg',
+                                                                size: 50,
+                                                                radius: 50,
+                                                              ),
+                                                            ),
+                                                            Expanded(
+                                                              child: Column(
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .start,
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .center,
+                                                                children: [
+                                                                  Row(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .spaceBetween,
+                                                                    children: [
+                                                                      Textr(
+                                                                        '${entry.value.first.conversation.user2.firstName} ${entry.value.first.conversation.user2.lastName}',
+                                                                        style: Gfont.color(LzColors.hex('000000'))
+                                                                            .bold
+                                                                            .fsize(12),
+                                                                        margin:
+                                                                            Ei.only(l: 10),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                  Container(
+                                                                    margin:
+                                                                        Ei.only(
+                                                                            l: 10),
+                                                                    width: double
+                                                                        .infinity,
+                                                                    child: Text(
+                                                                      entry
+                                                                          .value
+                                                                          .first
+                                                                          .messageText,
+                                                                      style: Gfont.color(LzColors.hex(
+                                                                              '7C7C7C'))
+                                                                          .fsize(
+                                                                              12),
+                                                                      maxLines:
+                                                                          2,
+                                                                      overflow:
+                                                                          TextOverflow
+                                                                              .ellipsis,
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                ],
+                                              ))
+                                          .toList(),
+                                    ).margin(t: 20, l: 25, r: 25)
+                                  : const LzNoData(
+                                      message:
+                                          'You don\'t have any messages yet');
+                            }, error: (error, _) {
+                              return LzNoData(message: 'Oops! $error');
+                            }, loading: () {
+                              return LzLoader.bar(
+                                  message: 'Loading Message...');
+                            });
+                          },
+                          error: (error, _) {
+                            return LzNoData(message: 'Oops! $error');
+                          },
+                          loading: () {
+                            return LzLoader.bar(message: 'Loading Profile...');
+                          },
+                        ),
                       ],
                     ),
                   ],
@@ -62,20 +227,7 @@ class SupportView extends ConsumerWidget {
             ],
           ),
         ),
-        floatingActionButton: Container(
-          margin: Ei.only(r: 25, b: 25),
-          child: FloatingActionButton(
-            onPressed: () {},
-            backgroundColor: color1,
-            child: const Icon(
-              Ti.plus,
-              size: 30,
-            ),
-          ),
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       ),
     );
   }
-  }
-
+}

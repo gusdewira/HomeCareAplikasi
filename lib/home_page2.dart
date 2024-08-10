@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:homecare_app/employer/screens/message_employer/list_message_employer.dart';
 import 'package:homecare_app/freelancer/core/extensions/riverpod_extension.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lazyui/lazyui.dart';
@@ -7,13 +8,10 @@ import 'employer/screens/explore_employer/explore_view_employer.dart';
 import 'employer/screens/home_employer/home_view_employer.dart';
 import 'employer/screens/project_employer/project_view_employer.dart';
 import 'employer/screens/setting_employer/setting_view_employer.dart';
-import 'employer/screens/support_employer/support_view_employer.dart';
 import 'freelancer/providers/app_provider.dart';
 
-
-
 class HomePage2 extends ConsumerWidget {
-   const HomePage2({super.key});
+  const HomePage2({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -21,7 +19,7 @@ class HomePage2 extends ConsumerWidget {
       const ExploreView(),
       const ProjectEmployerView(),
       const HomeEmployerView(),
-      const SupportEmployerView(),
+      ListMessagePage(),
       const SettingEmployerView(),
     ];
     Utils.setSystemUI(
@@ -82,19 +80,25 @@ class HomePage2 extends ConsumerWidget {
                                   alignment: Alignment.center,
                                   children: [
                                     Transform.translate(
-                                      offset: isActive? const Offset(0, -20) : Offset.zero,
+                                      offset: isActive
+                                          ? const Offset(0, -20)
+                                          : Offset.zero,
                                       child: Container(
                                         width: 60,
                                         height: 60,
                                         decoration: BoxDecoration(
                                           shape: BoxShape.circle,
-                                          color: isActive? LzColors.hex('0047E3') : Colors.transparent,
+                                          color: isActive
+                                              ? LzColors.hex('0047E3')
+                                              : Colors.transparent,
                                         ),
                                         child: Align(
                                           alignment: Alignment.center,
                                           child: Icon(
                                             icon,
-                                            color: isActive? Colors.white : colorActive,
+                                            color: isActive
+                                                ? Colors.white
+                                                : colorActive,
                                             size: 30,
                                           ),
                                         ),
@@ -103,7 +107,7 @@ class HomePage2 extends ConsumerWidget {
                                   ],
                                 ),
                               ],
-                       )));
+                            )));
                   }),
                 ),
               ],

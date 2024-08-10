@@ -188,9 +188,11 @@ class Tabbar2 extends ConsumerWidget {
                         },
                       ),
                     )
-                  : const LzNoData(
+                  : RefreshIndicator(
+                      onRefresh: refreshProjects,
+                      child: const LzNoData(
                       message: 'No offers were accepted',
-                    );
+                    ));
             },
             error: (error, _) {
               ref.read(projectProgress.notifier).getProjectProgress();

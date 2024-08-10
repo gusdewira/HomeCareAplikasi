@@ -29,9 +29,10 @@ class Tabbar1ProjectEmployer extends ConsumerWidget {
       body: projectsEmployee.when(
         data: (List<ProjectEmployerModel> projects) {
           if (projects.isEmpty) {
-            return const Center(
+            return RefreshIndicator(
+            onRefresh: refreshData, child: const Center(
               child: Text('Project is empty'),
-            );
+            ));
           }
           return RefreshIndicator(
             onRefresh: refreshData,

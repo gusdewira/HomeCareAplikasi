@@ -167,9 +167,11 @@ class Tabbar3 extends ConsumerWidget {
                         },
                       ),
                     )
-                  : const LzNoData(
+                  : RefreshIndicator(
+                      onRefresh: refreshProjects,
+                      child: const LzNoData(
                       message: 'No projects have been completed yet',
-                    );
+                    ));
             },
             error: (error, _) {
               ref.read(projectComplated.notifier).getProjectComplated();

@@ -111,6 +111,7 @@ class Auth with ChangeNotifier, UseApi, UseApi1 {
       return {'status': false, 'role': null};
     } catch (e, s) {
       Errors.check(e, s);
+      return {'status': false, 'role': null};
     } finally {
       LzToast.dismiss();
     }

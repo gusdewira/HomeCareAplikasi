@@ -7,6 +7,8 @@ part 'profile_api.dart';
 part 'project_active_api.dart';
 part 'reviews_api.dart';
 part 'dashboard_api.dart';
+part 'message_api.dart';
+part 'conversation_api.dart';
 
 mixin UseApi1 {
   ProfileEmployeeApi profileEmployeeApi = ProfileEmployeeApi();
@@ -15,4 +17,6 @@ mixin UseApi1 {
   ProjectCompletedApi projectCompletedApi = ProjectCompletedApi();
   DashboardApi dashboardApi = DashboardApi();
   NotificationApi notificationApi = NotificationApi();
+  MessageApi messageApi = MessageApi();
+  ConversationApi conversationApi = ConversationApi();
 }

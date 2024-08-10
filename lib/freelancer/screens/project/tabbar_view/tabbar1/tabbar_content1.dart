@@ -235,7 +235,10 @@ class Tabbar1 extends ConsumerWidget {
                         },
                       ),
                     )
-                  : const LzNoData(message: 'You don\'t have an offer yet');
+                  : RefreshIndicator(
+                      onRefresh: refreshProjects,
+                      child: const LzNoData(
+                          message: 'You don\'t have an offer yet'));
             },
             error: (error, _) {
               ref.read(projectBid.notifier).getProjectBid();

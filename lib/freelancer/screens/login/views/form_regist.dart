@@ -14,10 +14,10 @@ class RegistView extends ConsumerStatefulWidget {
 }
 
 class _RegistViewState extends ConsumerState<RegistView> {
+  String selectedRole = 'freelancer';
   @override
   Widget build(BuildContext context) {
     final notifier = ref.read(registerProvider.notifier);
-    String selectedRole = 'freelancer';
     final List<String> roles = ['freelancer', 'employer'];
 
     return Scaffold(
@@ -121,7 +121,10 @@ class _RegistViewState extends ConsumerState<RegistView> {
                 Center(
                   child: const Text(
                     'Role User',
-                    style: TextStyle(fontSize: 16, color: Colors.blue, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.blue,
+                        fontWeight: FontWeight.bold),
                   ).margin(t: 20, b: 10),
                 ),
                 RadioGroup<String>.builder(
@@ -129,6 +132,7 @@ class _RegistViewState extends ConsumerState<RegistView> {
                   horizontalAlignment: MainAxisAlignment.spaceAround,
                   direction: Axis.horizontal,
                   onChanged: (value) => setState(() {
+                    selectedRole = value!;
                     notifier.forms['role']?.controller.text = value!;
                     (context as Element).markNeedsBuild();
                   }),

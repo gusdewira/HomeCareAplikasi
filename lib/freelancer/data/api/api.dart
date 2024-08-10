@@ -15,6 +15,8 @@ part 'explore/bid_project_api.dart';
 part 'project/project_waiting_api.dart';
 part 'project/project_active_api.dart';
 part 'project/project_complated_api.dart';
+part 'conversation_api.dart';
+part 'message_api.dart';
 
 
 

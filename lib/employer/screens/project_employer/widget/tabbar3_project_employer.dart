@@ -168,12 +168,14 @@ class Tabbar3ProjectEmployer extends ConsumerWidget {
       child: projectCompleted.when(
         data: (List<ProjectEmployerModel> projects) {
           if (projects.isEmpty) {
-            return Center(
-              child: Text(
-                'No data available',
-                style: Gfont.color(LzColors.hex('001380')).fsize(16),
-              ),
-            );
+            return RefreshIndicator(
+                onRefresh: () => _refreshData(ref),
+                child: Center(
+                  child: Text(
+                    'No data available',
+                    style: Gfont.color(LzColors.hex('001380')).fsize(16),
+                  ),
+                ));
           }
           return ListView.builder(
             itemCount: projects.length,
