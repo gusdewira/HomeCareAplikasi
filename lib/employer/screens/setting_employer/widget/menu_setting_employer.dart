@@ -22,33 +22,72 @@ class MenuSettingEmployer extends ConsumerWidget {
       child: Column(
         children: [
           InkTouch(
-              onTap: () {
-                context.lzPush(EditProfileEmployer(
-                  data: profile,
-                ));
-              },
-              child: RowItem('Edit Profile', Ti.edit, color1)),
-          // RowItem('Payment Account', Ti.creditCard, color1),
-          // RowItem('Privacy & Policy', Ti.key, color1),
-          // ignore: prefer_const_constructors
+            onTap: () {
+              context.lzPush(EditProfileEmployer(
+                data: profile,
+              ));
+            },
+            child: RowItem('Edit Profile', Ti.edit, color1),
+          ),
           InkTouch(
-              onTap: () {
-                context.push(Paths.notificationHome);
-              },
-              child: RowItem('Notification', Ti.bell, color1)),
+            onTap: () {
+              context.push(Paths.notificationHome);
+            },
+            child: RowItem('Notification', Ti.bell, color1),
+          ),
+          RowItem('Payment Account', Ti.creditCard, color1),
           RowItem('Changes Password', Ti.key, color1),
+          RowItem('Privacy & Policy', Ti.shieldLock, color1),
           RowItem(
             'Logout',
             Ti.logout,
             Colors.red,
             onTap: () async {
-              bool ok = await notifier.logout();
+              bool? confirmed = await showDialog<bool>(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                          title: Center(
+                            child: Text(
+                              'Logout',
+                            ),
+                          ),
+                          content: Text('Are you sure you want to logout?'),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          actions: <Widget>[
+                            TextButton(
+                              child: Text(
+                                'Cancel',
+                                style: TextStyle(color: Colors.red),
+                              ),
+                              onPressed: () {
+                                Navigator.of(context).pop(false);
+                              },
+                            ),
+                            TextButton(
+                              child: Text(
+                                'OK',
+                              ),
+                              onPressed: () {
+                                Navigator.of(context).pop(true);
+                              },
+                            ),
+                          ],
+                        );
+                },
+              );
 
-              if (ok) {
-                LzToast.show("Logout Successful!");
-                context.pushReplacement(Paths.login);
-              } else {
-                LzToast.show("Logout Successful!");
+              if (confirmed == true) {
+                bool ok = await notifier.logout();
+
+                if (ok) {
+                  LzToast.show("Logout Successful!");
+                  context.pushReplacement(Paths.login);
+                } else {
+                  LzToast.show("Logout Failed!");
+                }
               }
             },
           )
@@ -77,18 +116,20 @@ class RowItem extends StatelessWidget {
               Row(
                 children: [
                   Container(
-                      height: 50,
-                      width: 50,
-                      padding: Ei.all(10),
-                      margin: Ei.only(r: 15),
-                      decoration: BoxDecoration(
-                          color: warna.lighten(0.10),
-                          borderRadius: Br.radius(10)),
-                      child: Icon(
-                        icon,
-                        color: warna,
-                        size: 25,
-                      )),
+                    height: 50,
+                    width: 50,
+                    padding: Ei.all(10),
+                    margin: Ei.only(r: 15),
+                    decoration: BoxDecoration(
+                      color: warna.lighten(0.10),
+                      borderRadius: Br.radius(10),
+                    ),
+                    child: Icon(
+                      icon,
+                      color: warna,
+                      size: 25,
+                    ),
+                  ),
                   Text(
                     text,
                     style: Gfont.color(LzColors.hex('000000')).fsize(15),
