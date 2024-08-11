@@ -3,9 +3,9 @@ import 'package:lazyui/lazyui.dart';
 
 import '../../../data/models/setting/project_freelancer_model.dart';
 
-class DetailProjectExplore extends StatelessWidget {
+class DetailProjectActive extends StatelessWidget {
   final ProjectFreelancerModel data;
-  const DetailProjectExplore({super.key, required this.data});
+  const DetailProjectActive({super.key, required this.data});
 
   @override
   Widget build(BuildContext context) {
@@ -166,6 +166,17 @@ class DetailProjectExplore extends StatelessWidget {
                                   data.attachment!.split('/')[1],
                                   style: Gfont.color(LzColors.hex('A9A6CD'))
                                       .fsize(15),
+                                ),
+                              ),
+                              Container(
+                                padding: Ei.all(3),
+                                decoration: BoxDecoration(
+                                    color: LzColors.hex('FFD700'),
+                                    borderRadius: BorderRadius.circular(5)),
+                                child: Textr(
+                                  'Download',
+                                  style: Gfont.color(LzColors.hex('000000'))
+                                      .fsize(10),
                                 ),
                               ),
                             ],

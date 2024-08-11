@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:homecare_app/freelancer/screens/explore/content_widget/detail_project_active.dart';
 
 import 'package:homecare_app/freelancer/screens/explore/content_widget/detail_project_explore.dart';
 import 'package:homecare_app/freelancer/screens/project/tabbar_view/tabbar2/history_progress_project.dart';
@@ -168,7 +169,7 @@ class Tabbar2 extends ConsumerWidget {
                                             margin: Ei.only(t: 15, l: 20),
                                             onTap: () {
                                               context.lzPush(
-                                                  DetailProjectExplore(
+                                                  DetailProjectActive(
                                                       data: projectProgress));
                                             },
                                             child: Icon(
