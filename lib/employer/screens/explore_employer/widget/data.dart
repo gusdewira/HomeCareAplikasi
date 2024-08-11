@@ -4,7 +4,7 @@ import 'package:homecare_app/freelancer/data/models/setting/profile_freelancer_m
 import 'package:lazyui/lazyui.dart';
 
 class DataExploreFreelancer extends StatelessWidget {
-  final ProfileFreelancerModel projectEmployee;
+  final FreelancerExplore projectEmployee;
   const DataExploreFreelancer({super.key, required this.projectEmployee});
 
   @override
@@ -15,7 +15,8 @@ class DataExploreFreelancer extends StatelessWidget {
       return formatCurrency.format(number);
     }
 
-    final name = '${projectEmployee.firstName ?? "No First Name"} ${projectEmployee.lastName ?? "No Last Name"}';
+    final name =
+        '${projectEmployee.firstName ?? "No First Name"} ${projectEmployee.lastName ?? "No Last Name"}';
     final profession = projectEmployee.profession ?? "Unknown";
     final summary = projectEmployee.summary ?? "No Summary";
 
@@ -103,7 +104,8 @@ class DataExploreFreelancer extends StatelessWidget {
                     width: 80,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(30),
-                      border: Border.all(color: LzColors.hex('0047E3'), width: 2),
+                      border:
+                          Border.all(color: LzColors.hex('0047E3'), width: 2),
                     ),
                     child: Row(
                       mainAxisAlignment: Maa.center,
@@ -134,7 +136,8 @@ class DataExploreFreelancer extends StatelessWidget {
                   ),
                   child: InkTouch(
                     onTap: () {
-                      context.lzPush(ProfileFreelancerEx(profile: projectEmployee));
+                      context.lzPush(
+                          ProfileFreelancerEx(profile: projectEmployee));
                     },
                     child: Textr(
                       alignment: Alignment.center,

@@ -30,9 +30,10 @@ class Tabbar1ProjectEmployer extends ConsumerWidget {
         data: (List<ProjectEmployerModel> projects) {
           if (projects.isEmpty) {
             return RefreshIndicator(
-            onRefresh: refreshData, child: const Center(
-              child: Text('Project is empty'),
-            ));
+                onRefresh: refreshData,
+                child: const Center(
+                  child: Text('Project is empty'),
+                ));
           }
           return RefreshIndicator(
             onRefresh: refreshData,
@@ -46,7 +47,9 @@ class Tabbar1ProjectEmployer extends ConsumerWidget {
                 final startDate = project.startDate!.format('yy/MM/dd');
                 final endDate = project.endDate!.format('yy/MM/dd');
                 final description = project.description!;
-                String status = project.offer!.isNotEmpty ? project.offer![0]['status'] : "WAITING";
+                final status = project.offer!.isNotEmpty
+                    ? project.offer![0]['status']
+                    : null;
 
                 return Container(
                   padding: Ei.only(l: 20, r: 20, t: 10),
@@ -113,7 +116,6 @@ class Tabbar1ProjectEmployer extends ConsumerWidget {
                                 ],
                               ),
                             ),
-                            
                           ],
                         ).margin(t: 10),
                       ),
@@ -124,35 +126,59 @@ class Tabbar1ProjectEmployer extends ConsumerWidget {
                         child: Text(
                             maxLines: 3, overflow: Tof.ellipsis, description),
                       ),
-                     InkTouch(
-                        onTap: () {
-                          context.lzPush(SeeRequestEmployer(
-                            project: project,
-                          ));
-                        },
-                        child: SizedBox(
-                          width: context.width,
-                          child: Row(
-                            mainAxisAlignment: Maa.end,
-                            children: [
-                              Container(
-                                height: 30,
-                                width: 90,
-                                decoration: BoxDecoration(
-                                  color: LzColors.hex('0047E3'),
-                                  borderRadius: BorderRadius.circular(30),
-                                ),
-                                child: Textr(
-                                  alignment: Alignment.center,
-                                  'See Request',
-                                  style: Gfont.color(LzColors.hex('ffffff'))
-                                      .fsize(12),
-                                ),
+                      status != "ACCEPT" || status != "END"
+                          ? InkTouch(
+                              onTap: () {
+                                context.lzPush(SeeRequestEmployer(
+                                  project: project,
+                                ));
+                              },
+                              child: SizedBox(
+                                width: context.width,
+                                child: Row(
+                                  mainAxisAlignment: Maa.end,
+                                  children: [
+                                    Container(
+                                      height: 30,
+                                      width: 90,
+                                      decoration: BoxDecoration(
+                                        color: LzColors.hex('0047E3'),
+                                        borderRadius: BorderRadius.circular(30),
+                                      ),
+                                      child: Textr(
+                                        alignment: Alignment.center,
+                                        'See Request',
+                                        style:
+                                            Gfont.color(LzColors.hex('ffffff'))
+                                                .fsize(12),
+                                      ),
+                                    ),
+                                  ],
+                                ).margin(t: 20),
                               ),
-                            ],
-                          ).margin(t: 20),
-                        ),
-                      )
+                            )
+                          : SizedBox(
+                              width: context.width,
+                              child: Row(
+                                mainAxisAlignment: Maa.end,
+                                children: [
+                                  Container(
+                                    height: 30,
+                                    width: 90,
+                                    decoration: BoxDecoration(
+                                      color: LzColors.hex('0047E3'),
+                                      borderRadius: BorderRadius.circular(30),
+                                    ),
+                                    child: Textr(
+                                      alignment: Alignment.center,
+                                      status,
+                                      style: Gfont.color(LzColors.hex('ffffff'))
+                                          .fsize(12),
+                                    ),
+                                  ),
+                                ],
+                              ).margin(t: 20),
+                            )
                     ],
                   ),
                 );

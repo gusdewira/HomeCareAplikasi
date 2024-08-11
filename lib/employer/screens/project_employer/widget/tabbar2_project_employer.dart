@@ -19,6 +19,12 @@ class Tabbar2ProjectEmployer extends ConsumerWidget {
       ref.refresh(projectActiveProvider);
     }
 
+    String formatNumber(double number) {
+      final formatCurrency = NumberFormat.currency(
+          locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
+      return formatCurrency.format(number);
+    }
+
     void showEndContractDialog(
         BuildContext context, ProjectEmployerModel project) {
       showDialog(
@@ -142,12 +148,13 @@ class Tabbar2ProjectEmployer extends ConsumerWidget {
       data: (List<ProjectEmployerModel> projects) {
         if (projects.isEmpty) {
           return RefreshIndicator(
-            onRefresh: refreshData, child: const Center(
-            child: Text(
-              'No active projects',
-              style: TextStyle(fontSize: 18, color: Colors.grey),
-            ),
-          ));
+              onRefresh: refreshData,
+              child: const Center(
+                child: Text(
+                  'No active projects',
+                  style: TextStyle(fontSize: 18, color: Colors.grey),
+                ),
+              ));
         }
         return RefreshIndicator(
           onRefresh: refreshData,
@@ -226,7 +233,7 @@ class Tabbar2ProjectEmployer extends ConsumerWidget {
                               'Hired date : ${formatTanggal(project.startDate, project.endDate)}')
                           .margin(t: 10),
                       Text(
-                          'Salary: Rp. ${project.startSalary!.toStringAsFixed(0)} - Rp. ${project.endSalary!.toStringAsFixed(0)}'),
+                          'Salary: ${formatNumber(project.startSalary!)} - ${formatNumber(project.endSalary!)}'),
                       Container(
                         margin: Ei.only(t: 8, b: 8),
                         width: context.width,

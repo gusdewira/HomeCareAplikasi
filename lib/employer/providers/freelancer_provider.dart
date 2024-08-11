@@ -7,7 +7,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lazyui/lazyui.dart';
 import 'package:riverpod/riverpod.dart';
 
-class FreelancerProvider extends StateNotifier<AsyncValue<List<ProfileFreelancerModel>>> with UseApi1 {
+class FreelancerProvider extends StateNotifier<AsyncValue<List<FreelancerExplore>>> with UseApi1 {
   FreelancerProvider() : super(const AsyncValue.loading()) {
     getFreelancer();
   }
@@ -19,8 +19,8 @@ class FreelancerProvider extends StateNotifier<AsyncValue<List<ProfileFreelancer
       ResHandler res = await dashboardApi.getFreelancer();
 
       if (res.status) {
-        List<ProfileFreelancerModel> data = (res.data as List<dynamic>)
-            .map((e) => ProfileFreelancerModel.fromJson(e))
+        List<FreelancerExplore> data = (res.data as List<dynamic>)
+            .map((e) => FreelancerExplore.fromJson(e))
             .toList();
         state = AsyncValue.data(data);
       } else {
@@ -33,6 +33,6 @@ class FreelancerProvider extends StateNotifier<AsyncValue<List<ProfileFreelancer
   }
 }
 
-final freelancerProvider = StateNotifierProvider.autoDispose<FreelancerProvider, AsyncValue<List<ProfileFreelancerModel>>>((ref) {
+final freelancerProvider = StateNotifierProvider.autoDispose<FreelancerProvider, AsyncValue<List<FreelancerExplore>>>((ref) {
   return FreelancerProvider();
 });

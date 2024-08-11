@@ -19,7 +19,7 @@ class Tabbar3MyProfile extends ConsumerWidget {
     return Column(
       children: [
         Container(
-          margin:Ei.only(l: 25, r: 25, b: 20),
+          margin: Ei.only(l: 25, r: 25, b: 20),
           width: context.width,
           height: 40,
           decoration: BoxDecoration(
@@ -67,7 +67,7 @@ class Tabbar3MyProfile extends ConsumerWidget {
                         String description = skill.description;
 
                         return Container(
-                          margin: Ei.only( b: 20, l: 25, r: 25),
+                          margin: Ei.only(b: 20, l: 25, r: 25),
                           height: 130,
                           width: context.width / 1,
                           decoration: BoxDecoration(
@@ -89,7 +89,6 @@ class Tabbar3MyProfile extends ConsumerWidget {
                                 children: [
                                   Textr(
                                     skillName,
-                                    
                                     width: context.width / 2 - 50,
                                     maxLines: 1,
                                     overflow: Tof.ellipsis,
@@ -125,8 +124,7 @@ class Tabbar3MyProfile extends ConsumerWidget {
                                         Navigator.of(context).push(
                                           MaterialPageRoute(
                                             builder: (context) => AddMoreSkill(
-                                              data: skill, edit: true
-                                            ),
+                                                data: skill, edit: true),
                                           ),
                                         );
                                       } else if (value == 'delete') {
@@ -155,10 +153,8 @@ class Tabbar3MyProfile extends ConsumerWidget {
                                   ),
                                 ],
                               ),
-                              Textr(
-                                description,
-                                  style: Gfont.color(Colors.grey)
-                                      .fsize(12),
+                              Textr(description,
+                                  style: Gfont.color(Colors.grey).fsize(12),
                                   maxLines: 3,
                                   overflow: Tof.ellipsis,
                                   margin: Ei.only(r: 30)),
@@ -169,8 +165,9 @@ class Tabbar3MyProfile extends ConsumerWidget {
                     )
                   : const LzNoData(
                       message:
-                          'There is no data yet, please add data in the add experience menu', 
-                          iconWidget: Icon(Ti.alertTriangle, color: Colors.grey, size: 50));
+                          'There is no data yet, please add data in the add skill menu',
+                      iconWidget:
+                          Icon(Ti.alertTriangle, color: Colors.grey, size: 50));
             },
             error: (error, _) {
               // Perbaiki dan lengkapi penanganan error

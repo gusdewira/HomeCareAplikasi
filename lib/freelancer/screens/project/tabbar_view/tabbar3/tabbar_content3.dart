@@ -56,9 +56,8 @@ class Tabbar3 extends ConsumerWidget {
                           final projectComplated = projectComplateds[index];
                           String title = projectComplated.title!;
                           String firstName =
-                              projectComplated.offer![0]['user']['first_name'];
-                          String lastName =
-                              projectComplated.offer![0]['user']['last_name'];
+                              projectComplated.user!['first_name'];
+                          String lastName = projectComplated.user!['last_name'];
                           String startSalary =
                               formatNumber(projectComplated.startSalary ?? 0.0);
                           String endSalary =
@@ -104,7 +103,7 @@ class Tabbar3 extends ConsumerWidget {
                                     style: Gfont.color(LzColors.hex('001380')),
                                   ),
                                   Text(
-                                    'Freelancer: $firstName $lastName',
+                                    'Employer: $firstName $lastName',
                                     style: Gfont.color(LzColors.hex('001380')),
                                   ),
                                   Row(

@@ -122,8 +122,11 @@ class EditProfilChangeNotifier with ChangeNotifier, UseApi {
         final map = forms.toMap();
         LzToast.overlay('Editing profile...');
 
-        map['profile_photo'] = await projectFreelancerApi.toFile(filePath,
-            filename: "profile_photo");
+        if (filePath.isNotEmpty) {
+          map['profile_photo'] = await projectFreelancerApi.toFile(filePath,
+              filename: "profile_photo");
+        }
+
         map['_method'] = 'put';
         ResHandler res = await editProfileApi.updateImageProfile(map);
         LzToast.dismiss();

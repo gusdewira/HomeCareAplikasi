@@ -89,8 +89,7 @@ class AddMorePortofolio extends ConsumerWidget {
                         padding: Ei.only(l: 25, r: 25, t: 20),
                         itemCount: data!.portofolioAttachments!.length,
                         itemBuilder: (context, index) {
-                          final portfolio =
-                              data!.portofolioAttachments![index];
+                          final portfolio = data!.portofolioAttachments![index];
                           return Container(
                             margin: const EdgeInsets.only(bottom: 15),
                             width: double.infinity,

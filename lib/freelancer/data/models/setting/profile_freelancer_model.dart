@@ -176,3 +176,109 @@ class ProfileFreelancerModel1 {
     };
   }
 }
+
+class FreelancerExplore {
+  int? id;
+  String? firstName;
+  String? lastName;
+  String? email;
+  String? numberPhone;
+  String? address;
+  String? photoProfile;
+  String? summary;
+  String? earning;
+  List<PortfolioAttachment>? portfolioAttachments;
+  String? profession;
+  List<String>? role;
+  List<dynamic>? experience;
+  List<dynamic>? qualifications;
+  List<dynamic>? skills;
+  List<dynamic>? reviews;
+
+  FreelancerExplore({
+    this.id,
+    this.firstName,
+    this.lastName,
+    this.email,
+    this.numberPhone,
+    this.address,
+    this.photoProfile,
+    this.summary,
+    this.earning,
+    this.portfolioAttachments,
+    this.profession,
+    this.role,
+    this.experience,
+    this.qualifications,
+    this.skills,
+    this.reviews,
+  });
+
+  factory FreelancerExplore.fromJson(Map<String, dynamic> json) {
+    return FreelancerExplore(
+      id: json["id"] as int?,
+      firstName: json["first_name"] as String?,
+      lastName: json["last_name"] as String?,
+      email: json["email"] as String?,
+      numberPhone: json["number_phone"] as String?,
+      address: json["address"] as String?,
+      photoProfile: json["profile_photo"] as String?,
+      summary: json["summary"] as String?,
+      earning: json["earning"] as String?,
+      portfolioAttachments: (json["portofolio_attachments"] as List<dynamic>?)
+          ?.map((item) =>
+              PortfolioAttachment.fromJson(item as Map<String, dynamic>))
+          .toList(),
+      profession: json["profession"] as String?,
+      role: (json["role"] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      experience: json["experience"] as List<dynamic>?,
+      qualifications: json["qualifications"] as List<dynamic>?,
+      skills: json["skills"] as List<dynamic>?,
+      reviews: json["reviews"] as List<dynamic>?,
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "first_name": firstName,
+        "last_name": lastName,
+        "email": email,
+        "number_phone": numberPhone,
+        "address": address,
+        "profile_photo": photoProfile,
+        "summary": summary,
+        "earning": earning,
+        "portofolio_attachments":
+            portfolioAttachments?.map((e) => e.toJson()).toList(),
+        "profession": profession,
+        "role": role,
+        "experience": experience,
+        "qualifications": qualifications,
+        "skills": skills,
+        "reviews": reviews,
+      };
+}
+
+class PortfolioAttachment {
+  final int id;
+  final String path;
+
+  PortfolioAttachment({
+    required this.id,
+    required this.path,
+  });
+
+  factory PortfolioAttachment.fromJson(Map<String, dynamic> json) {
+    return PortfolioAttachment(
+      id: json['id'] as int,
+      path: json['path'] as String,
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'path': path,
+      };
+}

@@ -163,6 +163,12 @@ class Tabbar3ProjectEmployer extends ConsumerWidget {
     final projectCompleted = ref.watch(projectCompletedProvider);
     final profileEmployee = ref.watch(profileEmployeeProvider);
 
+    String formatNumber(double number) {
+      final formatCurrency = NumberFormat.currency(
+          locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
+      return formatCurrency.format(number);
+    }
+
     return RefreshIndicator(
       onRefresh: () => _refreshData(ref),
       child: projectCompleted.when(
@@ -207,7 +213,7 @@ class Tabbar3ProjectEmployer extends ConsumerWidget {
                       style: Gfont.color(LzColors.hex('001380')),
                     ),
                     Text(
-                      'Freelancer: ${project.user!["first_name"]} ${project.user!["last_name"]}',
+                      'Freelancer: ${project.offer![0]["user"]["first_name"]} ${project.offer![0]["user"]["last_name"]}',
                       style: Gfont.color(LzColors.hex('001380')),
                     ),
                     Row(
@@ -220,7 +226,7 @@ class Tabbar3ProjectEmployer extends ConsumerWidget {
                               Text(
                                 maxLines: 1,
                                 overflow: Tof.ellipsis,
-                                '${project.startSalary!} - ${project.endSalary!}',
+                                '${formatNumber(project.startSalary!)} - ${formatNumber(project.endSalary!)}',
                                 style: Gfont.color(LzColors.hex('001380')),
                               ),
                             ],

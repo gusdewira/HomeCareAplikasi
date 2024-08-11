@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:homecare_app/freelancer/screens/home/views/my_portofolios.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lazyui/lazyui.dart';
 import '../../../data/models/setting/profile_freelancer_model.dart';
@@ -216,7 +217,7 @@ class ProfileHome extends StatelessWidget {
                           children: [
                             InkTouch(
                               onTap: () {
-                                context.push(Paths.myPortofolios);
+                                context.lzPush(MyPortofolios(data: profileFreelancer));
                               },
                               child: Align(
                                 alignment: Alignment.centerLeft,

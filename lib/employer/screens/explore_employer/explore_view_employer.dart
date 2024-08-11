@@ -110,22 +110,33 @@ class ExploreEmployerView extends ConsumerState<ExploreView> {
                     children: [
                       Expanded(
                           child: profiles.when(
-                        data: (List<ProfileFreelancerModel> profile) {
+                        data: (List<FreelancerExplore> profile) {
                           final bool hasFilters =
-                              rating != null || reviews != null;
+                              _searchQuery.text.isNotEmpty ||
+                                  rating != null ||
+                                  reviews != null;
 
                           final filteredProfiles = hasFilters
                               ? profile.where((freelancer) {
-                                // print(convertRatingToStars(freelancer
-                                //           .reviews![0]['quantity_star']));
+                                  final name =
+                                      '${freelancer.firstName} ${freelancer.lastName}'
+                                          .toLowerCase();
+
+                                  final matchesQuery = name.contains(
+                                      _searchQuery.text.toLowerCase());
+
                                   final rate = freelancer.reviews!.isNotEmpty
                                       ? convertRatingToStars(freelancer
                                           .reviews![0]['quantity_star'])
                                       : 0;
-                                  final matchesRating = rate == rating;
-                                  final matchesReviews =
+                                  final matchesRating =
+                                      rating == null || rate == rating;
+                                  final matchesReviews = reviews == null ||
                                       freelancer.reviews!.length == reviews;
-                                  return matchesRating && matchesReviews;
+
+                                  return matchesQuery &&
+                                      matchesRating &&
+                                      matchesReviews;
                                 }).toList()
                               : profile;
 

@@ -217,7 +217,7 @@ class Tabbar2MyProfile extends ConsumerWidget {
                     )
                   : const LzNoData(
                       message:
-                          'There is no data yet, please add data in the add experience menu',
+                          'There is no data yet, please add data in the add qualifications menu',
                       iconWidget:
                           Icon(Ti.alertTriangle, color: Colors.grey, size: 50));
             },

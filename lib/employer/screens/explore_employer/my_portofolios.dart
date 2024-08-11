@@ -3,20 +3,13 @@ import 'package:homecare_app/freelancer/data/models/setting/profile_freelancer_m
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lazyui/lazyui.dart';
 
-import '../../../providers/setting/edit_profile_provider.dart';
 
-class MyPortofolios extends ConsumerWidget {
-  final ProfileFreelancerModel? data;
-  const MyPortofolios({super.key, this.data});
+class FreelanceProfile extends ConsumerWidget {
+  final FreelancerExplore? data;
+  const FreelanceProfile({super.key, this.data});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final notifier = ref.read(editProfilChangeNotifier.notifier);
-
-    if (data != null) {
-      notifier.fillForm(data!);
-    }
-
     return Scaffold(
       body: Stack(
         children: [
@@ -42,16 +35,16 @@ class MyPortofolios extends ConsumerWidget {
           Column(
             children: [
               Expanded(
-                child: data?.portofolioAttachments == null ||
-                        data!.portofolioAttachments!.isEmpty
+                child: data?.portfolioAttachments == null ||
+                        data!.portfolioAttachments!.isEmpty
                     ? const Center(
                         child: Text('Portfolio is empty'),
                       )
                     : ListView.builder(
                         padding: Ei.only(l: 25, r: 25, t: 20),
-                        itemCount: data!.portofolioAttachments!.length,
+                        itemCount: data!.portfolioAttachments!.length,
                         itemBuilder: (context, index) {
-                          final portfolio = data!.portofolioAttachments![index];
+                          final portfolio = data!.portfolioAttachments![index];
                           return Container(
                             margin: const EdgeInsets.only(bottom: 15),
                             width: double.infinity,
