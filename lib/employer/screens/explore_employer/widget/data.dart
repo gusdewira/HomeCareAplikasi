@@ -21,7 +21,8 @@ class DataExploreFreelancer extends StatelessWidget {
       }
     }
 
-    final name = '${projectEmployee.firstName ?? "No First Name"} ${projectEmployee.lastName ?? "No Last Name"}';
+    final name =
+        '${projectEmployee.firstName ?? "No First Name"} ${projectEmployee.lastName ?? "No Last Name"}';
     final profession = projectEmployee.profession ?? "Unknown";
     final address = projectEmployee.address ?? "No Address";
     final summary = projectEmployee.summary ?? "No Summary";
@@ -49,7 +50,8 @@ class DataExploreFreelancer extends StatelessWidget {
           Row(
             children: [
               LzImage(
-                projectEmployee.photoProfile,
+                projectEmployee.photoProfile ?? const LzImage(
+                        'profile.jpg'), 
                 radius: 40,
                 size: 50,
               ),
@@ -135,7 +137,8 @@ class DataExploreFreelancer extends StatelessWidget {
                     width: 80,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(30),
-                      border: Border.all(color: LzColors.hex('0047E3'), width: 2),
+                      border:
+                          Border.all(color: LzColors.hex('0047E3'), width: 2),
                     ),
                     child: Row(
                       mainAxisAlignment: Maa.center,
@@ -166,7 +169,8 @@ class DataExploreFreelancer extends StatelessWidget {
                   ),
                   child: InkTouch(
                     onTap: () {
-                      context.lzPush(ProfileFreelancerEx(profile: projectEmployee));
+                      context.lzPush(
+                          ProfileFreelancerEx(profile: projectEmployee));
                     },
                     child: Textr(
                       alignment: Alignment.center,

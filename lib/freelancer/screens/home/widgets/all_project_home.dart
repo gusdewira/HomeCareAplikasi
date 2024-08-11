@@ -37,18 +37,18 @@ class AllProjectHome extends StatelessWidget {
                 'All Project',
                 style: Gfont.color(LzColors.hex('2A1E17')).fsize(16),
               ),
-              Row(
-                children: [
-                  Text(
-                    'Total',
-                    style: Gfont.fs18,
-                  ).margin(r: 5),
-                  Text(
-                    '$projects',
-                    style: Gfont.bold.fsize(16),
-                  ),
-                ],
-              ),
+              // Row(
+              //   children: [
+              //     Text(
+              //       'Total',
+              //       style: Gfont.fs18,
+              //     ).margin(r: 5),
+              //     Text(
+              //       '$projects',
+              //       style: Gfont.bold.fsize(16),
+              //     ),
+              //   ],
+              // ),
             ],
           ).margin(l: 15, r: 15, t: 15, b: 15),
           Container(

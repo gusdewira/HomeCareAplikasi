@@ -73,6 +73,7 @@ class BidExplore extends ConsumerWidget {
                       color: Colors.white,
                     ),
                   ),
+<<<<<<< Updated upstream
                 ),
                 Positioned(
                     top: 60,
@@ -136,6 +137,69 @@ class BidExplore extends ConsumerWidget {
               ],
             ),
           ],
+=======
+                  Positioned(
+                      top: 60,
+                      left: 0,
+                      right: 0,
+                      child: Center(
+                          child: Textr(
+                        'Make an offer',
+                        style: Gfont.white.bold.fsize(18),
+                      ))),
+                  Column(
+                    crossAxisAlignment: Caa.start,
+                    children: [
+                      Text(
+                        '${data!.title}',
+                        style: Gfont.color(LzColors.hex('000000')).bold,
+                      ).margin(b: 15),
+                      SizedBox(
+                        width: context.width,
+                        child: Row(
+                          mainAxisAlignment: Maa.spaceBetween,
+                          children: [
+                            Text(
+                              'Start Date: ${DateFormat('dd/MM/yyyy').format(data!.startDate!)}',
+                              style: Gfont.fs12.bold,
+                            ),
+                            Text(
+                              'End date : ${DateFormat('dd/MM/yyyy').format(data!.endDate!)}',
+                              style: Gfont.fs12.bold,
+                            )
+                          ],
+                        ).margin(b: 20),
+                      ),
+                      Container(
+                        width: context.width,
+                        height: 1,
+                        color: Colors.black54,
+                      ),
+                      LzForm.input(
+                        label: 'Bid Amount',
+                        labelStyle: LzFormLabelStyle(color: color1),
+                        hint: 'Input Bid Amount',
+                        model: forms['offer_amount'],
+                      ).margin(t: 20),
+                      LzForm.input(
+                        label: 'Estimated Duration',
+                        labelStyle: LzFormLabelStyle(color: color1),
+                        hint: 'input based on weeks ',
+                        model: forms['estimated_duration'],
+                      ),
+                      LzForm.input(
+                        label: 'Reason',
+                        labelStyle: LzFormLabelStyle(color: color1),
+                        hint: 'Input Reason',
+                        model: forms['offer_reason'],
+                      ),
+                    ],
+                  ).margin(t: 140, l: 25, r: 25)
+                ],
+              ),
+            ],
+          ),
+>>>>>>> Stashed changes
         ),
       ),
         bottomNavigationBar: LzButton(

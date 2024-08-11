@@ -257,7 +257,7 @@ class PostingProjectEmployer extends ConsumerWidget {
                               child: LzButton(
                                 radius: 20,
                                 color: color1,
-                                text: 'Save',
+                                text: 'Posting',
                                 textColor: Colors.white,
                                 onTap: (state) async {
                                   state.submit();

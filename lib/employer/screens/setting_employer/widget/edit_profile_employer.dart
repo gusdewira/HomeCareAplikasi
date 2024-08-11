@@ -161,13 +161,6 @@ class _EditProfileEmployerState extends ConsumerState<EditProfileEmployer> {
                                       model: notifier.forms["last_name"],
                                     ),
                                     LzForm.input(
-                                      label: 'profession',
-                                      labelStyle:
-                                          LzFormLabelStyle(color: color1),
-                                      hint: 'profession',
-                                      model: notifier.forms["profession"],
-                                    ),
-                                    LzForm.input(
                                       label: 'email',
                                       labelStyle:
                                           LzFormLabelStyle(color: color1),

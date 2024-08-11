@@ -13,7 +13,7 @@ class ListMenuSetting extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final notifier = ref.watch(authProvider.notifier);
     return Container(
-      margin: Ei.only(t: 30),
+      margin: Ei.only(t: 20),
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

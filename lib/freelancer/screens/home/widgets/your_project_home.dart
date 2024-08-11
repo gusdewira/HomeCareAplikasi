@@ -46,22 +46,22 @@ String formatNumber(double number) {
                 'Your Projects',
                 style: Gfont.color(LzColors.hex('2A1E17')).fsize(16),
               ),
-              InkTouch(
-                onTap: () {},
-                child: Container(
-                  height: 30,
-                  width: 110,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      border: Border.all(width: 1, color: color1)),
-                  child: Center(
-                    child: Text(
-                      'View all project',
-                      style: Gfont.color(color1).fsize(12),
-                    ),
-                  ),
-                ),
-              )
+              // InkTouch(
+              //   onTap: () {},
+              //   child: Container(
+              //     height: 30,
+              //     width: 110,
+              //     decoration: BoxDecoration(
+              //         borderRadius: BorderRadius.circular(15),
+              //         border: Border.all(width: 1, color: color1)),
+              //     child: Center(
+              //       child: Text(
+              //         'View all project',
+              //         style: Gfont.color(color1).fsize(12),
+              //       ),
+              //     ),
+              //   ),
+              // )
             ],
           ).margin(l: 15, r: 15, t: 15, b: 15),
           Container(
@@ -76,8 +76,8 @@ String formatNumber(double number) {
                 itemBuilder: (contect, index) {
                   final project = projects[index];
 
-                  String startDate = project.startDate.format('dd/MM/yyyy');
-                  String endDate = project.endDate.format('dd/MM/yyyy');
+                  // String startDate = project.startDate.format('dd/MM/yyyy');
+                  // String endDate = project.endDate.format('dd/MM/yyyy');
 
                   String startSalary = formatNumber(project.startSalary!);
                   String endSalary = formatNumber(project.endSalary!);
@@ -98,13 +98,13 @@ String formatNumber(double number) {
                                 fontSize: 13,
                               ),
                             ),
-                            Text(
-                              '$startDate - $endDate',
-                              style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 12,
-                              ),
-                            ),
+                            // Text(
+                            //   '$startDate - $endDate',
+                            //   style: const TextStyle(
+                            //     color: Colors.black,
+                            //     fontSize: 12,
+                            //   ),
+                            // ),
                           ],
                         ),
                       ),

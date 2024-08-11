@@ -31,6 +31,7 @@ class RegistView extends ConsumerWidget {
             ),
           ),
           SizedBox(
+<<<<<<< Updated upstream
               height: 730,
               child: Column(
                 mainAxisSize: Mas.min,
@@ -38,6 +39,15 @@ class RegistView extends ConsumerWidget {
                 children: [
                   Center(
                       child: Column(
+=======
+            height: 780,
+            child: Column(
+              mainAxisSize: Mas.min,
+              crossAxisAlignment: Caa.start,
+              children: [
+                Center(
+                  child: Column(
+>>>>>>> Stashed changes
                     mainAxisSize: Mas.min,
                     children: [
                       Text(
@@ -64,6 +74,7 @@ class RegistView extends ConsumerWidget {
                         ],
                       ),
                     ],
+<<<<<<< Updated upstream
                   )),
                   LzForm.input(
                           label: 'First name',
@@ -110,10 +121,80 @@ class RegistView extends ConsumerWidget {
                       model: notifier.forms['role']),
                 ],
               ).margin(l: 25, r: 25)),
+=======
+                  ),
+                ),
+                LzForm.input(
+                  label: 'First name',
+                  labelStyle: LzFormLabelStyle(color: color1),
+                  hint: 'Input your first name',
+                  model: notifier.forms['first_name'],
+                ).margin(t: 20),
+                LzForm.input(
+                  label: 'Last name',
+                  labelStyle: LzFormLabelStyle(color: color1),
+                  hint: 'Input your last name',
+                  model: notifier.forms['last_name'],
+                ),
+                LzForm.input(
+                  label: 'Address',
+                  labelStyle: LzFormLabelStyle(color: color1),
+                  hint: 'Input your address',
+                  model: notifier.forms['address'],
+                ),
+                LzForm.input(
+                  label: 'Phone number',
+                  labelStyle: LzFormLabelStyle(color: color1),
+                  hint: 'Input your phone number',
+                  model: notifier.forms['number_phone'],
+                ),
+                LzForm.input(
+                  label: 'Email',
+                  labelStyle: LzFormLabelStyle(color: color1),
+                  hint: 'Input your email',
+                  model: notifier.forms['email'],
+                ),
+                LzForm.input(
+                  label: 'Password',
+                  labelStyle: LzFormLabelStyle(color: color1),
+                  hint: 'Create Your Password',
+                  obsecureToggle: true,
+                  model: notifier.forms['password'],
+                ),
+                LzForm.input(
+                  label: 'Retype password',
+                  labelStyle: LzFormLabelStyle(color: color1),
+                  hint: 'Retype your password',
+                  obsecureToggle: true,
+                  model: notifier.forms['retype_password'],
+                ),
+                Text(
+                  'User role :',
+                  style: TextStyle(
+                      fontSize: 15,
+                      color: color1,
+                      ),
+                ).margin(t: 10, b: 10, l: 15),
+                RadioGroup<String>.builder(
+                  groupValue: selectedRole,
+                  horizontalAlignment: MainAxisAlignment.spaceAround,
+                  direction: Axis.horizontal,
+                  onChanged: (value) => setState(() {
+                    selectedRole = value!;
+                    notifier.forms['role']?.controller.text = value!;
+                    (context as Element).markNeedsBuild();
+                  }),
+                  items: roles,
+                  itemBuilder: (item) => RadioButtonBuilder(item),
+                ).margin(l: 25),
+              ],
+            ).margin(l: 25, r: 25),
+          ),
+>>>>>>> Stashed changes
           Stack(
             children: [
               Container(
-                margin: Ei.only(t: 20, l: 25, r: 25),
+                margin: Ei.only( l: 25, r: 25),
                 width: context.width,
                 height: 50,
                 child: ElevatedButton(
@@ -137,7 +218,7 @@ class RegistView extends ConsumerWidget {
               Container(
                 margin: Ei.only(t: 200),
                 width: MediaQuery.of(context).size.width,
-                height: 170,
+                height: 150,
                 child: const LzImage(
                   'glombang.png',
                   fit: BoxFit.cover,

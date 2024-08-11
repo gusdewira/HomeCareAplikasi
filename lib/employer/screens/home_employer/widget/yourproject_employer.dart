@@ -44,22 +44,22 @@ class YourProjectEmployer extends StatelessWidget {
                 'Your Projects',
                 style: Gfont.color(LzColors.hex('2A1E17')).fsize(16),
               ),
-              InkTouch(
-                onTap: () {},
-                child: Container(
-                  height: 30,
-                  width: 110,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      border: Border.all(width: 1, color: color1)),
-                  child: Center(
-                    child: Text(
-                      'View all project',
-                      style: Gfont.color(color1).fsize(12),
-                    ),
-                  ),
-                ),
-              )
+              // InkTouch(
+              //   onTap: () {},
+              //   child: Container(
+              //     height: 30,
+              //     width: 110,
+              //     decoration: BoxDecoration(
+              //         borderRadius: BorderRadius.circular(15),
+              //         border: Border.all(width: 1, color: color1)),
+              //     child: Center(
+              //       child: Text(
+              //         'View all project',
+              //         style: Gfont.color(color1).fsize(12),
+              //       ),
+              //     ),
+              //   ),
+              // )
             ],
           ).margin(l: 15, r: 15, t: 15, b: 15),
           Container(

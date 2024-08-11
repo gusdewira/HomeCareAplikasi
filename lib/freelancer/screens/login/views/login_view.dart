@@ -94,8 +94,30 @@ class LoginView extends ConsumerWidget {
                   alignment: Alignment.centerRight,
                   style: Gfont.red.bold.fsize(12),
                 ),
+<<<<<<< Updated upstream
               ),
             ],
+=======
+                const Text(
+                  "I am a: ",
+                  style: TextStyle(
+                      color: Colors.black, fontWeight: FontWeight.bold),
+                ),
+                RadioGroup<String>.builder(
+                  groupValue: _selectedRole,
+                  horizontalAlignment: MainAxisAlignment.spaceAround,
+                  direction: Axis.horizontal,
+                  onChanged: (value) => setState(() {
+                    _selectedRole = value!;
+                  }),
+                  items: _roles,
+                  itemBuilder: (item) => RadioButtonBuilder(
+                    item,
+                  ),
+                ).margin(t: 10, l: 25),
+              ],
+            ),
+>>>>>>> Stashed changes
           ),
         ),
         Stack(
@@ -160,6 +182,7 @@ class LoginView extends ConsumerWidget {
                 'glombang.png',
                 fit: BoxFit.cover,
               ),
+<<<<<<< Updated upstream
             ),
             const Align(
               alignment: Alignment.topCenter,
@@ -172,5 +195,46 @@ class LoginView extends ConsumerWidget {
         )
       ],
     ));
+=======
+              Row(
+                mainAxisAlignment: Maa.center,
+                children: [
+                  Textr(
+                    'Don\'t have an account?',
+                    style: Gfont.color(LzColors.hex('7E7E7E')).bold.fsize(12),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      context.push(Paths.signup);
+                    },
+                    child: Text(
+                      '  Sign Up',
+                      style: Gfont.color(colorLogin).bold.fsize(15),
+                    ),
+                  ),
+                ],
+              ).margin(t: 70),
+              Container(
+                margin: Ei.only(t: 180),
+                width: MediaQuery.of(context).size.width,
+                height: 180,
+                child: const LzImage(
+                  'glombang.png',
+                  fit: BoxFit.cover,
+                ),
+              ),
+              const Align(
+                alignment: Alignment.topCenter,
+                child: LzImage(
+                  'logoHomecare.png',
+                  size: 100,
+                ),
+              ).margin(t: 100),
+            ],
+          )
+        ],
+      ),
+    );
+>>>>>>> Stashed changes
   }
 }
