@@ -127,106 +127,124 @@ class DataSeeRequest extends ConsumerWidget {
           ),
           SizedBox(
             width: context.width,
-            child: Row(
-              children: [
-                InkTouch(
-                  onTap: () async {
-                    ProjectsApi projectsApi = ProjectsApi();
-                    ResHandler res = await projectsApi.approveBid(bid['id']);
-
-                    LzToast.dismiss();
-                    if (res.status) {
-                      LzToast.show(res.message);
-                      Navigator.pop(context);
-
-                      await notification.postNotification({
-                        "sent_to": bid["user"]["id"],
-                        "title": "made",
-                        "notif_text": "made",
-                        "is_read": 1,
-                        "offer_id": bid["id"]
-                      });
-
-                      return true;
-                    } else {
-                      LzToast.show('Failed approved bid project...');
-                      return false;
-                    }
-                  },
-                  child: Container(
+            child: bid['status'] == 'REJECT'
+                ? Container(
                     height: 30,
                     width: 100,
                     decoration: BoxDecoration(
-                      color: LzColors.hex('0047E3'),
+                      color: LzColors.hex('fa736b'),
                       borderRadius: BorderRadius.circular(30),
                     ),
                     child: Textr(
                       alignment: Alignment.center,
                       // 'Approve Bid ${bid["user"]["id"]}',
-                      'Approve Bid',
+                      'Request Rejected',
                       style: Gfont.color(LzColors.hex('ffffff')).fsize(12),
                     ),
-                  ),
-                ),
-                InkTouch(
-                  onTap: () async {
-                    ProjectsApi projectsApi = ProjectsApi();
-                    ResHandler res = await projectsApi.rejectBid(bid['id']);
-                    LzToast.dismiss();
-                    if (res.status) {
-                      LzToast.show(res.message);
-                      Navigator.pop(context);
-                      await notification.postNotification({
-                        "sent_to": bid["user"]["id"],
-                        "title": "made",
-                        "notif_text": "made",
-                        "is_read": 1,
-                        "offer_id": bid["id"]
-                      });
-                      return true;
-                    } else {
-                      LzToast.show('Failed reject bid project...');
-                      return false;
-                    }
-                  },
-                  child: Container(
-                    margin: Ei.only(l: 10),
-                    height: 30,
-                    width: 100,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30),
-                      border: Border.all(color: Colors.red, width: 2),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: Maa.center,
-                      children: [
-                        const SizedBox(
-                          width: 5,
+                  )
+                : Row(
+                    children: [
+                      InkTouch(
+                        onTap: () async {
+                          ProjectsApi projectsApi = ProjectsApi();
+                          ResHandler res =
+                              await projectsApi.approveBid(bid['id']);
+
+                          LzToast.dismiss();
+                          if (res.status) {
+                            LzToast.show(res.message);
+                            Navigator.pop(context);
+
+                            await notification.postNotification({
+                              "sent_to": bid["user"]["id"],
+                              "title": "made",
+                              "notif_text": "made",
+                              "is_read": 1,
+                              "offer_id": bid["id"]
+                            });
+
+                            return true;
+                          } else {
+                            LzToast.show('Failed approved bid project...');
+                            return false;
+                          }
+                        },
+                        child: Container(
+                          height: 30,
+                          width: 100,
+                          decoration: BoxDecoration(
+                            color: LzColors.hex('0047E3'),
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          child: Textr(
+                            alignment: Alignment.center,
+                            // 'Approve Bid ${bid["user"]["id"]}',
+                            'Approve Bid',
+                            style:
+                                Gfont.color(LzColors.hex('ffffff')).fsize(12),
+                          ),
                         ),
-                        Textr(
-                          alignment: Alignment.center,
-                          'Reject Bid',
-                          style: Gfont.red.fsize(12),
+                      ),
+                      InkTouch(
+                        onTap: () async {
+                          ProjectsApi projectsApi = ProjectsApi();
+                          ResHandler res =
+                              await projectsApi.rejectBid(bid['id']);
+                          LzToast.dismiss();
+                          if (res.status) {
+                            LzToast.show(res.message);
+                            Navigator.pop(context);
+                            await notification.postNotification({
+                              "sent_to": bid["user"]["id"],
+                              "title": "made",
+                              "notif_text": "made",
+                              "is_read": 1,
+                              "offer_id": bid["id"]
+                            });
+                            return true;
+                          } else {
+                            LzToast.show('Failed reject bid project...');
+                            return false;
+                          }
+                        },
+                        child: Container(
+                          margin: Ei.only(l: 10),
+                          height: 30,
+                          width: 100,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            border: Border.all(color: Colors.red, width: 2),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: Maa.center,
+                            children: [
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              Textr(
+                                alignment: Alignment.center,
+                                'Reject Bid',
+                                style: Gfont.red.fsize(12),
+                              ),
+                            ],
+                          ),
                         ),
-                      ],
-                    ),
-                  ),
-                ),
-                const Spacer(),
-                InkTouch(
-                  onTap: () {
-                    context.lzPush(InfoRequestBid(
-                      bid: bid,
-                    ));
-                  },
-                  child: Icon(
-                    Ti.infoCircle,
-                    size: 30,
-                    color: LzColors.hex('0047E3'),
-                  ),
-                )
-              ],
-            ).margin(t: 15),
+                      ),
+                      const Spacer(),
+                      InkTouch(
+                        onTap: () {
+                          context.lzPush(InfoRequestBid(
+                            bid: bid,
+                          ));
+                        },
+                        child: Icon(
+                          Ti.infoCircle,
+                          size: 30,
+                          color: LzColors.hex('0047E3'),
+                        ),
+                      )
+                    ],
+                  ).margin(t: 15),
           ),
         ],
       ),

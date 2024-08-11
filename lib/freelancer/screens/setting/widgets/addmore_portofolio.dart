@@ -1,23 +1,62 @@
 import 'package:flutter/material.dart';
-import 'package:homecare_app/freelancer/providers/setting/profile_provider.dart';
+import 'package:homecare_app/freelancer/providers/setting/edit_profile_provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lazyui/lazyui.dart';
 
 import '../../../data/models/setting/profile_freelancer_model.dart';
 import '../../../widgets/color_widget.dart';
 
-class AddMorePortofolio extends ConsumerWidget {
+class AddMorePortofolio extends ConsumerStatefulWidget {
   final ProfileFreelancerModel? data;
   const AddMorePortofolio({super.key, this.data});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final notifier = ref.read(editProfilChangeNotifier.notifier);
+  _AddMorePortofolioState createState() => _AddMorePortofolioState();
+}
 
-    if (data != null) {
-      notifier.fillForm(data!);
+class _AddMorePortofolioState extends ConsumerState<AddMorePortofolio> {
+  @override
+  void initState() {
+    super.initState();
+    if (widget.data != null) {
+      final notifier = ref.read(editProfilChangeNotifier.notifier);
+      notifier.fillForm(widget.data!);
     }
+  }
 
+  void _showDeleteConfirmation(BuildContext context, int index, int id) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Confirm Delete'),
+          content: const Text(
+              'Are you sure you want to delete this portfolio item?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                setState(() {
+                  widget.data?.portofolioAttachments?.removeAt(index);
+                });
+                ref.read(editProfilChangeNotifier.notifier).delete(id);
+                Navigator.of(context).pop();
+              },
+              child: const Text('Delete'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         children: [
@@ -69,7 +108,7 @@ class AddMorePortofolio extends ConsumerWidget {
                       onPressed: () {
                         ref
                             .read(editProfilChangeNotifier.notifier)
-                            .pickPortfolio(context, data!.id);
+                            .pickImage(context, widget.data!.id!);
                       },
                       child: const Icon(
                         Icons.add,
@@ -80,26 +119,33 @@ class AddMorePortofolio extends ConsumerWidget {
                 ),
               ),
               Expanded(
-                child: data?.portofolioAttachments == null ||
-                        data!.portofolioAttachments!.isEmpty
+                child: widget.data?.portofolioAttachments == null ||
+                        widget.data!.portofolioAttachments!.isEmpty
                     ? const Center(
                         child: Text('Portfolio is empty'),
                       )
                     : ListView.builder(
                         padding: Ei.only(l: 25, r: 25, t: 20),
-                        itemCount: data!.portofolioAttachments!.length,
+                        itemCount: widget.data!.portofolioAttachments!.length,
                         itemBuilder: (context, index) {
-                          final portfolio = data!.portofolioAttachments![index];
-                          return Container(
-                            margin: const EdgeInsets.only(bottom: 15),
-                            width: double.infinity,
-                            height: 150,
-                            decoration: BoxDecoration(
-                              color: Colors.grey[200],
-                              borderRadius: BorderRadius.circular(10),
-                              image: DecorationImage(
-                                image: NetworkImage(portfolio.path),
-                                fit: BoxFit.cover,
+                          final portfolio =
+                              widget.data!.portofolioAttachments![index];
+                          return GestureDetector(
+                            onLongPress: () {
+                              _showDeleteConfirmation(
+                                  context, index, portfolio.id);
+                            },
+                            child: Container(
+                              margin: const EdgeInsets.only(bottom: 15),
+                              width: double.infinity,
+                              height: 150,
+                              decoration: BoxDecoration(
+                                color: Colors.grey[200],
+                                borderRadius: BorderRadius.circular(10),
+                                image: DecorationImage(
+                                  image: NetworkImage(portfolio.path),
+                                  fit: BoxFit.cover,
+                                ),
                               ),
                             ),
                           );

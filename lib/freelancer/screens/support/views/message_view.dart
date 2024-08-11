@@ -32,12 +32,12 @@ class _ChatPageState extends ConsumerState<ChatPage> {
     final notifier = ref.read(postMessage.notifier);
 
     if (_messageController.text.isNotEmpty) {
-      Future<bool> ok = notifier.create({
+      Map<String, dynamic> ok = await notifier.create({
         "message_text": _messageController.text,
         "conversation_id": widget.initialMessages.first.conversation.id
       });
 
-      if (await ok) {
+      if (ok['status'] == true) {
         _refreshMessages();
         final mess = MessageModel(
           senderId: widget.senderId,

@@ -49,7 +49,7 @@ class Tabbar1ProjectEmployer extends ConsumerWidget {
                 final description = project.description!;
                 final status = project.offer!.isNotEmpty
                     ? project.offer![0]['status']
-                    : null;
+                    : "null";
 
                 return Container(
                   padding: Ei.only(l: 20, r: 20, t: 10),
@@ -126,7 +126,7 @@ class Tabbar1ProjectEmployer extends ConsumerWidget {
                         child: Text(
                             maxLines: 3, overflow: Tof.ellipsis, description),
                       ),
-                      status != "ACCEPT" || status != "END"
+                      (status != "ACCEPT" && status != "END")
                           ? InkTouch(
                               onTap: () {
                                 context.lzPush(SeeRequestEmployer(
@@ -166,7 +166,9 @@ class Tabbar1ProjectEmployer extends ConsumerWidget {
                                     height: 30,
                                     width: 90,
                                     decoration: BoxDecoration(
-                                      color: LzColors.hex('0047E3'),
+                                      color: status == "ACCEPT"
+                                          ? LzColors.hex('4c83fc')
+                                          : LzColors.hex('23e82d'),
                                       borderRadius: BorderRadius.circular(30),
                                     ),
                                     child: Textr(

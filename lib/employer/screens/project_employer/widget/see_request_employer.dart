@@ -15,7 +15,7 @@ class SeeRequestEmployer extends StatelessWidget {
       return formatCurrency.format(number);
     }
 
-    int countOffers = project.offer!.length;
+    int countOffers = project.offer!.where((item)=> item['status'] == "WAITING" || item['status'] == "REJECT").length;
 
     return Container(
       decoration: BoxDecoration(

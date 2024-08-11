@@ -128,7 +128,8 @@ class _EditProfileState extends ConsumerState<EditProfile> {
                                 ),
                                 InkTouch(
                                   onTap: () {
-                                    final notifier = ref.read(editProfilChangeNotifier.notifier);
+                                    final notifier = ref.read(
+                                        editProfilChangeNotifier.notifier);
                                     notifier.pickImage(context, data!.id!);
                                   },
                                   child: Container(
@@ -161,28 +162,36 @@ class _EditProfileState extends ConsumerState<EditProfile> {
                                       labelStyle:
                                           LzFormLabelStyle(color: color1),
                                       hint: 'first name',
-                                      model: ref.watch(editProfilChangeNotifier).forms["first_name"],
+                                      model: ref
+                                          .watch(editProfilChangeNotifier)
+                                          .forms["first_name"],
                                     ),
                                     LzForm.input(
                                       label: 'Last Name',
                                       labelStyle:
                                           LzFormLabelStyle(color: color1),
                                       hint: 'last name',
-                                      model: ref.watch(editProfilChangeNotifier).forms["last_name"],
+                                      model: ref
+                                          .watch(editProfilChangeNotifier)
+                                          .forms["last_name"],
                                     ),
                                     LzForm.input(
                                       label: 'profession',
                                       labelStyle:
                                           LzFormLabelStyle(color: color1),
                                       hint: 'profession',
-                                      model: ref.watch(editProfilChangeNotifier).forms["profession"],
+                                      model: ref
+                                          .watch(editProfilChangeNotifier)
+                                          .forms["profession"],
                                     ),
                                     LzForm.input(
                                       label: 'email',
                                       labelStyle:
                                           LzFormLabelStyle(color: color1),
                                       hint: 'email',
-                                      model: ref.watch(editProfilChangeNotifier).forms["email"],
+                                      model: ref
+                                          .watch(editProfilChangeNotifier)
+                                          .forms["email"],
                                     ),
                                     LzForm.input(
                                       label: 'address',
@@ -190,23 +199,30 @@ class _EditProfileState extends ConsumerState<EditProfile> {
                                           LzFormLabelStyle(color: color1),
                                       hint: 'address',
                                       maxLength: 100,
-                                      model: ref.watch(editProfilChangeNotifier).forms["address"],
+                                      model: ref
+                                          .watch(editProfilChangeNotifier)
+                                          .forms["address"],
                                     ),
                                     LzForm.input(
                                       label: 'number phone',
                                       labelStyle:
                                           LzFormLabelStyle(color: color1),
                                       hint: 'number_phone',
-                                      keyboard: const TextInputType.numberWithOptions(),
+                                      keyboard: const TextInputType
+                                          .numberWithOptions(),
                                       maxLength: 13,
-                                      model: ref.watch(editProfilChangeNotifier).forms["number_phone"],
+                                      model: ref
+                                          .watch(editProfilChangeNotifier)
+                                          .forms["number_phone"],
                                     ),
                                     LzForm.input(
                                       label: 'earning',
                                       labelStyle:
                                           LzFormLabelStyle(color: color1),
                                       hint: 'earning',
-                                      model: ref.watch(editProfilChangeNotifier).forms["earning"],
+                                      model: ref
+                                          .watch(editProfilChangeNotifier)
+                                          .forms["earning"],
                                     ),
                                     LzForm.input(
                                       label: 'summary',
@@ -214,7 +230,9 @@ class _EditProfileState extends ConsumerState<EditProfile> {
                                           LzFormLabelStyle(color: color1),
                                       hint: 'summary',
                                       maxLength: 2000,
-                                      model: ref.watch(editProfilChangeNotifier).forms["summary"],
+                                      model: ref
+                                          .watch(editProfilChangeNotifier)
+                                          .forms["summary"],
                                     ),
                                   ],
                                 ).margin(t: 10, l: 25, r: 25, b: 50),
@@ -249,7 +267,7 @@ class DecimalFormatter extends TextInputFormatter {
 
     final parts = newString.split('.');
     final integerPart = parts[0];
-    
+
     return TextEditingValue(
       text: integerPart,
       selection: newValue.selection,

@@ -42,7 +42,7 @@ class Tabbar2ProjectEmployer extends ConsumerWidget {
                 ),
                 content: Text(
                   textAlign: Ta.center,
-                  'If you complete this project ${project.offer![0]['id']}, the system balance will be transferred to the freelancer.',
+                  'If you active this project ${project.offer![0]['id']}, the system balance will be transferred to the freelancer.',
                   style: Gfont.fs18,
                 ),
                 actions: [

@@ -87,7 +87,7 @@ class Tabbar2 extends ConsumerWidget {
                                       style: Gfont.color(color1).fsize(15).bold,
                                     ).margin(b: 5),
                                     Text(
-                                      'Client : $client $idProject',
+                                      'Client : $client',
                                       style: Gfont.color(color1).fsize(12),
                                     ),
                                     Row(
@@ -192,8 +192,8 @@ class Tabbar2 extends ConsumerWidget {
                   : RefreshIndicator(
                       onRefresh: refreshProjects,
                       child: const LzNoData(
-                      message: 'No offers were accepted',
-                    ));
+                        message: 'No offers were accepted',
+                      ));
             },
             error: (error, _) {
               ref.read(projectProgress.notifier).getProjectProgress();

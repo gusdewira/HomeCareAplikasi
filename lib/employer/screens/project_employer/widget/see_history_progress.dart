@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:homecare_app/employer/providers/project_active_provider.dart';
 import 'package:homecare_app/freelancer/data/models/project/history_progress_model.dart';
+import 'package:homecare_app/freelancer/providers/project/history_progress_provider.dart';
 import 'package:homecare_app/freelancer/widgets/color_widget.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lazyui/lazyui.dart';
@@ -9,9 +10,9 @@ class SeeHistoryProgressEmployer extends ConsumerWidget {
   final int id;
   const SeeHistoryProgressEmployer({super.key, required this.id});
 
-@override
-Widget build(BuildContext context, WidgetRef ref) {
-    final history = ref.watch(historyProgressProvider(id));
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final history = ref.watch(historyProgressProvider);
     return Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -61,75 +62,71 @@ Widget build(BuildContext context, WidgetRef ref) {
                   'History Progress',
                   style: Gfont.white.bold.fsize(18),
                 ))),
-            Column(
-              children: [
-                Container(
-                    child: history.when(data: (HistoryProgressModel progress) {
-                  return Container(
-                    height: 160,
-                    width: context.width,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        border: Border.all(width: 2, color: Colors.black12)),
-                    child: Column(
-                      crossAxisAlignment: Caa.start,
-                      children: [
-                        Row(
-                          crossAxisAlignment: Caa.start,
-                          children: [
-                            const LzImage(
-                              'profile.jpg',
-                              radius: 50,
-                              size: 50,
-                            ).margin(t: 10),
-                            Column(
-                              crossAxisAlignment: Caa.start,
-                              children: [
-                                Textr(
-                                  progress.title!,
-                                  style: Gfont.color(color1).fsize(12).bold,
-                                  margin: Ei.only(b: 5),
-                                  width: context.width / 2 - 10,
-                                  maxLines: 2,
-                                  overflow: Tof.ellipsis,
-                                ),
-                                Textr(
-                                  progress.description!,
-                                  margin: Ei.only(b: 10),
-                                  style: Gfont.fs10,
-                                  width: context.width / 2,
-                                  overflow: Tof.ellipsis,
-                                  maxLines: 2,
-                                ),
-                              ],
-                            ).margin(l: 10)
-                          ],
-                        ).margin(l: 10, t: 10),
-                        Container(
-                          margin: Ei.only(l: 15, r: 15, t: 10),
-                          height: 40,
-                          width: context.width,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              border:
-                                  Border.all(width: 2, color: Colors.black12)),
-                          child: Align(
-                            alignment: Alignment.centerLeft,
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 130, horizontal: 16),
+                child: history.when(
+                    data: (List<HistoryProgressModel> progresses) {
+              return ListView.builder(
+                  itemCount: progresses.length,
+                  itemBuilder: (context, index) {
+                    final progress = progresses[index];
+                    if (progress.projectAcceptId == id) {
+                      return Container(
+                      height: 120,
+                      margin: EdgeInsets.only(bottom: 12),
+                      width: context.width,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          border:
+                              Border.all(width: 2, color: Colors.black12)),
+                      child: Column(
+                        crossAxisAlignment: Caa.start,
+                        children: [
+                          Column(
+                            crossAxisAlignment: Caa.start,
+                            children: [
+                              Textr(
+                                progress.title!,
+                                style:
+                                    Gfont.color(color1).fsize(12).bold,
+                                margin: Ei.only(b: 5),
+                                width: context.width / 2 - 10,
+                                maxLines: 2,
+                                overflow: Tof.ellipsis,
+                              ),
+                              Textr(
+                                progress.description!,
+                                margin: Ei.only(b: 10),
+                                style: Gfont.fs10,
+                                width: context.width / 2,
+                                overflow: Tof.ellipsis,
+                                maxLines: 2,
+                              ),
+                            ],
+                          ).margin(l: 10).margin(l: 10, t: 10),
+                          Container(
+                            margin: Ei.only(l: 15, r: 15, t: 10),
+                            height: 40,
+                            width: context.width,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                border: Border.all(
+                                    width: 2, color: Colors.black12)),
+                            child: Align(
+                              alignment: Alignment.centerLeft,
                               child: Row(
                                 mainAxisAlignment: Maa.spaceBetween,
                                 children: [
                                   Expanded(
                                     child: SingleChildScrollView(
                                       scrollDirection: Axis.horizontal,
-                                      child: Container(
-                                        child: Textr(
-                                          progress.attachment!
-                                              .split('/attachments/')[1],
-                                          margin: Ei.only(l: 10),
-                                          style: Gfont.fs13,
-                                          overflow: TextOverflow.ellipsis,
-                                          maxLines: 1,
-                                        ),
+                                      child: Textr(
+                                        progress.attachment!
+                                            .split('/attachments/')[1],
+                                        margin: Ei.only(l: 10),
+                                        style: Gfont.fs13,
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 1,
                                       ),
                                     ),
                                   ),
@@ -144,25 +141,27 @@ Widget build(BuildContext context, WidgetRef ref) {
                                               BorderRadius.circular(10)),
                                       child: Textr(
                                         'Download',
-                                        style: Gfont.color(LzColors.hex('000000'))
+                                        style: Gfont.color(
+                                                LzColors.hex('000000'))
                                             .fsize(10),
                                       ),
                                     ),
                                   ),
                                 ],
                               ),
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  );
-                }, error: (error, _) {
-                  return LzNoData(message: 'Oops! $error');
-                }, loading: () {
-                  return LzLoader.bar(message: 'Loading...');
-                }))
-              ],
-            ).margin(l: 25, r: 25, t: 150)
+                        ],
+                      ),
+                    );
+                    }
+                    return null;
+                  });
+            }, error: (error, _) {
+              return LzNoData(message: 'Oops! $error');
+            }, loading: () {
+              return LzLoader.bar(message: 'Loading...');
+            }))
           ],
         ));
   }

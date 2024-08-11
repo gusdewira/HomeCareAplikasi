@@ -208,10 +208,10 @@ class _SupportViewState extends ConsumerState<SupportView> {
                                                                           .infinity,
                                                                       child:
                                                                           Text(
-                                                                        entry
-                                                                            .value
-                                                                            .first
-                                                                            .messageText,
+                                                                        profile.id ==
+                                                                                entry.value.first.conversation.user1.id
+                                                                            ? "You: ${entry.value.first.messageText}"
+                                                                            : entry.value.first.messageText,
                                                                         style: Gfont.color(LzColors.hex('7C7C7C'))
                                                                             .fsize(12),
                                                                         maxLines:

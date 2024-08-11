@@ -50,7 +50,7 @@ class EditProfilChangeNotifier with ChangeNotifier, UseApi {
               WidImagePreview(file: File(pickedFile.path))).then((value) {
         if (value != null) {
           image = File(pickedFile.path);
-          edit(context, id);
+          portfolio(context, id);
         }
       });
       filePath = pickedFile.path;
@@ -67,8 +67,6 @@ class EditProfilChangeNotifier with ChangeNotifier, UseApi {
         final map = forms.toMap();
         LzToast.overlay('Editing profile...');
 
-        map['portofolio_attachment'] = filePath;
-
         map['_method'] = 'put';
         ResHandler res = await editProfileApi.updateEditProfile(map);
 
@@ -81,10 +79,62 @@ class EditProfilChangeNotifier with ChangeNotifier, UseApi {
           Navigator.pop(context);
         } else {
           forms.reset();
-          LzToast.show('Successfully Edited Profile Freelancer');
+          LzToast.show('Failed Edited Profile Freelancer');
 
           Navigator.pop(context);
         }
+      }
+    } catch (e, s) {
+      Errors.check(e, s);
+    }
+  }
+
+  Future portfolio(BuildContext context, int id) async {
+    try {
+      LzToast.overlay('Adding portfolio...');
+
+      // Ensure the image file is valid
+      if (image.path.isEmpty || !await image.exists()) {
+        LzToast.show('Invalid file.');
+        return;
+      }
+
+      final formData = FormData.fromMap({
+        'portofolio_attachments[5]': await MultipartFile.fromFile(
+          image.path,
+          filename: image.path.split('/').last,
+        ),
+        '_method': 'put'
+      });
+
+      final response = await editProfileApi.updateEditPortfolio(formData);
+
+      print("Response Status: ${response.status}");
+      print("Response Body: ${response.body}");
+
+      LzToast.dismiss();
+
+      if (response.status) {
+        LzToast.show('Portfolio added successfully');
+        Navigator.pop(context);
+      } else {
+        LzToast.show('Failed to add portfolio: ${response.message}');
+      }
+    } catch (e, s) {
+      Errors.check(e, s);
+    }
+  }
+
+  Future delete(int id) async {
+    try {
+      ResHandler res = await editProfileApi.deleteProfile(id);
+
+      LzToast.dismiss();
+
+      if (!res.status) {
+        LzToast.show(res.message);
+      } else {
+        LzToast.show('Successfully Deleted Portfolio Freelancer');
       }
     } catch (e, s) {
       Errors.check(e, s);
@@ -124,26 +174,41 @@ class EditImageChangeNotifier with ChangeNotifier, UseApi {
 
   Future edit(BuildContext context, int id) async {
     try {
-        Map<String, dynamic> map = {};
-        LzToast.overlay('Editing profile...');
+      Map<String, dynamic> map = {};
+      LzToast.overlay('Editing profile...');
 
-        map['portofolio_attachment'] = filePath;
+      map['portofolio_attachment'] = filePath;
 
-        map['_method'] = 'put';
-        ResHandler res = await editProfileApi.updateEditProfile(map);
+      map['_method'] = 'put';
+      ResHandler res = await editProfileApi.updateEditProfile(map);
 
-        LzToast.dismiss();
+      LzToast.dismiss();
 
-        if (!res.status) {
-          LzToast.show(res.message);
+      if (!res.status) {
+        LzToast.show(res.message);
 
-          Navigator.pop(context);
-        } else {
-          LzToast.show('Successfully Edited Profile Freelancer');
+        Navigator.pop(context);
+      } else {
+        LzToast.show('Successfully Edited Profile Freelancer');
 
-          Navigator.pop(context);
-        }
+        Navigator.pop(context);
+      }
+    } catch (e, s) {
+      Errors.check(e, s);
+    }
+  }
 
+  Future delete(int id) async {
+    try {
+      ResHandler res = await editProfileApi.deleteProfile(id);
+
+      LzToast.dismiss();
+
+      if (!res.status) {
+        LzToast.show(res.message);
+      } else {
+        LzToast.show('Successfully Deleted Portfolio Freelancer');
+      }
     } catch (e, s) {
       Errors.check(e, s);
     }

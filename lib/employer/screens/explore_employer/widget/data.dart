@@ -1,18 +1,85 @@
 import 'package:flutter/material.dart';
+import 'package:homecare_app/employer/providers/conversation_provider.dart';
+import 'package:homecare_app/employer/providers/message_provider.dart';
 import 'package:homecare_app/employer/screens/explore_employer/profille_freelancer.dart';
+import 'package:homecare_app/employer/screens/message_employer/message_page.dart';
 import 'package:homecare_app/freelancer/data/models/setting/profile_freelancer_model.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lazyui/lazyui.dart';
 
-class DataExploreFreelancer extends StatelessWidget {
+class DataExploreFreelancer extends ConsumerWidget {
   final FreelancerExplore projectEmployee;
+
   const DataExploreFreelancer({super.key, required this.projectEmployee});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     String formatNumber(double number) {
       final formatCurrency = NumberFormat.currency(
           locale: 'id_ID', symbol: 'Rp ', decimalDigits: 0);
       return formatCurrency.format(number);
+    }
+
+    Future<void> handleTap(int id) async {
+      final notifier = ref.read(postConversation.notifier);
+      final notifier2 = ref.read(postMessage.notifier);
+
+      Map<String, dynamic> ok = await notifier.create({"user2_id": id});
+
+      if (ok['status']) {
+        showDialog(
+          context: context,
+          builder: (BuildContext dialogContext) {
+            String message = '';
+
+            return AlertDialog(
+              title: const Text('Kirim Pesan'),
+              content: TextField(
+                onChanged: (value) {
+                  message = value;
+                },
+                decoration:
+                    const InputDecoration(hintText: "Tulis pesan Anda di sini"),
+              ),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(dialogContext).pop();
+                  },
+                  child: const Text('Batal'),
+                ),
+                TextButton(
+                  onPressed: () async {
+                    Navigator.of(dialogContext).pop();
+                    if (message.isNotEmpty) {
+                      Map<String, dynamic> res = await notifier2.create({
+                        "message_text": message,
+                        "conversation_id": ok["conversationId"]
+                      });
+
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        if (context.mounted) {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => MessagePage(
+                                senderId: res['message']['sender_id'],
+                                conversationId: ok['conversationId'],
+                              ),
+                            ),
+                          );
+                        }
+                      });
+                    } else {
+                      print('Message cannot be empty');
+                    }
+                  },
+                  child: const Text('Kirim'),
+                ),
+              ],
+            );
+          },
+        );
+      }
     }
 
     final name =
@@ -96,7 +163,7 @@ class DataExploreFreelancer extends StatelessWidget {
               children: [
                 InkTouch(
                   onTap: () {
-                    // Handle onTap action
+                    handleTap(projectEmployee.id!);
                   },
                   child: Container(
                     margin: Ei.only(r: 10),
@@ -115,9 +182,7 @@ class DataExploreFreelancer extends StatelessWidget {
                           color: LzColors.hex('0047E3'),
                           size: 15,
                         ),
-                        const SizedBox(
-                          width: 5,
-                        ),
+                        const SizedBox(width: 5),
                         Textr(
                           alignment: Alignment.center,
                           'Chat',

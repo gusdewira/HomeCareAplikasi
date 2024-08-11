@@ -8,21 +8,25 @@ import 'package:lazyui/lazyui.dart';
 import '../../data/api/api.dart';
 
 class HistoryProgressProvider
-    extends StateNotifier<AsyncValue<HistoryProgressModel>> with UseApi {
-  final int id;
-
-  HistoryProgressProvider(this.id) : super(const AsyncValue.loading()) {
-    getHistoryProgress(id);
+    extends StateNotifier<AsyncValue<List<HistoryProgressModel>>> with UseApi {
+  HistoryProgressProvider() : super(const AsyncValue.loading()) {
+    getHistoryProgress();
   }
 
-  Future<void> getHistoryProgress(int id) async {
+  Future<void> getHistoryProgress() async {
     try {
       state = const AsyncValue.loading();
 
-      ResHandler res = await projectProgressApi.getHistoryProgress(id);
+      ResHandler res = await projectProgressApi.getHistoryProgress();
 
       if (res.status) {
-        state = AsyncValue.data(HistoryProgressModel.fromJson(res.data));
+        dynamic data = res.data;
+        if (data is List) {
+          state = AsyncValue.data(
+              data.map((e) => HistoryProgressModel.fromJson(e)).toList());
+        } else {
+          LzToast.show("Unexpected data type received");
+        }
       } else {
         LzToast.show(res.message);
       }
@@ -32,10 +36,9 @@ class HistoryProgressProvider
   }
 }
 
-final historyProgressProvider = StateNotifierProvider.autoDispose
-    .family<HistoryProgressProvider, AsyncValue<HistoryProgressModel>, int>(
-        (ref, id) {
-  return HistoryProgressProvider(id);
+final historyProgressProvider = StateNotifierProvider.autoDispose<
+    HistoryProgressProvider, AsyncValue<List<HistoryProgressModel>>>((ref) {
+  return HistoryProgressProvider();
 });
 
 class ProgressPostProvider with ChangeNotifier, UseApi {

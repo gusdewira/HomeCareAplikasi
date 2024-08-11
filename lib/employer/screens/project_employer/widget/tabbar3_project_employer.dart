@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:homecare_app/employer/data/api/api.dart';
 import 'package:homecare_app/employer/data/models/profile_model.dart';
 import 'package:homecare_app/employer/data/models/project_model.dart';
+import 'package:homecare_app/employer/providers/conversation_provider.dart';
+import 'package:homecare_app/employer/providers/message_provider.dart';
 import 'package:homecare_app/employer/providers/profile_provider.dart';
 import 'package:homecare_app/employer/providers/project_completed_provider.dart';
+import 'package:homecare_app/employer/screens/message_employer/message_page.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lazyui/lazyui.dart';
 import 'package:fetchly/fetchly.dart';
@@ -169,6 +172,68 @@ class Tabbar3ProjectEmployer extends ConsumerWidget {
       return formatCurrency.format(number);
     }
 
+    Future<void> handleTap(int id) async {
+      final notifier = ref.read(postConversation.notifier);
+      final notifier2 = ref.read(postMessage.notifier);
+
+      Map<String, dynamic> ok = await notifier.create({"user2_id": id});
+
+      if (ok['status']) {
+        showDialog(
+          context: context,
+          builder: (BuildContext dialogContext) {
+            String message = '';
+
+            return AlertDialog(
+              title: const Text('Kirim Pesan'),
+              content: TextField(
+                onChanged: (value) {
+                  message = value;
+                },
+                decoration:
+                    const InputDecoration(hintText: "Tulis pesan Anda di sini"),
+              ),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(dialogContext).pop();
+                  },
+                  child: const Text('Batal'),
+                ),
+                TextButton(
+                  onPressed: () async {
+                    Navigator.of(dialogContext).pop();
+                    if (message.isNotEmpty) {
+                      Map<String, dynamic> res = await notifier2.create({
+                        "message_text": message,
+                        "conversation_id": ok["conversationId"]
+                      });
+
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        if (context.mounted) {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => MessagePage(
+                                senderId: res['message']['sender_id'],
+                                conversationId: ok['conversationId'],
+                              ),
+                            ),
+                          );
+                        }
+                      });
+                    } else {
+                      print('Message cannot be empty');
+                    }
+                  },
+                  child: const Text('Kirim'),
+                ),
+              ],
+            );
+          },
+        );
+      }
+    }
+
     return RefreshIndicator(
       onRefresh: () => _refreshData(ref),
       child: projectCompleted.when(
@@ -288,7 +353,10 @@ class Tabbar3ProjectEmployer extends ConsumerWidget {
                                   ],
                                 ).margin(t: 20, r: 5),
                                 InkTouch(
-                                    onTap: () {},
+                                    onTap: () {
+                                      handleTap(
+                                          project.offer![0]["user"]["id"]);
+                                    },
                                     child: SizedBox(
                                       width: 100,
                                       child: Row(

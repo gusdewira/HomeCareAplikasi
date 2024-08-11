@@ -37,34 +37,3 @@ final projectActiveProvider =
     StateNotifierProvider.autoDispose<ProjectActiveProvider, AsyncValue<List<ProjectEmployerModel>>>((ref) {
   return ProjectActiveProvider();
 });
-
-class HistoryProgressProvider
-    extends StateNotifier<AsyncValue<HistoryProgressModel>> with UseApi1 {
-  final int id;
-
-  HistoryProgressProvider(this.id) : super(const AsyncValue.loading()) {
-    getHistoryProgress(id);
-  }
-
-  Future<void> getHistoryProgress(int id) async {
-    try {
-      state = const AsyncValue.loading();
-
-      ResHandler res = await projectActivesApi.getHistoryProgress(id);
-
-      if (res.status) {
-        state = AsyncValue.data(HistoryProgressModel.fromJson(res.data));
-      } else {
-        LzToast.show(res.message);
-      }
-    } catch (e, s) {
-      Errors.check(e, s);
-    }
-  }
-}
-
-final historyProgressProvider = StateNotifierProvider.autoDispose
-    .family<HistoryProgressProvider, AsyncValue<HistoryProgressModel>, int>(
-        (ref, id) {
-  return HistoryProgressProvider(id);
-});

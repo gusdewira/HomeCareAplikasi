@@ -216,7 +216,7 @@ class SendProgressProject extends ConsumerWidget {
                           ResHandler ok = await notifier.progressPost(
                               context, '${detail.id!}');
 
-                          if (ok.status && context.mounted) {
+                          if (ok.status) {
                             LzToast.show("Progress has been created.");
 
                             await notification.postNotification({
@@ -227,6 +227,8 @@ class SendProgressProject extends ConsumerWidget {
                               "progresses_id": ok.data['id'],
                               "offer_id": offer
                             });
+
+                            Navigator.of(context).pop();
                           } else {
                             state.abort();
                             LzToast.show("Please fill all required fields.");

@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -52,25 +53,32 @@ final messageProvider = StateNotifierProvider.autoDispose<MessageProvider,
 class PostMessage with ChangeNotifier, UseApi1 {
   final forms = LzForm.make(['message_text', 'conversation_id']);
 
-  Future<bool> create(Map<String, dynamic> data) async {
+  Future<Map<String, dynamic>> create(Map<String, dynamic> data) async {
     try {
       if (data.isNotEmpty) {
         ResHandler res = await messageApi.postMessage(data);
 
+        print('Response Body: ${res.body}');
+        print('Response Status: ${res.status}');
+        print('Response Data: ${res.data}');
+
         LzToast.dismiss();
+
         if (!res.status) {
           LzToast.show(res.message);
-          return false;
+          return {"status": false, "message": 1};
         } else {
-          forms.reset();
-          LzToast.show('Successfully send new message...');
-          return true;
+          Map<String, dynamic> message = jsonDecode(res.body);
+          LzToast.show('Successfully sent new message...');
+          return {"status": true, "message": message["message"]};
         }
       }
-      return false;
+      return {"status": false, "message": 2};
     } catch (e, s) {
+      print('Exception: $e');
+      print('Stack Trace: $s');
       Errors.check(e, s);
-      return false;
+      return {"status": false, "message": 3};
     }
   }
 

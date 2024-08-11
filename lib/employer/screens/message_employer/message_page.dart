@@ -5,13 +5,13 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lazyui/lazyui.dart';
 
 class MessagePage extends ConsumerStatefulWidget {
-  final List<MessageModel> initialMessages;
+  final List<MessageModel>? initialMessages;
   final int senderId;
   final int conversationId;
 
   MessagePage(
       {required this.conversationId,
-      required this.initialMessages,
+      this.initialMessages,
       required this.senderId});
 
   @override
@@ -22,32 +22,17 @@ class _MessagePageState extends ConsumerState<MessagePage> {
   late List<MessageModel> _messages;
   final TextEditingController _messageController = TextEditingController();
 
-  @override
-  void initState() {
-    super.initState();
-    _messages = List.from(widget.initialMessages);
-  }
-
   Future<void> _sendMessage() async {
     final notifier = ref.read(postMessage.notifier);
 
     if (_messageController.text.isNotEmpty) {
-      Future<bool> ok = notifier.create({
+      Map<String, dynamic> ok = await notifier.create({
         "message_text": _messageController.text,
-        "conversation_id": widget.initialMessages.first.conversation.id
+        "conversation_id": widget.conversationId
       });
 
-      if (await ok) {
+      if (ok['status'] == true) {
         _refreshMessages();
-        final mess = MessageModel(
-          senderId: widget.senderId,
-          messageText: _messageController.text,
-          conversation: widget.initialMessages.first.conversation,
-        );
-
-        setState(() {
-          _messages = [mess, ..._messages];
-        });
 
         _messageController.clear();
       }
@@ -81,8 +66,7 @@ class _MessagePageState extends ConsumerState<MessagePage> {
                 if (editController.text.isNotEmpty) {
                   Future<bool> ok = notifier.update({
                     "message_text": editController.text,
-                    "conversation_id":
-                        widget.initialMessages.first.conversation.id
+                    "conversation_id": widget.conversationId
                   }, index);
 
                   if (await ok) {
