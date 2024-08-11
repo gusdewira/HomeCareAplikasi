@@ -18,84 +18,94 @@ class ListMenuSetting extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Textr(
-            //   'Account',
-            //   style: Gfont.color(black).fsize(15),
-            //   alignment: Alignment.centerLeft,
-            // ),
             Column(
               children: [
-                InkTouch(
-                    onTap: () {
-                      context.push(Paths.myprofile);
-                    },
-                    child: RowItem('My Profile', Ti.user, color1)),
+                Textr(
+                  margin: Ei.only(b: 10),
+                  alignment: Alignment.centerLeft,
+                  'Account'),
+                  InkTouch(
+                  onTap: () {
+                    context.push(Paths.myprofile);
+                  },
+                  child: RowItem('My Profile', Ti.user, color1),
+                ),
+                RowItem('Payment Account', Ti.creditCard, color1),
+                RowItem('Review Story', Ti.star, color1),
+
+                  Textr(
+                  margin: Ei.only(b: 10),
+                  alignment: Alignment.centerLeft,
+                  'About'),
+                RowItem('Pivacy & Policy', Ti.shieldLock, color1),
+                RowItem('Terms & Conditions', Ti.file, color1),
+
+                  Textr(
+                  margin: Ei.only(b: 10),
+                  alignment: Alignment.centerLeft,
+                  'Setting'),
                 InkTouch(
                   onTap: () {
                     context.push(Paths.notificationHome);
                   },
-                  child: RowItem('Notification', Ti.bell, color1)),
+                  child: RowItem('Notification', Ti.bell, color1),
+                ),
                 RowItem('Changes Password', Ti.key, color1),
                 RowItem(
                   'Logout',
                   Ti.logout,
                   Colors.red,
                   onTap: () async {
-                    bool ok = await notifier.logout();
+                    bool? confirmed = await showDialog<bool>(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Center(
+                            child: Text(
+                              'Logout',
+                            ),
+                          ),
+                          content: Text('Are you sure you want to logout?'),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          actions: <Widget>[
+                            TextButton(
+                              child: Text(
+                                'Cancel',
+                                style: TextStyle(color: Colors.red),
+                              ),
+                              onPressed: () {
+                                Navigator.of(context).pop(false);
+                              },
+                            ),
+                            TextButton(
+                              child: Text(
+                                'OK',
+                              ),
+                              onPressed: () {
+                                Navigator.of(context).pop(true);
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
 
-                    if (ok) {
-                      LzToast.show("Logout Successful!");
-                      context.pushReplacement(Paths.login);
-                    } else {
-                      LzToast.show("Logout Successful!");
+                    if (confirmed == true) {
+                      bool ok = await notifier.logout();
+
+                      if (ok) {
+                        LzToast.show("Logout Successful!");
+                        context.pushReplacement(Paths.login);
+                      } else {
+                        LzToast.show("Logout Failed!");
+                      }
                     }
                   },
-                )
-                // InkTouch(
-                //     onTap: () {
-                //       context.push(Paths.paymentaccount);
-                //     },
-                //     child: RowItem('Payment Account', Ti.creditCard, color1)),
-                // RowItem('Review history', Ti.message2Cog, color1),
+                ),
               ],
             ).margin(t: 10, b: 20),
-            // Textr(
-            //   'About',
-            //   alignment: Alignment.centerLeft,
-            //   style: Gfont.color(black).fsize(15),
-            // ),
-            // Column(
-            //   children: [
-            //     RowItem('Privacy & Policy', Ti.shieldLock, color1),
-            //     RowItem('Tema & Conditions', Ti.file, color1),
-            //   ],
-            // ).margin(t: 10, b: 20),
-            // Textr(
-            //   'Settings',
-            //   alignment: Alignment.centerLeft,
-            //   style: Gfont.color(black).fsize(15),
-            // ),
-            // Column(
-            //   children: [
-            //     RowItem('Notification', Ti.bell, color1),
-            //     RowItem('Changes Password', Ti.key, color1),
-            //     RowItem(
-            //       'Logout',
-            //       Ti.logout,
-            //       Colors.red,
-            //       onTap: () async {
-            //         bool ok = await notifier.logout();
-
-            //         if (ok) {
-            //           LzToast.show("Anda telah logout!");
-            //           context.pushReplacement(Paths.login);
-            //         } else {
-            //           LzToast.show("Anda gagal logout!");
-            //         }
-            //       },
-            //     )
-            //   ],
-            // ).margin(t: 10)
           ],
         ),
       ),
@@ -117,40 +127,45 @@ class RowItem extends StatelessWidget {
       child: Column(
         children: [
           Row(
-            mainAxisAlignment: Maa.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Row(
                 children: [
                   Container(
-                      height: 50,
-                      width: 50,
-                      padding: Ei.all(10),
-                      margin: Ei.only(r: 15),
-                      decoration: BoxDecoration(
-                          color: warna.lighten(0.10),
-                          borderRadius: Br.radius(10)),
-                      child: Icon(
-                        icon,
-                        color: warna,
-                        size: 25,
-                      )),
+                    height: 50,
+                    width: 50,
+                    padding: Ei.all(10),
+                    margin: Ei.only(r: 15),
+                    decoration: BoxDecoration(
+                      color: warna.withOpacity(0.10),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Icon(
+                      icon,
+                      color: warna,
+                      size: 25,
+                    ),
+                  ),
                   Text(
                     text,
-                    style: Gfont.color(LzColors.hex('000000')).fsize(15),
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 15,
+                    ),
                   ),
                 ],
               ),
               const Icon(
-                Ti.chevronRight,
+                Icons.chevron_right,
                 color: Colors.grey,
               ),
             ],
           ),
           Container(
             margin: Ei.only(l: 55),
-            color: LzColors.hex('E6E6E8'),
+            color: Colors.grey[200],
             height: 1,
-            width: context.width,
+            width: double.infinity,
           ),
         ],
       ).margin(b: 10),

@@ -137,6 +137,38 @@ class HomeView extends ConsumerWidget {
                   Column(
                     mainAxisAlignment: Maa.start,
                     children: [
+                      Container(
+                        margin: Ei.only(b: 20),
+                        width: context.width,
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Container(
+                                margin: Ei.only(r: 10),
+                                height: 40,
+                                width: context.width/2,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: color1,
+                                ),
+                                child: Center(child: Icon(Ti.coin, color: Colors.white,)),
+                              ),
+                            ),
+                             Expanded(
+                               child: Container(
+                                margin: Ei.only(l: 10),
+                                height: 40,
+                                width: context.width/2,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: color1,
+                                ),
+                                child: Center(child: Icon(Ti.clock, color: Colors.white,)),
+                                                           ),
+                             )
+                          ],
+                        ),
+                      ),
                       projectData.when(
                         data: (List<ProjectFreelancerModel> projects) {
                           print('Projects data loaded successfully');
@@ -201,7 +233,44 @@ class HomeView extends ConsumerWidget {
                         },
                       ),
                     ],
-                  ).margin(l: 25, r: 25, t: 130),
+                  ).margin(l: 25, r: 25, t: 220),
+                  Positioned(
+                        top: 120,
+                        left: 25,
+                        right: 25,
+                        child: Container(
+                            padding: Ei.only(l: 20, r: 20),
+                            height: 80,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(color: color1, width: 1),
+                              color: Colors.white,
+                            ),
+                            child: Row(
+                              mainAxisAlignment: Maa.spaceBetween,
+                              children: [
+                                Column(
+                                  mainAxisSize: Mas.min,
+                                  crossAxisAlignment: Caa.start,
+                                  children: [
+                                    Text(
+                                      'Saldo Anda',
+                                      style: Gfont.bold.fsize(15),
+                                    ),
+                                    Text(
+                                      'Rp. 500.000,00',
+                                      style: Gfont.bold.fsize(20),
+                                    )
+                                  ],
+                                ),
+                                IconButton(
+                                    onPressed: () {},
+                                    icon: const Icon(
+                                      Ti.chevronRight,
+                                      size: 30,
+                                    ))
+                              ],
+                            ))),
                 ],
               ),
             ),
